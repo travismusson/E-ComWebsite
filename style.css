@@ -888,3 +888,23 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     transition: background-color 0.5s ease-in-out;
 }
 
+.addProductContainer form .data select {
+    height: 40px;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 15px;
+    border: 1px solid #838280;
+    outline: 1px solid #838280;
+    border-radius: 10px;
+    background-color: #686868;
+    color: #fff;
+    transition: all 0.5s ease-in-out;
+}
+
+.addProductContainer form .data select:focus, .addProductContainer form .data select:hover {
+    border-color: #464545;
+    outline: 1px solid #686868;
+    outline-color: #686868;
+    transition: 1s ease-in-out;
+    background-color: #464545;      /*makes it more visible might remove tho*/
+}

@@ -17,8 +17,8 @@ if(isset($_POST['addProduct'])){
     $productPrice = $_POST['productPrice'];         //getting the product price from the form
     $productCategory = $_POST['productCategory'];   //getting the product category from the form
     $productStockQuantity = $_POST['productStockQuantity']; //getting the product stock quantity from the form
-    $productDateAdded = $_POST['productDateAdded']; //getting the product date added from the form
-    
+    //$productDateAdded = $_POST['productDateAdded']; //getting the product date added from the form // gonna auto generate this
+    $productDateAdded = date('Y-m-d H:i:s'); // auto generate current date and time ref stackoverflow --workin perfectly
     //not sure if this is correct
     $fileName = $_FILES['productImage']['name'];       //getting the file name from the form
     $fileTmpName = $_FILES['productImage']['tmp_name']; //getting the temporary file name
@@ -114,18 +114,32 @@ if(isset($_POST['addProduct'])){
                         <label for="productPrice">Product Price:</label>
                         <input type="number" id="productPrice" name="productPrice" step="0.01" required>        <!--step is used to allow for more accessibility-->
                     </div>
-                    <div class="data">
+                    <div class="data">      <!-- gonna replace this with select dropdown -->
                         <label for="productCategory">Product Category:</label>
-                        <input type="text" id="productCategory" name="productCategory" required>
+                        <!--<input type="text" id="productCategory" name="productCategory" required>        maybe going to add dynamically here by server admin in future? linking through DB or something-->
+                        <select id="productCategory" name="productCategory" required>
+                            <option value="" disabled selected>Select Category</option>     <!-- default option to prompt user to select a category, disable makes it not selectable by user, however selected attribute after allows it to be selected -->
+                            <option value="Appliances">Appliances</option>
+                            <option value="Gaming">Gaming</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Home & Garden">Home & Garden</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Kitchen">Kitchen</option>
+                            <option value="Books">Books</option>
+                            <option value="Kiddies">Kiddies</option>
+                        </select>
                     </div>
                     <div class="data">
                         <label for="productStockQuantity">Product Stock Quantity:</label>
                         <input type="number" id="productStockQuantity" name="productStockQuantity" required>
                     </div>
+                    <!--
                     <div class="data">
-                        <label for="productDateAdded">Product Date Added:</label>
+                        <label for="productDateAdded">Product Date Added:</label>       might remove this and auto generate it on server side  yeh i decided to auto generate it on server side
                         <input type="datetime-local" id="productDateAdded" name="productDateAdded" required>
                     </div>
+                    -->     
                     <div class="data">
                         <label for="productImage">Product Image:</label>
                         <input type="file" id="productImage" name="productImage" accept="image/*">

@@ -139,7 +139,7 @@ endif; ?>
                 <div class="dealsItem">Test</div>
                 <div class="dealsItem">Test</div>
             -->
-                <?php 
+                <?php //dynamically adds products to the dealsItem divs
                 $query = "SELECT ProductID, Name, Price, Description, Product_IMG_DIR FROM products";    //selecting the product from the products table
                 $result = mysqli_query($db_Conn, $query);
                 //if(!$result){
