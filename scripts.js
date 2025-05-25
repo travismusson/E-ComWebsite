@@ -64,7 +64,7 @@ dropdownButton.addEventListener("click", function () {
     categoryMenu.style.opacity = menuIsToggled ? "1" : "0";     //uses a ternary operator to set opacity and visibility accordingly might revert back to if elses for consistency and less complexity (thought id just showcase and test usecase)
     categoryMenu.style.visibility = menuIsToggled ? "visible" : "hidden";  
     // Move Latest Deals when menu is open
-    latestDealsContainer.style.transform = menuIsToggled ? "translateY(200px)" : "translateY(0)";
+    latestDealsContainer.style.transform = menuIsToggled ? "translateY(250px)" : "translateY(0)";
     //move scroll buttons when category menu is open
 });
 
@@ -74,10 +74,10 @@ dropdownButton.addEventListener("mouseover", function () {
     if(!menuIsToggled){         //ensures no more overiding the click event causing incosistencies before
         categoryMenu.style.opacity = "1";
         categoryMenu.style.visibility = "visible";
-        latestDealsContainer.style.transform = "translateY(200px)";
-        topSellersContainer.style.transform = "translateY(200px)";
-        popularCategoriesContainer.style.transform = "translateY(200px)";
-        bestCarDealsContainer.style.transform = "translateY(200px)";
+        latestDealsContainer.style.transform = "translateY(250px)";
+        topSellersContainer.style.transform = "translateY(250px)";
+        popularCategoriesContainer.style.transform = "translateY(250px)";
+        bestCarDealsContainer.style.transform = "translateY(250px)";
     }
 });
 
@@ -86,10 +86,10 @@ categoryMenu.addEventListener("mouseover", function () {
     if(!menuIsToggled){         //ensures no more overiding the click event causing incosistencies before
         categoryMenu.style.opacity = "1";
         categoryMenu.style.visibility = "visible";
-        latestDealsContainer.style.transform = "translateY(200px)";
-        topSellersContainer.style.transform = "translateY(200px)";
-        popularCategoriesContainer.style.transform = "translateY(200px)";
-        bestCarDealsContainer.style.transform = "translateY(200px)";
+        latestDealsContainer.style.transform = "translateY(250px)";
+        topSellersContainer.style.transform = "translateY(250px)";
+        popularCategoriesContainer.style.transform = "translateY(250px)";
+        bestCarDealsContainer.style.transform = "translateY(250px)";
     }
 });
 

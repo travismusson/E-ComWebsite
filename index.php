@@ -91,7 +91,10 @@ endif; ?>
                 <li><div class="catItems"><span class="material-symbols-outlined">chair</span><a href="#">Furniture & Outdoor</a></div></li>
                 <li><div class="catItems"><span class="material-symbols-outlined">kettle</span><a href="#">Kitchen</a></div></li>
                 <li><div class="catItems"><span class="material-symbols-outlined">tv_gen</span><a href="#">Entertainment</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">child_care</span><a href="#">Kiddies</a></div></li>        
+                <li><div class="catItems"><span class="material-symbols-outlined">child_care</span><a href="#">Kiddies</a></div></li>    
+                <li><div class="catItems"><span class="material-symbols-outlined">computer</span><a href="#">Electronics</a></div></li>    
+                <li><div class="catItems"><span class="material-symbols-outlined">apparel</span><a href="#">Clothing</a></div></li>    
+                <li><div class="catItems"><span class="material-symbols-outlined">book_5</span><a href="#">Books</a></div></li>   
             </ul>
         </div>
     </div>
