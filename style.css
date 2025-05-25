@@ -1,0 +1,890 @@
+body{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 15px;
+    font: normal;
+    background-color: #464545;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.headerStrip{
+    position: relative;
+    overflow: visible;      /*changed from hidden to show autohide cat*/
+    background-color: rgb(54, 54, 54);
+    border-radius: 20px;
+    padding: 20px;
+    
+}
+
+.homeStrip{
+    display: flex;      /*trying to make search bar fit screen by making the container a flex box adapting to smaller screensizes*/
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 5px;
+    background-color: #838280;
+    border-radius: 20px;
+    /*transition: all 0.5s ease-in-out;*/
+    visibility: visible;
+    opacity: 1;
+    height: auto;
+    
+}
+.homeStrip a{
+    padding: 10px;
+    border-radius: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+.homeStrip a:hover{
+    background-color: rgb(54, 54, 54);
+    transition: background-color 0.5s ease-in-out;
+}
+
+.headerStrip .homeStrip .active{
+    background-color: rgb(54, 54, 54);
+}
+.searchWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #686868;
+    border-radius: 20px;
+    flex-grow: 1;
+}
+
+.searchBar{
+    flex-grow: 1;       
+    min-width: 25%;
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    color: #ffffff;
+    outline-color: #686868;
+}
+.searchBar:focus{
+    transition: 1s ease-in-out;
+    outline: 1px solid #464545;
+    outline-color: #464545;
+}
+.searchWrapper button{
+    border: none;
+    border-radius: 50%;
+    margin-left: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.searchWrapper button:hover{
+    background-color: rgb(54, 54, 54);
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+
+ul li{
+    list-style: none;
+    font-weight: bold;
+}
+
+button{
+    background-color: #838280;
+    border-radius: 20px;
+    border: none;
+    padding: 5px 10px;
+    margin: 5px 5px;
+    color: white;
+
+}
+
+.btn_DropDown:hover{
+    background-color: #686868;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.autoHideCat{
+    margin: 5px;
+    padding: 0px;
+    /*display: none;*/      /*removed for refactor*/
+    position: absolute;     /*allows us to position where we want it -- was absolute until changed headerStrip to be relative changing from fixed to absolute?*/
+    /*positioning*/
+    top: 210px;
+    left: 0;
+    background-color: #838280;
+    width: 250px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    overflow: hidden;
+    /*animation*/
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 1s ease-in-out; 
+}
+.autoHideCat ul{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 5px;
+    margin: 0;
+  
+}
+.autoHideCat ul li{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+}
+/*  redundant so refactored
+.autoHideCat ul li a:hover{
+    background-color: #464545;
+    border-radius: 20px;
+    transition: 0.5s ease-in-out;
+}
+    */
+.autoHideCat span{
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 24px;
+    padding-right: 10px;
+}
+.catItems{
+    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+
+}
+.catItems:hover{
+    background-color: #464545;
+    border-radius: 20px;
+    transition: 0.5s ease-in-out;
+}
+
+h2{
+    font-size: 30px;
+    padding: 5px;
+    display: block;
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    margin-bottom: 10px;
+
+}
+
+.latestDealsContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+    /*flex-grow: 250;*/
+    width: 80%;
+    margin: 0 auto;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    scrollbar-width: none;      /*this removes scrollbar in firefox*/
+}
+
+.latestDealsContainer::-webkit-scrollbar{
+    display: none;
+}
+
+.latestDealsContainer a:hover{
+    color: #838280;
+    transition: 0.5s ease-in-out;
+}
+
+.latestDeals{
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    /*white-space: nowrap;*/
+    flex-wrap: nowrap;
+    gap: 10px;
+    align-items: center;
+    background-color: #838280;
+    padding: 10px;
+    border-radius: 10px;
+    width: 85%;     /*We need to ensure that the total width is bigger than the parent container to allow for scrolling as the browser only allows scrolling when the content is overflowing*/
+    scrollbar-width: none;      /*this removes scrollbar in firefox*/
+}
+
+.latestDeals::-webkit-scrollbar{        /* this hides the scroll bar*/
+    display: none;
+}
+
+
+/* changed from span to just div        refactor
+.latestDeals span{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    text-align: center;
+    padding: 15px;
+    background-color: #d3ceca;
+    border: 2px solid #d3ceca;
+    border-radius: 5px;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.latestDeals span:hover{
+    background-color: #c8c2be; 
+    transition: 0.5s ease-in-out;
+}
+*/
+.latestDeals div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    text-align: center;
+    padding: 15px;
+    background-color: #686868;
+    border: 2px solid #686868;
+    border-radius: 5px;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.latestDeals div:hover{
+    background-color: rgb(54, 54, 54); 
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+
+.latestDeals img{
+    width: 150px;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto;
+}
+
+.dealsItem{
+    display: inline-block;
+    flex: 0 0 auto;
+    margin: 0 10px;
+    width: 150px;       /*set fixed width to try fix scroll issue -- already solved scroll issue keeping for consistency*/
+    text-align: center;
+}
+/*added unique identifiers to the scrolls to allow for javascript manip*/
+.latestDealsScrollLeft, .latestDealsScrollRight, .topSellersScrollLeft, .topSellersScrollRight, .popularCategoriesScrollLeft, .popularCategoriesScrollRight, .bestCarDealsScrollLeft, .bestCarDealsScrollRight {
+    position: absolute;
+    cursor: pointer;
+    font-size: 20px;
+    bottom: 150px;
+    opacity: 0.8;
+    z-index: 5;
+}
+.latestDealsScrollLeft, .topSellersScrollLeft, .popularCategoriesScrollLeft, .bestCarDealsScrollLeft {
+    left: 0px;
+
+}
+.latestDealsScrollRight, .topSellersScrollRight, .popularCategoriesScrollRight, .bestCarDealsScrollRight {
+    right: 0px;
+
+}
+
+.latestDealsScrollLeft:hover, .latestDealsScrollRight:hover, .topSellersScrollLeft:hover, .topSellersScrollRight:hover, .popularCategoriesScrollLeft:hover, .popularCategoriesScrollRight:hover, .bestCarDealsScrollLeft:hover, .bestCarDealsScrollRight:hover {
+    background-color: rgb(54, 54, 54); /* Slightly darker hover effect */
+    transition: 0.5s ease-in-out;
+}
+
+/*added top sellers, popular, best car deals categories to website*/
+.topSellersContainer, .popularCategoriesContainer, .bestCarDealsContainer{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+    width: 80%;
+    margin: 0 auto;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    scrollbar-width: none;      /*this removes scrollbar in firefox*/
+}
+.topSellersContainer::-webkit-scrollbar, .popularCategoriesContainer::-webkit-scrollbar, .bestCarDealsContainer::-webkit-scrollbar{
+    /*this hides the scroll bar*/
+    display: none;
+}
+.topSellersContainer a:hover, .popularCategoriesContainer a:hover, .bestCarDealsContainer a:hover{
+    color: #838280;
+    transition: 0.5s ease-in-out;
+}
+
+.topSellers, .popularCategories, .bestCarDeals{
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    flex-wrap: nowrap;
+    gap: 10px;
+    align-items: center;
+    background-color: #838280;
+    padding: 10px;
+    border-radius: 10px;
+    width: 85%;     /*We need to ensure that the total width is bigger than the parent container to allow for scrolling as the browser only allows scrolling when the content is overflowing*/
+    scrollbar-width: none;      /*this removes scrollbar in firefox*/
+}
+
+.topSellers div, .popularCategories div, .bestCarDeals div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    text-align: center;
+    padding: 15px;
+    background-color: #686868;
+    border: 2px solid #686868;
+    border-radius: 5px;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.topSellers div:hover, .popularCategories div:hover, .bestCarDeals div:hover{
+    /*hover effect*/
+    background-color: rgb(54, 54, 54); 
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.popularCategories img, .topSellers img, .bestCarDeals img{
+    width: 150px;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto;
+}
+
+.sellersItem, .categoryItem, .bestCarDealsItem{
+    display: inline-block;
+    flex: 0 0 auto;
+    margin: 0 10px;
+    width: 150px;       /*set fixed width to try fix scroll issue -- already solved scroll issue keeping for consistency*/
+    text-align: center;
+}
+
+
+
+
+/* refactor to remove redundancy 
+.popularCategories{
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    flex-wrap: nowrap;
+    gap: 10px;
+    align-items: center;
+    background-color: #838280;
+    padding: 10px;
+    border-radius: 10px;
+    width: 85%;     
+    scrollbar-width: none;      
+}
+
+.popularCategories div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    text-align: center;
+    padding: 15px;
+    background-color: #686868;
+    border: 2px solid #686868;
+    border-radius: 5px;
+    transition: background-color 0.5s ease-in-out;
+}
+.popularCategories div:hover{
+    background-color: rgb(54, 54, 54); 
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.bestCarDeals{
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    flex-wrap: nowrap;
+    gap: 10px;
+    align-items: center;
+    background-color: #838280;
+    padding: 10px;
+    border-radius: 10px;
+    width: 85%;     
+    scrollbar-width: none;      
+}
+.bestCarDeals div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    text-align: center;
+    padding: 15px;
+    background-color: #686868;
+    border: 2px solid #686868;
+    border-radius: 5px;
+    transition: background-color 0.5s ease-in-out;
+}
+.bestCarDeals div:hover{
+    background-color: rgb(54, 54, 54); 
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+*/
+/* could have put them all into one category actually*/
+
+
+
+
+
+/*Mobile items*/
+
+.headerTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.hamburgerBtn{
+    display: none;
+    background: none;
+    
+}
+/*small screen styling*/
+@media screen and (max-width: 624px){
+    .homeStrip{
+        /*refactor*/
+        /*
+        display: block;
+        text-align: center;
+        padding: 5px;
+        margin: 0 5px 5px;
+        */
+        position:relative;
+        display: flex;
+        /*
+        width: 100%;
+        max-height: 0;
+        */
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        /*transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out, height 0.5s ease-in-out;  */
+        transition: all 1s ease-in-out;
+    }
+
+    
+
+    .homeStrip.active{
+        opacity: 1;
+        visibility: visible;
+         
+        
+        /*max-height: 500px;
+        */
+    }
+    .searchWrapper{
+        width: 90%;
+        justify-content: space-between;
+    }
+
+    .homeStrip .searchBar{
+        width: 90%;
+    }
+    
+    .autoHideCat{
+        top: 250px;
+    }  
+    
+    .hamburgerBtn{
+        display: inline-block;
+        width: 50px;
+    }
+
+    .hamburgerBtn:hover{
+        color: #838280;
+        transition: all 0.5s ease-in-out;
+    }
+
+}
+
+
+
+
+.loginContainer{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #838280;
+    width: 450px;
+    padding: 20px;
+    box-shadow: #464545;
+    border-radius: 20px;
+}
+
+.registerContainer{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #838280;
+    width: 450px;
+    padding: 20px;
+    box-shadow: #464545;
+    border-radius: 20px;
+}
+
+.loginContainer .text, .registerContainer .text{
+    font-size: 25px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* controls space usage within these containers*/   
+.loginContainer form, .registerContainer form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 90%;
+}
+
+
+.loginContainer form .data, .registerContainer form .data{
+    height: auto;
+    min-height: 20px;   
+    width: 90%;     
+    margin: 10px 0;
+    display: flex;  /*added to fix styling issue*/
+    flex-direction: column;
+}
+
+form .data label{
+    font-size: 20px;
+}
+
+form .data input::placeholder{
+    font-size: 15px;
+    color: #ffffff;
+}
+
+form .data input{
+    height: 30px;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 15px;
+    outline-color:#838280;
+    border: 1px solid #838280;
+    border-radius: 10px;
+    background-color: #686868;
+    color: #ffffff;
+}
+
+form .data input:focus{
+    border-color: #464545;
+    border-bottom-width: 2px;
+    outline: 1px solid #686868;
+    outline-color: #686868;
+    transition: 1s ease-in-out;
+}
+
+form .forgotPass{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-self: start;
+}
+
+form a{
+    color: #686868;
+}
+
+form a:hover{
+    text-decoration: underline;
+    color: #464545;
+    transition: 0.5s ease-in-out;
+}
+
+form .btnLogin, form .btnRegister{
+    margin: 20px 0;
+    height: 40px;
+    width: 100%;
+}
+
+form .btnLogin button, form .btnRegister button{
+    height: 100%;
+    width: 100%;
+    background-color: #686868;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+form .btnLogin button:hover, form .btnRegister button:hover{
+    background-color: #464545;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+
+.loginContainer .material-symbols-outlined{
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.registerContainer .material-symbols-outlined{
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.loginContainer .material-symbols-outlined:hover{
+    color: #464545;
+    transition: 0.5s ease-in-out;
+}
+.registerContainer .material-symbols-outlined:hover{
+    color: #464545;
+    transition: 0.5s ease-in-out;
+}
+/*added this to ensure users can focus on the login form more effectivley*/
+.blurOverlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(1px);
+    background-color: rgba(0,0,0,0.3);
+    z-index: 999;
+    display: none;
+}
+
+/*styling error menus*/
+/*not working as inteded its being overwritten by previous its not pushing the other elements   --fixed*/
+.error{
+    display: block;
+    color:red;
+    font-size: 15px;
+    min-height: 0px;    /*makes it invis when not used*/ 
+    margin: 0 10px;
+}
+
+
+/*product page styling*/
+
+.productDetails {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #686868;
+    border-radius: 15px;
+    border: 2px solid #838280;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+}
+
+.productDetails:hover{
+    border: 2px solid #464545;
+    transition: all 0.5s ease-in-out;
+}
+
+.productDetails h2 {
+    margin-bottom: 15px;
+    color: #fff;
+}
+.productDetails img {
+    width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    background: #838280;
+    border: 1px solid #464545;
+    transition: all 0.5s ease-in-out;
+}
+.productDetails img:hover{
+    border: 1px solid #838280;
+    transition: all 0.5s ease-in-out;
+}
+
+.productDetails h4 {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 20px;
+}
+
+.productDetails div {
+    margin: 5px 0;
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
+}
+.productDetails form {
+    margin: 15px auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.productDetails button {
+    background: #838280;
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.productDetails button:hover {
+    transition: all 0.5s ease-in-out;
+    background: #464545;
+}
+
+.productDetails a {
+    color: #fff;
+    margin-top: 10px;
+    transition: all 0.5s ease-in-out;
+}
+.productDetails a:hover {
+    color: #464545;
+    text-decoration: underline;
+}
+
+.productItems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/*add product styling*/
+.addProductContainer {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #686868;
+    border-radius: 15px;
+    border: 2px solid #838280;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+}
+.addProductContainer:hover{
+    border: 2px solid #464545;
+    transition: all 0.5s ease-in-out;
+}
+.addProductContainer .text {
+    font-size: 25px;
+    font-weight: 500;
+    text-align: center;
+}
+.addProductContainer form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.addProductContainer form .data {
+    height: auto;
+    min-height: 20px;   
+    width: 90%;     
+    margin: 10px 0;
+    display: flex;  
+    flex-direction: column;
+}
+.addProductContainer form .data label {
+    font-size: 20px;
+}
+
+.addProductContainer form .data input {
+    height: 35px;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 15px;
+    border: 1px solid #838280;
+    border-radius: 10px;
+    background-color: #686868;
+}
+.addProductContainer form .data input:focus, .addProductContainer form .data input:hover{
+    border-color: #464545;
+    outline: 1px solid #686868;
+    outline-color: #686868;
+    transition: 1s ease-in-out;
+}
+.addProductContainer form .data textarea {
+    height: auto;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 15px;
+    outline-color:#838280;
+    border: 1px solid #838280;
+    border-radius: 10px;
+    background-color: #686868;
+    color: #fff;
+}
+.addProductContainer form .data textarea:focus, .addProductContainer form .data textarea:hover {
+    border-color: #464545;
+    outline: 1px solid #686868;
+    outline-color: #686868;
+    transition: 1s ease-in-out;
+}
+
+
+.addProductContainer form .btnAddProduct {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.addProductContainer form .btnAddProduct button {
+    background: #838280;
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+.addProductContainer form .btnAddProduct button:hover {
+    background: #464545;
+    transition: all 0.5s ease-in-out;
+}
+
+/*add product*/
+
+.directAddProduct{
+    display: block;
+    position: fixed;
+    right: 30px;
+    left: auto;
+}
+.directAddProduct button:hover{
+    background-color: #686868;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+
