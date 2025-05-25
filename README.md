@@ -1,4 +1,4 @@
-#Travis Musson C2C Ecommerce Website
+# Travis Musson C2C Ecommerce Website
 
 **Project Overview**
 This project is being developed as part of my Web Design course at university. The objective is to create a local C2C (consumer-to-consumer) e-commerce website tailored for users within South Africa. The platform aims to support and enhance revenue generation within the South African e-commerce sector by providing a user-friendly space for individuals to buy and sell products directly with one another.
