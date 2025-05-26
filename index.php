@@ -3,6 +3,8 @@
 session_start();        //session start for session handling
 include("dbconnection.php");    //added in to allow for dynamic product loading and db connection       
 //check if user is logged in
+// Set background color early to prevent white flashes
+echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';    //came to conclusion this was best way of keeping background color
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){      //this checks if the user is logged in -- might remove this as i used it within the actual html code using control structures
     echo "Welcome ".$_SESSION["FirstName"]." ".$_SESSION["LastName"]." <br>";      //this will show the user their name at the top of the page this is nice but i need to move it to the account list item      --decided on keeping this at top of page i think its quite nice.
     /*echo "<script>

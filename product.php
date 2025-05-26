@@ -1,7 +1,7 @@
 <?php
 include("dbconnection.php");        //included to ensure db connection is valid
 session_start();      //this is needed to start the session
-
+echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';
 //get product id from the URL
 $productID = 0;     //initialize to 0
 if(isset($_GET['id'])){
@@ -63,7 +63,7 @@ $product = mysqli_fetch_assoc($result);
     <div class="headerStrip">       <!-- standardized header strip for all pages -->
         <header>
             <div class="headerTop">
-                <h1>My Account</h1>
+                <h1>Travis Musson's C2C E-Commerce Website!</h1>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">

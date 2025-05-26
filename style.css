@@ -1,6 +1,6 @@
 html{
     scroll-behavior: smooth; /*smooth scrolling*/
-    min-height:fit-content;
+    min-height: 100%;
     background: linear-gradient(to top, #686868, rgb(54, 54, 54)); 
     
 }
@@ -9,10 +9,13 @@ body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 15px;
     font: normal;
-    background-color: #464545;
     color: white;
-    background: linear-gradient(to top, #686868, rgb(54, 54, 54)); 
     
+    background: linear-gradient(to top, #686868, rgb(54, 54, 54));       /*applyting here also for page loading, seems to sometimes flash white might needa add it to html also?        --not working, however adding it to the php did seem to fix it*/
+    /*this is to ensure footer is sticky        thanks ByteGrad*/
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 a{
@@ -711,7 +714,8 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 /*product page styling*/
 
 .productDetails {
-    max-width: 500px;
+    
+    min-width: 500px;
     margin: 40px auto;
     background: #686868;
     border-radius: 15px;
@@ -799,9 +803,9 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     gap: 20px;
 }
 
-/*add product styling*/
+/*add product php styling*/
 .addProductContainer {
-    max-width: 500px;
+    min-width: 500px;
     margin: 40px auto;
     background: #686868;
     border-radius: 15px;
@@ -892,20 +896,6 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     transition: all 0.5s ease-in-out;
 }
 
-/*add product*/
-
-.directAddProduct{
-    display: block;
-    position: absolute;
-    right: 30px;
-    left: auto;
-}
-.directAddProduct button:hover{
-    background-color: #686868;
-    cursor: pointer;
-    transition: background-color 0.5s ease-in-out;
-}
-
 .addProductContainer form .data select {
     height: 40px;
     width: 100%;
@@ -927,13 +917,31 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     background-color: #464545;      /*makes it more visible might remove tho*/
 }
 
+/*add product btn styling*/
+
+.directAddProduct{
+    display: block;
+    position: absolute;
+    right: 30px;
+    left: auto;
+}
+.directAddProduct button:hover{
+    background-color: #686868;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+
+
 .footerContainer{
     /*border-radius: 20px;*/
     /*background: linear-gradient(to bottom, #464545, rgb(54, 54, 54));*/
     color: #fff;
-    padding: 20px;
+    padding:5px;
     transition:all 0.5s ease-in-out;
-    
+    margin-top: auto;       /*ensures footer is at bottom*/
+    background: #464545;
+    border-radius: 10px;
+
 }
 .footerContainer p {
     padding-left: 5px;
@@ -963,5 +971,68 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     transition: all 0.5s ease-in-out;
     color: #838280;
 }
+
+
+/*account.php styling*/
+.accountHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*  not sure if i like it
+    background: #464545;
+    border-radius: 20px;
+    */
+}
+
+.accountContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-items: center;
+    margin: 0;
+}
+
+.accountDetails, .accountOrders, .accountSupport{
+    background: #686868;
+    padding: 10px;
+    border-radius: 20px;
+    flex:1;
+    margin: 20px;
+    border: 1px solid #686868;
+    outline: 1px solid #686868;
+    transition: all 0.5s ease-in-out;
+}
+
+.accountDetails ul, .accountOrders ul, .accountSupport ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 100%;
+}
+
+.accountDetails ul li, .accountOrders ul li, .accountSupport ul li {
+    width: 100%;
+    text-align: center;
+    margin: 5px 0;
+    
+}
+
+
+.accountContainer ul li a:hover{
+    color: #838280;
+    transition: all 0.5s ease-in-out;
+    
+}
+
+.accountDetails:hover, .accountOrders:hover, .accountSupport:hover{
+    transition: all 0.5s ease-in-out;
+    border: 1px solid #464545;
+    outline: 1px solid #464545;
+
+}
+
+
 
 

@@ -1,5 +1,6 @@
 <?php
 session_start();    //enusre user is logged in
+echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@ session_start();    //enusre user is logged in
     <div class="headerStrip">
         <header>
             <div class="headerTop">
-                <h1>My Account</h1>
+                <h1>Travis Musson's C2C E-Commerce Website!</h1>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">
@@ -41,6 +42,11 @@ session_start();    //enusre user is logged in
             </div>
         </header>
     </div>
+    <div class="accountHeader">
+        <h1>Welcome <?php echo $_SESSION['FirstName']; ?> to Your Account</h1>
+        <p>Manage your orders, account details, and support requests.</p>
+    </div>
+<div class="accountContainer">
     <div class="accountOrders">
         <h2>Orders</h2>
         <ul>
@@ -67,6 +73,7 @@ session_start();    //enusre user is logged in
             <li><a href="#">Help Center</a></li>
         </ul>
     </div>
+</div>
 <div class="footerContainer">
     <footer>
         <p>2025 Travis Musson. All rights reserved.</p>

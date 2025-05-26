@@ -1,6 +1,7 @@
 <?php
 include("dbconnection.php");        //included to ensure db connection is valid
 session_start();      //this is needed to start the session
+echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     // User is logged in, proceed with adding product
 } else {
@@ -72,7 +73,7 @@ if(isset($_POST['addProduct'])){
     <div class="headerStrip">       <!-- standardized header strip for all pages -->
         <header>
             <div class="headerTop">
-                <h1>My Account</h1>
+                <h1>Travis Musson's C2C E-Commerce Website!</h1>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">
