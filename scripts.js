@@ -58,6 +58,9 @@ let registerLastNameError = document.getElementById("lastNameError");
 let footer = document.querySelector(".footerContainer");        //not working
 //now that im actually thinking about it would it not be easier to just move the entire body?
 //let body = document.querySelector("body");
+//weird things happening on zooms with html height
+//let html = document.querySelector("html");
+//after some research i figured i should maybe test moving the contents margins instead of using transforms
 //events
 dropdownButton.addEventListener("click", function () {
     //https://www.youtube.com/watch?v=atS_A9HHAVo&ab_channel=BroCode        --ternary operator usage
@@ -66,7 +69,9 @@ dropdownButton.addEventListener("click", function () {
     categoryMenu.style.opacity = menuIsToggled ? "1" : "0";     //uses a ternary operator to set opacity and visibility accordingly might revert back to if elses for consistency and less complexity (thought id just showcase and test usecase)
     categoryMenu.style.visibility = menuIsToggled ? "visible" : "hidden";  
     // Move Latest Deals when menu is open
-    latestDealsContainer.style.transform = menuIsToggled ? "translateY(250px)" : "translateY(0)";
+    //latestDealsContainer.style.transform = menuIsToggled ? "translateY(250px)" : "translateY(0)";
+    //margin move test      --nope doesnt fix my issue
+    latestDealsContainer.style.marginTop = menuIsToggled ? "250px" : "0"; // Move Latest Deals down when menu is open
     //move scroll buttons when category menu is open
 });
 
@@ -76,12 +81,26 @@ dropdownButton.addEventListener("mouseover", function () {
     if(!menuIsToggled){         //ensures no more overiding the click event causing incosistencies before
         categoryMenu.style.opacity = "1";
         categoryMenu.style.visibility = "visible";
+
         //body.style.transform = "translateY(250px)"; // Move body down when menu is open       //works but moves headerstrip aswell
-        latestDealsContainer.style.transform = "translateY(250px)";
-        topSellersContainer.style.transform = "translateY(250px)";
-        popularCategoriesContainer.style.transform = "translateY(250px)";
-        bestCarDealsContainer.style.transform = "translateY(250px)";
-        footer.style.transform = "translateY(250px)"; // Move footer down when menu is open
+        //latestDealsContainer.style.transform = "translateY(250px)";
+        //topSellersContainer.style.transform = "translateY(250px)";
+        //popularCategoriesContainer.style.transform = "translateY(250px)";
+        //bestCarDealsContainer.style.transform = "translateY(250px)";
+        //footer.style.transform = "translateY(250px)"; // Move footer down when menu is open
+
+        //html.style.height = "135%"; // weirdly working not sure how else to go about this.
+        //html.style.transform = "translateY(-250px)"; // Move html down when menu is open
+        //html.style.height = "135%"; //
+
+        //testing margin move
+        latestDealsContainer.style.marginTop = "250px";         //i mean its working its animation isnt smooth tho. added animation to css, this is now working how i want.
+        
+        //these arnt needed after some testing
+        //topSellersContainer.style.marginTop = "250px"; 
+        //popularCategoriesContainer.style.marginTop = "250px"; 
+        //bestCarDealsContainer.style.marginTop = "250px"; 
+        //footer.style.marginTop = "250px"; 
     }
 });
 
@@ -90,11 +109,17 @@ categoryMenu.addEventListener("mouseover", function () {
     if(!menuIsToggled){         //ensures no more overiding the click event causing incosistencies before
         categoryMenu.style.opacity = "1";
         categoryMenu.style.visibility = "visible";
-        latestDealsContainer.style.transform = "translateY(250px)";
-        topSellersContainer.style.transform = "translateY(250px)";
-        popularCategoriesContainer.style.transform = "translateY(250px)";
-        bestCarDealsContainer.style.transform = "translateY(250px)";
-        footer.style.transform = "translateY(250px)";
+
+        //latestDealsContainer.style.transform = "translateY(250px)";
+        //topSellersContainer.style.transform = "translateY(250px)";
+        //popularCategoriesContainer.style.transform = "translateY(250px)";
+        //bestCarDealsContainer.style.transform = "translateY(250px)";
+        //footer.style.transform = "translateY(250px)";
+
+        //html.style.height = "135%"; 
+
+        latestDealsContainer.style.marginTop = "250px"; 
+         
     }
 });
 
@@ -104,11 +129,17 @@ dropdownButton.addEventListener("mouseout", function () {
         //categoryMenu.style.display = "none";      //refactor
         categoryMenu.style.opacity = "0";
         categoryMenu.style.visibility = "hidden"; 
-        latestDealsContainer.style.transform = "translateY(0)";
-        topSellersContainer.style.transform = "translateY(0)";
-        popularCategoriesContainer.style.transform = "translateY(0)";
-        bestCarDealsContainer.style.transform = "translateY(0)";
-        footer.style.transform = "translateY(0)"; // Reset footer position when menu is closed
+
+        //latestDealsContainer.style.transform = "translateY(0)";
+        //topSellersContainer.style.transform = "translateY(0)";
+        //popularCategoriesContainer.style.transform = "translateY(0)";
+        //bestCarDealsContainer.style.transform = "translateY(0)";
+        //footer.style.transform = "translateY(0)"; // Reset footer position when menu is closed
+
+        //html.style.height = "100%";
+
+        latestDealsContainer.style.marginTop = "0"; 
+        
     }
 });
 
@@ -116,12 +147,20 @@ categoryMenu.addEventListener("mouseout", function () {
     if (!menuIsToggled) {
         //categoryMenu.style.display = "none";      //refactor
         categoryMenu.style.opacity = "0";
-        categoryMenu.style.visibility = "hidden";    
-        latestDealsContainer.style.transform = "translateY(0)";
-        topSellersContainer.style.transform = "translateY(0)";
-        popularCategoriesContainer.style.transform = "translateY(0)";
-        bestCarDealsContainer.style.transform = "translateY(0)";
-        footer.style.transform = "translateY(0)"; 
+        categoryMenu.style.visibility = "hidden"; 
+
+        //esentially a big refactor below, makes script handling alot more compact
+        //latestDealsContainer.style.transform = "translateY(0)";
+        //topSellersContainer.style.transform = "translateY(0)";
+        //popularCategoriesContainer.style.transform = "translateY(0)";
+        //bestCarDealsContainer.style.transform = "translateY(0)";
+        //footer.style.transform = "translateY(0)"; 
+
+        //html.style.height = "100%";
+
+        latestDealsContainer.style.marginTop = "0";
+        
+
     }
 });
 

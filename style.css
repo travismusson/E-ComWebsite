@@ -1,5 +1,8 @@
 html{
     scroll-behavior: smooth; /*smooth scrolling*/
+    min-height:fit-content;
+    background: linear-gradient(to top, #686868, rgb(54, 54, 54)); 
+    
 }
 
 body{
@@ -8,7 +11,8 @@ body{
     font: normal;
     background-color: #464545;
     color: white;
-    background: linear-gradient(to top, #686868, rgb(54, 54, 54));  
+    background: linear-gradient(to top, #686868, rgb(54, 54, 54)); 
+    
 }
 
 a{
@@ -17,7 +21,11 @@ a{
 }
 
 .headerStrip{
-    position: relative;
+    /*position: relative;*/
+    /*gonna try sticky*/
+    position: sticky;       /*esentially makes it fixed to the top of the page in 2 minds about it but think will keep for now*/
+    top: 0;
+    z-index: 1000; /*ensures that the header is always on top of other elements*/
     overflow: visible;      /*changed from hidden to show autohide cat*/
     background-color: rgb(54, 54, 54);
     border-radius: 20px;
@@ -200,7 +208,7 @@ h2{
     /*flex-grow: 250;*/
     width: 80%;
     margin: 0 auto;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, margin-top 0.5s ease-in-out;      /*this makes the animation smoother, including the margin-top change*/
     scrollbar-width: none;      /*this removes scrollbar in firefox*/
 }
 
@@ -920,11 +928,12 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 }
 
 .footerContainer{
-    border-radius: 20px;
+    /*border-radius: 20px;*/
     /*background: linear-gradient(to bottom, #464545, rgb(54, 54, 54));*/
     color: #fff;
     padding: 20px;
     transition:all 0.5s ease-in-out;
+    
 }
 .footerContainer p {
     padding-left: 5px;
