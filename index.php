@@ -48,6 +48,7 @@ endif; ?>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">   testing some classess framework - very cool plug nd play element but doesnt align with my website idea -->
     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">     was testing bootstrap but its too late to incorperate it but for future projects i might look to use it and not suffer through all the styling ive been doing haha-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>E-commerce Platform</title> 
 </head>
 <body>
@@ -79,6 +80,7 @@ endif; ?>
             <a href="#">Cart</a>
         </div>
     </header>
+    <div class= "headerBtnContainer">
     <div class="directAddProduct">
         <button onclick="location.href='addproduct.php'">Add Product</button>     <!--this is the add product button that will redirect the user to the add product page-->
     </div>
@@ -97,6 +99,7 @@ endif; ?>
                 <li><div class="catItems"><span class="material-symbols-outlined">kettle</span><a href="#">Kitchen</a></div></li> 
             </ul>
         </div>
+    </div>
     </div>
 </div>
 
@@ -279,8 +282,23 @@ endif; ?>
 
 <div class="cartContainer">
     <div></div>
+
 </div>
-    <script src="scripts.js"></script>
-    <script src="validate.js"></script>
+<div class="footerContainer">
+    <footer>
+        <p>2025 Travis Musson. All rights reserved.</p>
+        <p><a href="mailto:travismusson@gmail.com">travismusson@gmail.com</a></p>
+        <picture>
+            <a href = "https://www.instagram.com/travismusson/"><i class="fa fa-brands fa-instagram fa-lg"></i>
+            </a>
+            <a href = "https://www.facebook.com/travis.musson.7"><i class="fa fa-brands fa-facebook fa-lg"></i> 
+            </a>
+            <a href = "https://www.linkedin.com/in/travis-musson-a5a30a298"><i class="fa fa-brands fa-linkedin fa-lg"></i>
+            </a>
+        </picture>
+    </footer>
+</div>
+<script src="scripts.js"></script>
+<script src="validate.js"></script>
 </body>
 </html>

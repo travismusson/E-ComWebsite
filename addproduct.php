@@ -65,6 +65,7 @@ if(isset($_POST['addProduct'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
     <title>Add Product</title>
 </head>
 <body>
@@ -150,7 +151,20 @@ if(isset($_POST['addProduct'])){
                 </form>
             </div>
     </div>
-
-
+<div class="footerContainer">
+    <footer>
+        <p>2025 Travis Musson. All rights reserved.</p>
+        <p><a href="mailto:travismusson@gmail.com">travismusson@gmail.com</a></p>
+        <picture>
+            <a href = "https://www.instagram.com/travismusson/"><i class="fa fa-brands fa-instagram fa-lg"></i>
+            </a>
+            <a href = "https://www.facebook.com/travis.musson.7"><i class="fa fa-brands fa-facebook fa-lg"></i> 
+            </a>
+            <a href = "https://www.linkedin.com/in/travis-musson-a5a30a298"><i class="fa fa-brands fa-linkedin fa-lg"></i>
+            </a>
+        </picture>
+    </footer>
+</div>
+<script src="script.js"></script> <!--linking to the script.js file for the hamburger menu-->
 </body>
 </html>

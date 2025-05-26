@@ -54,8 +54,10 @@ let registerEmailError = document.getElementById("emailError");
 let registerPasswordError = document.getElementById("passwordError");
 let registerFirstNameError = document.getElementById("firstNameError");
 let registerLastNameError = document.getElementById("lastNameError");
-
- 
+//moving the footer with the category menu
+let footer = document.querySelector(".footerContainer");        //not working
+//now that im actually thinking about it would it not be easier to just move the entire body?
+//let body = document.querySelector("body");
 //events
 dropdownButton.addEventListener("click", function () {
     //https://www.youtube.com/watch?v=atS_A9HHAVo&ab_channel=BroCode        --ternary operator usage
@@ -74,10 +76,12 @@ dropdownButton.addEventListener("mouseover", function () {
     if(!menuIsToggled){         //ensures no more overiding the click event causing incosistencies before
         categoryMenu.style.opacity = "1";
         categoryMenu.style.visibility = "visible";
+        //body.style.transform = "translateY(250px)"; // Move body down when menu is open       //works but moves headerstrip aswell
         latestDealsContainer.style.transform = "translateY(250px)";
         topSellersContainer.style.transform = "translateY(250px)";
         popularCategoriesContainer.style.transform = "translateY(250px)";
         bestCarDealsContainer.style.transform = "translateY(250px)";
+        footer.style.transform = "translateY(250px)"; // Move footer down when menu is open
     }
 });
 
@@ -90,6 +94,7 @@ categoryMenu.addEventListener("mouseover", function () {
         topSellersContainer.style.transform = "translateY(250px)";
         popularCategoriesContainer.style.transform = "translateY(250px)";
         bestCarDealsContainer.style.transform = "translateY(250px)";
+        footer.style.transform = "translateY(250px)";
     }
 });
 
@@ -103,6 +108,7 @@ dropdownButton.addEventListener("mouseout", function () {
         topSellersContainer.style.transform = "translateY(0)";
         popularCategoriesContainer.style.transform = "translateY(0)";
         bestCarDealsContainer.style.transform = "translateY(0)";
+        footer.style.transform = "translateY(0)"; // Reset footer position when menu is closed
     }
 });
 
@@ -115,6 +121,7 @@ categoryMenu.addEventListener("mouseout", function () {
         topSellersContainer.style.transform = "translateY(0)";
         popularCategoriesContainer.style.transform = "translateY(0)";
         bestCarDealsContainer.style.transform = "translateY(0)";
+        footer.style.transform = "translateY(0)"; 
     }
 });
 
