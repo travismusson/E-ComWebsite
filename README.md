@@ -23,5 +23,6 @@ This project is being developed as part of my Web Design course at university. T
 - Implement Cart Functionality
 - Implement Account Options Working
 - Implement Similair Products Carosel
+- Admin Functionality
 - Polish
 
