@@ -73,6 +73,38 @@ let navToggle = false;
 const tabs = document.querySelectorAll(".accountSideNavData a[data-tab-target]"); // contains all the tabs
 const tabContents = document.querySelectorAll(".tabContent"); // contains all the tab contents
 
+//editing user details variables:
+let inputPassword = document.getElementById("inputPassword");
+let tempPassword = document.getElementById("tempPassword");
+let btnEditPassword = document.getElementById("btnEditPassword");
+let btnSavePassword = document.getElementById("btnSavePassword");
+let btnCancelPassword = document.getElementById("btnCancelPassword");
+//2factor edit var
+let select2Factor = document.getElementById("select2Factor");
+let tempFactor = document.getElementById("tempFactor");
+let btnEdit2Factor = document.getElementById("btnEdit2Factor");
+let btnSave2Factor = document.getElementById("btnSave2Factor");
+let btnCancel2Factor = document.getElementById("btnCancel2Factor");
+//name edit
+let inputFirstName = document.getElementById("inputFirstName");
+let inputLastName = document.getElementById("inputLastName");
+let tempName = document.getElementById("tempName");
+let btnEditName = document.getElementById("btnEditName");
+let btnSaveName = document.getElementById("btnSaveName");
+let btnCancelName = document.getElementById("btnCancelName");
+//temp initialization
+let originalFirstName = "";
+let originalLastName = "";
+//email var
+let inputEmail = document.getElementById("inputEmail");
+let tempEmail = document.getElementById("tempEmail");
+let btnEditEmail = document.getElementById("btnEditEmail");
+let btnSaveEmail = document.getElementById("btnSaveEmail");
+let btnCancelEmail = document.getElementById("btnCancelEmail");
+//temp
+let originalEmail = "";
+
+
 if (tabs.length > 0) {
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
@@ -415,6 +447,182 @@ window.addEventListener("resize", function(){
         }
     }
 });
+}
+
+function editPassword(){
+    inputPassword.style.display = "block";
+    btnSavePassword.style.display = "inline-block";
+    btnCancelPassword.style.display = "inline-block";
+    tempPassword.style.display = "none";
+    btnEditPassword.style.display = "none";
+
+    inputPassword.focus();      /*sets focus to the input*/
+}
+
+function savePassword(){
+//pw client side validation
+    if(inputPassword.value.trim() === ""){
+        alert("Please Enter a Password!");
+        return;
+    }else if(inputPassword.value.length < 6){
+        alert("Password must be at least 6 characters in length");
+        return;
+    }
+
+    //reset visibility
+    inputPassword.style.display ="none";
+    btnSavePassword.style.display = "none";
+    btnCancelPassword.style.display = "none";
+    tempPassword.style.display = "block";
+    btnEditPassword.style.display = "block";
+    //debug
+    //alert(inputPassword.value)
+    
+}
+
+function cancelPassword(){
+    inputPassword.value = "";
+    inputPassword.style.display ="none";
+    btnSavePassword.style.display = "none";
+    btnCancelPassword.style.display = "none";
+    tempPassword.style.display = "block";
+    btnEditPassword.style.display = "block";
+}
+
+function edit2Factor(){
+    select2Factor.style.display = "block";
+    btnSave2Factor.style.display = "inline-block";
+    btnCancel2Factor.style.display = "inline-block";
+    tempFactor.style.display = "none";
+    btnEdit2Factor.style.display = "none";
+
+    select2Factor.focus();      /*sets focus to the select*/
+}
+
+function save2Factor(){
+//pw client side validation
+    if(!select2Factor.value){
+        alert("Please Select a 2Factor!");
+        return;
+    }
+
+    //reset visibility
+    select2Factor.style.display ="none";
+    btnSave2Factor.style.display = "none";
+    btnCancel2Factor.style.display = "none";
+    tempFactor.style.display = "block";
+    tempFactor.innerHTML = select2Factor.value;
+    btnEdit2Factor.style.display = "block";
+    //debug
+    //alert(inputPassword.value)
+    
+}
+
+function cancel2Factor(){
+    select2Factor.value = 0;        //needa check --works
+    select2Factor.style.display ="none";
+    btnSave2Factor.style.display = "none";
+    btnCancel2Factor.style.display = "none";
+    tempFactor.style.display = "block";
+    btnEdit2Factor.style.display = "block";
+}
+
+//name
+
+
+function editName(){
+    //put it here incase user messes up
+    originalFirstName = inputFirstName.value;
+    originalLastName = inputLastName.value;
+
+    inputFirstName.style.display = "block";
+    inputLastName.style.display = "block";
+    btnEditName.style.display = "none";
+    btnSaveName.style.display = "inline-block";
+    btnCancelName.style.display = "inline-block";
+    tempName.style.display = "none";
+    
+
+    inputFirstName.focus();      /*sets focus to the input*/
+}
+
+function saveName(){
+//pw client side validation
+    if(inputFirstName.value.trim() === ""){
+        alert("Please Enter a First Name!");
+        return;
+    }else if(inputLastName.value.trim() ===""){
+        alert("Please Enter a Last Name!");
+        return;
+    }
+
+    //reset visibility
+    inputFirstName.style.display = "none";
+    inputLastName.style.display = "none";
+    btnSaveName.style.display = "none";
+    btnCancelName.style.display = "none";
+    tempName.innerHTML = inputFirstName.value.trim() + " " + inputLastName.value.trim()
+    tempName.style.display = "block";
+    btnEditName.style.display = "block";
+    //debug
+    //alert(inputPassword.value)
+    
+}
+
+function cancelName(){
+    //think ima not reset this as it might cause issues
+    //inputFirstName.value = "";      //might remove session variables in this instance(until page is reloaded)
+    //inputLastName.value = "";
+    //fixed by using a temp var
+    inputFirstName.value = originalFirstName;
+    inputLastName.value = originalLastName;
+    inputFirstName.style.display = "none";
+    inputLastName.style.display = "none";
+    btnSaveName.style.display = "none";
+    btnCancelName.style.display = "none";
+    tempName.style.display = "block";
+    btnEditName.style.display = "block";
+}
+
+//email
+
+function editEmail(){
+    //put it here incase user messes up
+    originalEmail = inputEmail.value;
+    inputEmail.style.display = "block";
+    btnEditEmail.style.display = "none";
+    btnSaveEmail.style.display = "inline-block";
+    btnCancelEmail.style.display = "inline-block";
+    tempEmail.style.display = "none";
+    inputEmail.focus();      /*sets focus to the input*/
+}
+
+function saveEmail(){
+//pw client side validation
+    if(inputEmail.value.trim() === ""){
+        alert("Please Enter an Email!");
+        return;
+    }
+    //reset visibility
+    inputEmail.style.display = "none";
+    btnSaveEmail.style.display = "none";
+    btnCancelEmail.style.display = "none";
+    tempEmail.innerHTML = inputEmail.value;
+    tempEmail.style.display = "block";
+    btnEditEmail.style.display = "block";
+    //debug
+    //alert(inputPassword.value)
+    
+}
+
+function cancelEmail(){
+    
+    inputEmail.value = originalEmail;
+    inputEmail.style.display = "none";
+    btnSaveEmail.style.display = "none";
+    btnCancelEmail.style.display = "none";
+    tempEmail.style.display = "block";
+    btnEditEmail.style.display = "block";
 }
 
 /*

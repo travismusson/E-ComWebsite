@@ -65,15 +65,15 @@ include("dbconnection.php");
         <div class="accountSideNavSection">
             <div class="accountSideNavHeading">Account Details</div>
             <div class="accountSideNavData"><a href="#" data-tab-target="#editAccountTab">Edit Account</a></div>
-            <div class="accountSideNavData"><a href="#" data-tab-target="#securitySettingsTab">Security Settings</a></div>
+            <div class="accountSideNavData"><a href="#" data-tab-target="#editSecurityTab">Security Settings</a></div>
             <div class="accountSideNavData"><a href="#" data-tab-target="#addressSettingsTab">Address Settings</a></div>
             <div class="accountSideNavData"><a href="#" data-tab-target="#newsletterSubscriptionsTab">Newsletter Subscriptions</a></div>
         </div>
         <div class="accountSideNavSection">
             <div class="accountSideNavHeading">Support</div>
-            <div class="accountSideNavData"><a href="#">Contact Us</a></div>
-            <div class="accountSideNavData"><a href="#">FAQs</a></div>
-            <div class="accountSideNavData"><a href="#">Help Center</a></div>
+            <div class="accountSideNavData"><a href="#" data-tab-target="#supportTab">Contact Us</a></div>
+            <div class="accountSideNavData"><a href="#" data-tab-target="#FAQTab">FAQs</a></div>
+            <div class="accountSideNavData"><a href="#" data-tab-target="#helpCenterTab">Help Center</a></div>
         </div>
 </div>
 <!-- refactoring into a tab section ref: https://www.youtube.com/watch?v=fI9VM5zzpu8   comeback to fix things-->
@@ -111,11 +111,11 @@ include("dbconnection.php");
 </div>
 <div class="tabContent" id="returnsTab">
 <div class="returnsContainer">
-    <div class="returnHeader">
+    <div class="orderHeader">
         <h2>Returns</h2>
         <p>Manage your product returns and view return status.</p>
     </div>
-    <div class="returnList">
+    <div class="orderList">
         <?php
         // Fetch returns from the database
         $query = "SELECT * FROM returns WHERE BuyerID = ?";
@@ -142,11 +142,11 @@ include("dbconnection.php");
 </div>
 <div class="tabContent" id="reviewsTab">
 <div class="reviewsContainer">
-    <div class="reviewHeader">
+    <div class="orderHeader">
         <h2>Product Reviews</h2>
         <p>View and manage your product reviews.</p>
     </div>
-    <div class="reviewList">
+    <div class="orderList">
         <?php
         // Fetch product reviews from the database
         $query = "SELECT * FROM Reviews WHERE BuyerID = ?";
@@ -174,26 +174,130 @@ include("dbconnection.php");
 </div>
 <div class="tabContent" id="editAccountTab">
     <div class="editAccountContainer">
-        <div class="editAccountHeader">
+        <div class="accountHeader">
             <h2>Edit Account</h2>
             <p>Update your account information.</p>
         </div>
-        <form action="updateaccount.php" method="POST">
+        <div class="accountList">
+        <form action="updateaccount.php" method="POST" id="updateAccountDetails">
             <div class="nameSection">
-                <label for="Your Name">Your Name:</label><br>
-                <label><?php echo htmlspecialchars($_SESSION['FirstName'] . ' ' . $_SESSION['LastName']); ?></label>
-                <button type="button" class="btnEditButton">Edit</button>
-
+                <h4 for="tempName">Your Name:</h4>
+                <div class="inputRow">
+                    <label id="tempName"><?php echo htmlspecialchars($_SESSION['FirstName'] . ' ' . $_SESSION['LastName']); ?></label>
+                    <input type="text" id="inputFirstName" value="<?php echo htmlspecialchars($_SESSION['FirstName']); ?>">
+                    <input type="text" id="inputLastName" value="<?php echo htmlspecialchars($_SESSION['LastName']); ?>">
+                <div class="btnRow">
+                    <button type="button" id= "btnEditName" class="btnEditButton" onclick="editName()">Edit</button>
+                    <button type="button" id= "btnSaveName" class="btnEditButton" onclick="saveName()">Save</button>
+                    <button type="button" id= "btnCancelName" class="btnEditButton" onclick="cancelName()">Cancel</button>
+                </div>
+                </div>
             </div>
             <div class="emailSection">
-                <label for="email">Email:</label>
-                <label><?php echo htmlspecialchars($_SESSION['Email']); ?></label>
-                <button type="button" class="btnEditButton">Edit</button>
+                <h4 for="tempEmail">Email:</label></h4>
+                <div class="inputRow">
+                    <label id="tempEmail"><?php echo htmlspecialchars($_SESSION['Email']); ?></label>
+                    <input type="email" id="inputEmail" value="<?php echo htmlspecialchars($_SESSION['Email']); ?>">
+                <div class="btnRow">
+                    <button type="button" id= "btnEditEmail" class="btnEditButton" onclick="editEmail()">Edit</button>
+                    <button type="button" id= "btnSaveEmail" class="btnEditButton" onclick="saveEmail()">Save</button>
+                    <button type="button" id= "btnCancelEmail" class="btnEditButton" onclick="cancelEmail()">Cancel</button>
+                </div>
+                </div>
             </div>
-            <button type="submit">Update Account</button>
+            <button type="submit" class="btnUpdateAccount">Update Account</button>
         </form>
     </div>
+    </div>
 </div>
+<div class="tabContent" id="editSecurityTab">
+    <div class="editSecurityContainer">
+        <div class="accountHeader">
+            <h2>Edit Security Settings</h2>
+            <p>Update your security settings.</p>
+        </div>
+        <div class="accountList">
+        <form action="updateaccount.php" method="POST" id="updateSecurity">
+            <div class="2factorSection">
+                <h4 for="tempFactor">2 Factor Authentication:</h4>
+                <div class="inputRow">
+                    <label id="tempFactor">Enabled</label>
+                    <select id="select2Factor">
+                        <option value ="" disabled="disabled">Select an Option</option>
+                        <option value="Enabled">Enabled</option>
+                        <option value="Disabled">Disabled</option>
+                    </select>
+                    <div class="btnRow">
+                        <button type="button" id= "btnEdit2Factor" class="btnEditButton" onclick="edit2Factor()">Edit</button>
+                        <button type="button" id= "btnSave2Factor" class="btnEditButton" onclick="save2Factor()">Save</button>
+                        <button type="button" id= "btnCancel2Factor" class="btnEditButton" onclick="cancel2Factor()">Cancel</button>
+                    </div>
+                </div>                
+            </div>
+            <div class="passwordSection">
+                <h4 for="inputPassword">Password:</h4>
+                <div class="inputRow">
+                    <label id="tempPassword">*******</label>
+                    <input type="password" id="inputPassword" value="" placeholder="Password">       <!-- not gonna store password here rather gonna just make the update -->
+                <!--<input type="checkbox" onclick="toggleVisibility()">Show Password</input>-->
+                <div class="btnRow">
+                    <button type="button" id= "btnEditPassword" class="btnEditButton" onclick="editPassword()">Edit</button>
+                    <button type="button" id= "btnSavePassword" class="btnEditButton" onclick="savePassword()">Save</button>
+                    <button type="button" id= "btnCancelPassword" class="btnEditButton" onclick="cancelPassword()">Cancel</button>
+                </div>
+                </div>
+            </div>
+            <button type="submit" class="btnUpdateAccount">Update Account</button>
+        </form>
+    </div>
+    </div>
+</div>
+<div class="tabContent" id="addressSettingsTab">
+    <div class="editAddressSettings">
+        <div class="addressHeader">
+            <h2>Edit Address Settings</h2>
+            <p>Comming Soon!</p>
+        </div>
+    </div>
+</div>
+<div class="tabContent" id="newsletterSubscriptionsTab">
+    <div class="editNewsletterSubscriptions">
+        <div class="newsletterHeader">
+            <h2>Edit Newsletter Subscriptions</h2>
+            <p>Comming Soon!</p>
+        </div>
+    </div>
+</div>
+<div class="tabContent" id="supportTab">
+    <div class="viewSupport">
+        <div class="supportHeader">
+            <h2>Contact Us!</h2>
+            <h4 for="contactEmail">Email:</h4>
+        <p id="contactEmail"><a href="mailto:travismusson@gmail.com">travismusson@gmail.com</a></p>
+        </div>
+    </div>
+</div>
+<div class="tabContent" id="FAQTab">
+    <div class="FAQContainer">
+        <div class="FAQHeader">
+            <h2>Frequently Asked Questions</h2>
+            <p>Comming Soon!</p>
+        </div>
+    </div>
+</div>
+<div class="tabContent" id="helpCenterTab">
+    <div class="helpCenterContainer">
+        <div class="helpCenterHeader">
+            <h2>Help Center</h2>
+            <p>Comming Soon!</p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <?php else: ?>
     <div class="loginPrompt">
         <h2>Please log in to view your account details.</h2>
@@ -204,6 +308,10 @@ include("dbconnection.php");
     </div>
 <?php endif; ?> <!-- End of logged-in check -->
 
+
+
+
+<!--Login Content -->
 <div class="blurOverlay"></div>
 <div class="loginContainer">
     <span class="material-symbols-outlined" for="login">close</span>
@@ -273,16 +381,14 @@ include("dbconnection.php");
         <p>2025 Travis Musson. All rights reserved.</p>
         <p><a href="mailto:travismusson@gmail.com">travismusson@gmail.com</a></p>
         <picture>
-            <a href = "https://www.instagram.com/travismusson/"><i class="fa fa-brands fa-instagram fa-lg"></i>
-            </a>
-            <a href = "https://www.facebook.com/travis.musson.7"><i class="fa fa-brands fa-facebook fa-lg"></i> 
-            </a>
-            <a href = "https://www.linkedin.com/in/travis-musson-a5a30a298"><i class="fa fa-brands fa-linkedin fa-lg"></i>
-            </a>
+            <a href = "https://www.instagram.com/travismusson/"><i class="fa fa-brands fa-instagram fa-lg"></i></a>
+            <a href = "https://www.facebook.com/travis.musson.7"><i class="fa fa-brands fa-facebook fa-lg"></i></a>
+            <a href = "https://www.linkedin.com/in/travis-musson-a5a30a298"><i class="fa fa-brands fa-linkedin fa-lg"></i></a>
+            <a href = "https://github.com/travismusson"><i class = "fa fa-brands fa-github fa-lg"></i><a>
         </picture>
     </footer>
 </div>
-
+<!--https://github.com/travismusson-->
 <script src="scripts.js"></script>
 </body>
 </html>

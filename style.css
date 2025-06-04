@@ -239,12 +239,20 @@ h2{
     border-radius: 10px;
     width: 85%;     /*We need to ensure that the total width is bigger than the parent container to allow for scrolling as the browser only allows scrolling when the content is overflowing*/
     scrollbar-width: none;      /*this removes scrollbar in firefox*/
+    transition: all 0.5s ease-in-out;
+    border: 1px solid #838280;
+    outline: 1px solid #838280;
 }
 
 .latestDeals::-webkit-scrollbar{        /* this hides the scroll bar*/
     display: none;
 }
-
+/*adding for consitency across other ui container element*/
+.latestDeals:hover, .topSellers:hover, .popularCategories:hover, .bestCarDeals:hover{
+    transition: all 0.5s ease-in-out;
+    border: 1px solid #464545;
+    outline: 1px solid #464545;
+}
 
 /* changed from span to just div        refactor
 .latestDeals span{
@@ -357,6 +365,8 @@ h2{
     border-radius: 10px;
     width: 85%;     /*We need to ensure that the total width is bigger than the parent container to allow for scrolling as the browser only allows scrolling when the content is overflowing*/
     scrollbar-width: none;      /*this removes scrollbar in firefox*/
+    border: 1px solid #838280;
+    outline: 1px solid #838280;
 }
 
 .topSellers div, .popularCategories div, .bestCarDeals div{
@@ -1165,31 +1175,115 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     display: flex;
 }
 
-.orderList, .returnList, .reviewList{
+.orderList, .accountList{
+    display: flex;
     background-color: #686868;
     border-radius: 20px;
-    width: 350px;
+    width: clamp(250px, 500px, 800px);          /*cool media allternative method for diff screensizes*/
     padding: 10px;
     align-items: center;
     justify-content: center;
     border: 1px solid #686868;
     outline: 1px solid #686868;
     transition: all 0.5s ease-in-out;
+    flex-direction: column;
     
 }
-.orderList:hover, .returnList:hover, .reviewList:hover{
+.orderList:hover, .accountList:hover{
     border: 1px solid #464545;
     outline: 1px solid #464545;
     transition: all 0.5s ease-in-out;
 }
 
-.orderHeader, .returnHeader, .reviewHeader{
+.orderHeader, .accountHeader, .addressHeader, .newsletterHeader, .supportHeader, .FAQHeader, .helpCenterHeader{
     margin-bottom: 10px;
-    justify-self: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+ #updateSecurity, #updateAccountDetails{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+} 
+
+.inputRow{
+    display:flex;
+    align-items: center;
+    gap:15px;
+    flex-wrap: wrap;
 }
 
 
 
+/* buttons for editing user deats*/
+
+.btnRow{
+    display: flex;
+    justify-content: flex-end;
+    gap:10px;
+   
+}
+
+.btnUpdateAccount{
+    cursor: pointer;
+    background-color: #838280;
+    transition: all 0.5s ease-in-out;
+    
+}
+.btnUpdateAccount:hover{
+    background-color: #464545;
+    transition: all 0.5s ease-in-out;
+}
+.btnEditButton{
+    
+    align-self: flex-end;
+    cursor: pointer;
+    background-color: #838280;
+    transition: all 0.5s ease-in-out;
+    min-width: 80px;
+}
+.btnEditButton:hover{
+    background-color: #464545;
+    transition: all 0.5s ease-in-out;
+}
+
+#btnSavePassword, #btnSave2Factor, #btnSaveName, #btnSaveEmail{
+    display: none;
+    margin-left: 0; /*overide current setting to btn*/
+    
+}
+#btnCancelPassword, #btnCancel2Factor, #btnCancelName, #btnCancelEmail{
+    display: none;
+    margin-left: 0; /*overide current setting to btn*/
+    
+}
+
+/*input for forms on account tabs*/
+#inputPassword, #select2Factor, #inputFirstName, #inputLastName, #inputEmail{
+    display: none;
+    background-color: #686868;
+    border-radius: 20px;
+    border:1px solid #838280;
+    outline: 1px solid #838280;
+    color: #fff;
+    transition: all 0.5s ease-in-out;
+    width: 100%;
+    min-height: 20px;
+    margin-top: 5px;
+}
+#inputPassword:focus, #select2Factor:focus, #inputFirstName:focus, #inputLastName:focus, #inputEmail{
+    border:1px solid #464545;
+    outline: 1px solid #464545;
+    transition: all 0.5s ease-in-out;
+}
+#inputPassword::placeholder, #select2Factor option:disabled{
+    color: #838280;
+}
 
 
 
