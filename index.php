@@ -71,14 +71,16 @@ endif; ?>
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                 <span>Hi <?php echo $_SESSION["FirstName"]; ?></span>   <!--this will show the user name-->
                 <a href="logout.php" class="btnLogout">Logout</a>       <!--this is the logout button that will log the user out and redirect them to the home page-->
+                <!-- Refactor for now 
                 <script>
-                    document.getElementById("btnShowLogin").style.display = "none";      //this will hide the login button when the user is logged in
-                </script>
+                    document.getElementById("btnShowLogin").style.display = "none";      //this will hide the login button when the user is logged in     //looking at scripts im getting an error here as it is being hidden
+                </script> 
+                -->
             <?php else: ?>
                 <span>Hi Guest</span>   <!--guest username when not logged in-->
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
-            <a href="account.php">Account</a>
+            <a href="accountdashboard.php">Account</a>
             <a href="#">Cart</a>
         </div>
     </header>
@@ -86,7 +88,7 @@ endif; ?>
     <div class="directAddProduct">
         <button onclick="location.href='addproduct.php'">Add Product</button>     <!--this is the add product button that will redirect the user to the add product page-->
     </div>
-    <div class="dropCategory">
+    <div class="dropCategory"> <!-- need to update to actuall category menu -->
         <button class="btn_DropDown">Shop by Category</button>
         <div class = "autoHideCat">
             <ul>
@@ -148,12 +150,14 @@ endif; ?>
                 <div class="dealsItem">Test</div>
             -->
                 <?php //dynamically adds products to the dealsItem divs
-                $query = "SELECT ProductID, Name, Price, Description, Product_IMG_DIR FROM products";    //selecting the product from the products table
+                $query = "SELECT ProductID, Name, Price, Description, Product_IMG_DIR FROM products ORDER BY ProductID DESC";    //selecting the product from the products table    --need to update to reverse this to show the latest product added first
                 $result = mysqli_query($db_Conn, $query);
                 //if(!$result){
                 //    $_SESSION['error'] = "Error in SQL Result Statement: " . mysqli_error($db_Conn);
                 //    header("Location: index.php");
                 //    exit;
+                
+
                 if($result){
                     while($row = mysqli_fetch_assoc($result)){
                         //now we need to display the products in the dealsItem divs

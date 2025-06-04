@@ -23,7 +23,8 @@ let popularCategories = document.querySelector(".popularCategories");
 let bestCarDeals = document.querySelector(".bestCarDeals");
 //login variables
 let loginContainer = document.querySelector(".loginContainer");
-let showLoginButton = document.querySelector(".homeStrip .btnShowLogin");
+//let showLoginButton = document.querySelector(".homeStrip .btnShowLogin");       //issue, not showing on other pages, need to fix this
+let showLoginButtons = document.querySelectorAll(".btnShowLogin"); //to ensure that the login button is shown on all pages, not just the home page
 let loginButton = document.querySelector(".btnLogin button");
 let closeLoginButton = document.querySelector(".loginContainer .material-symbols-outlined");
 let alreadyRegistered = document.querySelector(".showLogin");
@@ -36,7 +37,7 @@ let closeRegisterButton = document.querySelector(".registerContainer .material-s
 let blurOverlay = document.querySelector(".blurOverlay");
 //hamburger for mobile view and header strip for resizing
 let mobileMenu = document.querySelector(".hamburgerBtn");
-let headerStrip = document.querySelectorAll(".headerStrip");
+let headerStrip = document.querySelector(".headerStrip");
 // Track whether the menu was toggled by a click
 let menuIsToggled = false;
 let mobileMenuIsToggled = false;
@@ -61,7 +62,78 @@ let footer = document.querySelector(".footerContainer");        //not working
 //weird things happening on zooms with html height
 //let html = document.querySelector("html");
 //after some research i figured i should maybe test moving the contents margins instead of using transforms
-//events
+
+//side nav variables
+let btn_NavOpen = document.querySelector(".btnSideNavOpen button");
+let btn_NavClose = document.querySelector(".btnSideNavClose button");
+let accountSideNavContainer = document.querySelector(".accountSideNavContainer");
+//let orderContainer = document.querySelector(".orderContainer");
+let navToggle = false;
+//adding tabs  https://www.youtube.com/watch?v=fI9VM5zzpu8   || https://www.youtube.com/watch?v=5L6h_MrNvsk || https://www.youtube.com/watch?v=JZa1qMXIiU0 as ref
+const tabs = document.querySelectorAll(".accountSideNavData a[data-tab-target]"); // contains all the tabs
+const tabContents = document.querySelectorAll(".tabContent"); // contains all the tab contents
+
+if (tabs.length > 0) {
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            // Remove active from all tabs and contents
+            tabs.forEach(t => t.classList.remove("active"));
+            tabContents.forEach(tabContent => tabContent.classList.remove("active"));
+
+            // Add active to clicked tab and its content
+            tab.classList.add("active");
+            const target = document.querySelector(tab.dataset.tabTarget);
+            if (target) {
+                target.classList.add("active");
+            }
+        });
+    });
+
+    // Show first tab by default
+    tabs[0].classList.add("active");
+    const firstTabTarget = tabs[0].dataset.tabTarget;
+    const firstTabContent = document.querySelector(firstTabTarget);
+    if (firstTabContent) {
+        firstTabContent.classList.add("active");
+    }
+}
+
+/*
+function parseURLParams(){      //did find this ima try https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams  || https://stackoverflow.com/questions/814613/how-to-read-get-data-from-a-url-using-javascript || I dunno this is taking alotta time to research ima just leave it for now
+    let params = new URLSearchParams(location.search);
+    let tab = params.get('tab');       //get the tab parameter from the url
+    console.log("Tab from URL:", tab);       //debugging
+    return tab;       //return the tab parameter
+}
+*/
+
+//need to find a way to read the url;
+//if(window.location.href.includes("accounttabs.php")){      //if the url contains accounttabs.php then we need to read the url ; its too late for this for now im gonna try brute force it
+    
+//}
+//Events
+//added this at the top to fix not loading error in the script (temp fix, i know its not the best practice)     --its here as its not used across the pages, and im using a full load script page not dedicated functions for actions but im very late into this to change now  --update added to all relevant functions, this ensures that nothing is null causing errors 
+if(btn_NavOpen && btn_NavClose && accountSideNavContainer){
+btn_NavOpen.addEventListener("click", function(){
+        //testing width changing
+        navToggle = !navToggle;        //toggle the nav toggle variable
+        accountSideNavContainer.style.width = navToggle ? "250px" : "0px";      //yeh i prefer this method in this context, when i tried it on other menu elements it wasnt what i wanted , also added a tenerary operator for toggling  --issue for mobile view atm
+        accountSideNavContainer.style.visibility = navToggle ? "visible" : "hidden"; // Show or hide the side nav based on the toggle added back for moving orderContainer
+        //orderContainer.style.marginLeft = navToggle ? "250px" : "0px"; // Move orderContainer when side nav is open
+        //alert("Clicked Open Side Nav");    //testing  
+    });
+btn_NavClose.addEventListener("click", function(){
+    navToggle = false;        //reset nav toggle variable
+    accountSideNavContainer.style.visibility = "hidden";
+        //testing width changing
+    accountSideNavContainer.style.width = "0px";
+        //orderContainer.style.marginLeft = "0px"; // Reset orderContainer margin when side nav is closed
+        //alert("Clicked Close Side Nav");
+    });
+
+}
+
+if(dropdownButton && categoryMenu && latestDealsContainer){     //if not null
 dropdownButton.addEventListener("click", function () {
     //https://www.youtube.com/watch?v=atS_A9HHAVo&ab_channel=BroCode        --ternary operator usage
     menuIsToggled = !menuIsToggled;
@@ -103,7 +175,8 @@ dropdownButton.addEventListener("mouseover", function () {
         //footer.style.marginTop = "250px"; 
     }
 });
-
+}
+if(categoryMenu && latestDealsContainer){     //if not null
 categoryMenu.addEventListener("mouseover", function () {
     //categoryMenu.style.display = "block";     //refactor
     if(!menuIsToggled){         //ensures no more overiding the click event causing incosistencies before
@@ -122,8 +195,10 @@ categoryMenu.addEventListener("mouseover", function () {
          
     }
 });
+}
 
 // Hide menu & reset Latest Deals position when mouse leaves both elements
+if(dropdownButton && categoryMenu && latestDealsContainer){     //if not null
 dropdownButton.addEventListener("mouseout", function () {
     if (!menuIsToggled) {
         //categoryMenu.style.display = "none";      //refactor
@@ -142,7 +217,26 @@ dropdownButton.addEventListener("mouseout", function () {
         
     }
 });
+dropdownButton.addEventListener("mouseout", function () {
+    if (!menuIsToggled) {
+        //categoryMenu.style.display = "none";      //refactor
+        categoryMenu.style.opacity = "0";
+        categoryMenu.style.visibility = "hidden"; 
 
+        //latestDealsContainer.style.transform = "translateY(0)";
+        //topSellersContainer.style.transform = "translateY(0)";
+        //popularCategoriesContainer.style.transform = "translateY(0)";
+        //bestCarDealsContainer.style.transform = "translateY(0)";
+        //footer.style.transform = "translateY(0)"; // Reset footer position when menu is closed
+
+        //html.style.height = "100%";
+
+        latestDealsContainer.style.marginTop = "0"; 
+        
+    }
+});
+}
+if(categoryMenu && latestDealsContainer){     //if not null
 categoryMenu.addEventListener("mouseout", function () {
     if (!menuIsToggled) {
         //categoryMenu.style.display = "none";      //refactor
@@ -163,7 +257,8 @@ categoryMenu.addEventListener("mouseout", function () {
 
     }
 });
-
+}
+if(latestDealsScrollLeft && latestDealsScrollRight && latestDeals){     //if not null
 latestDealsScrollLeft.addEventListener("click", function(){
     latestDeals.scrollBy({left: -200, behavior: "smooth"});
 });
@@ -171,7 +266,8 @@ latestDealsScrollLeft.addEventListener("click", function(){
 latestDealsScrollRight.addEventListener("click", function(){
     latestDeals.scrollBy({left: 200, behavior: "smooth"});
 });
-
+}
+if(topSellersScrollLeft && topSellersScrollRight && topSellers){     //if not null
 //need to ensure that the other containers are also scrollable      //probs need to use specific classes for each scroll?       --fixed by making unique variables for each scroll
 topSellersScrollLeft.addEventListener("click", function(){
     topSellers.scrollBy({left: -200, behavior: "smooth"});
@@ -180,7 +276,8 @@ topSellersScrollLeft.addEventListener("click", function(){
 topSellersScrollRight.addEventListener("click", function(){
     topSellers.scrollBy({left: 200, behavior: "smooth"});
 });
-
+}
+if(popularCategoriesScrollLeft && popularCategoriesScrollRight && popularCategories){     //if not null
 popularCategoriesScrollLeft.addEventListener("click", function(){
     popularCategories.scrollBy({left: -200, behavior: "smooth"});
 });
@@ -188,26 +285,33 @@ popularCategoriesScrollLeft.addEventListener("click", function(){
 popularCategoriesScrollRight.addEventListener("click", function(){
     popularCategories.scrollBy({left: 200, behavior: "smooth"});
 });
+}
+if(bestCarDealsScrollLeft && bestCarDealsScrollRight && bestCarDeals){     //if not null
 bestCarDealsScrollLeft.addEventListener("click", function(){
     bestCarDeals.scrollBy({left: -200, behavior: "smooth"});
 });
 bestCarDealsScrollRight.addEventListener("click", function(){
     bestCarDeals.scrollBy({left: 200, behavior: "smooth"});
 });
-
+}
 //login functionality
 //show login container
-showLoginButton.addEventListener("click",function(){
-    if(loginContainer.style.display === "none" || loginContainer.style.display === ""){
-        loginContainer.style.display = "flex";
-        blurOverlay.style.display = "block";
-    }else{
-        loginContainer.style.display = "none";  //hides container again
-        blurOverlay.style.display = "none";
-    }
-    
+if(showLoginButtons && loginContainer && blurOverlay){     //if not null
+showLoginButtons.forEach(function(showLoginButton){     //foreach loop to ensure that all buttons are added the event listener
+    showLoginButton.addEventListener("click",function(){
+        if(loginContainer.style.display === "none" || loginContainer.style.display === ""){
+            loginContainer.style.display = "flex";
+            blurOverlay.style.display = "block";
+        }else{
+            loginContainer.style.display = "none";  //hides container again
+            blurOverlay.style.display = "none";
+        }
+
+    });
 });
+}
 //hide login container
+if(closeLoginButton && loginContainer && blurOverlay){     //if not null
 closeLoginButton.addEventListener("click",function(){
     loginContainer.style.display = "none";
     blurOverlay.style.display = "none";
@@ -219,16 +323,19 @@ closeLoginButton.addEventListener("click",function(){
     loginEmailError.innerHTML = "";
     loginPasswordError.innerHTML = "";
 });
+}
 //2nd showlogin button (not great but needed for register form)
+if(alreadyRegistered && loginContainer && registerContainer && blurOverlay){     //if not null
 alreadyRegistered.addEventListener("click", function(){
     registerContainer.style.display="none";
     loginContainer.style.display = "flex";
     blurOverlay.style.display = "block";
 })
-
+}
 
 //register functionality
 //show register container
+if(showRegisterButton && registerContainer && loginContainer && blurOverlay){     //if not null
 showRegisterButton.addEventListener("click",function(){
     if(registerContainer.style.display ==="none" || registerContainer.style.display ===""){
         registerContainer.style.display = "flex";
@@ -240,6 +347,8 @@ showRegisterButton.addEventListener("click",function(){
         blurOverlay.style.display = "none";
     }
 });
+}
+if(closeRegisterButton && registerContainer && blurOverlay){     //if not null
 closeRegisterButton.addEventListener("click",function(){
     registerContainer.style.display = "none";
     blurOverlay.style.display = "none";
@@ -253,14 +362,16 @@ closeRegisterButton.addEventListener("click",function(){
     registerFirstNameError.innerHTML = "";
     registerLastNameError.innerHTML = "";
 });
-
+}
 //blur functionality
 //added this for user ease to minimize everything by clickthing the blur effect
+if(blurOverlay && registerContainer && loginContainer){     //if not null
 blurOverlay.addEventListener("click",function(){
     registerContainer.style.display = "none";
     loginContainer.style.display = "none";
     blurOverlay.style.display = "none";
 });
+}
 //mobile menu functionality
 
 //im spending too much time on this it works for preloaded screensizes, however if user does change the screensize manually it will hide the menu
@@ -284,7 +395,9 @@ mobileMenu.addEventListener("click", function(){
 //needa change the category to adjust to the above
 
 
+
 //this is working, ive blindly stumbled into the solution, im aware of the duplicate essentially 1 controls when screen is resized and the other controls drop down location when mobile hamburger is toggled (so ultimately this is working)
+if(homeStrip && categoryMenu){     //if not null
 window.addEventListener("resize", function(){
     let screenWidth = this.window.innerWidth;       //this seemed to be the deciding factor, checks current width of the screen size
 
@@ -301,7 +414,20 @@ window.addEventListener("resize", function(){
             categoryMenu.style.top = "250px"           //arrived at this value
         }
     }
-})
+});
+}
+
+/*
+btn_NavOpen.addEventListener("click", function(){
+    accountSideNavContainer.style.display = "flex";
+    alert("Clicked Open Side Nav");
+});
+btn_NavClose.addEventListener("click", function(){
+    accountSideNavContainer.style.display = "none";
+    alert("Clicked Close Side Nav");
+});
+*/
+
 
 
 //this isnt working so im gonna refactor
@@ -332,5 +458,16 @@ if(homeStripWidth > 624){
 
 */
 
+
+//function for side nav
+/*
+function sideNavOpen(){
+    document.getElementById("accountSideNavContainer").style.width = "500px";
+}
+
+function sideNavClose(){
+    document.getElementById("accountSideNavContainer").style.width = "0px";
+}
+*/
 
 

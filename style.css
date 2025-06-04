@@ -16,6 +16,8 @@ body{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    
+    
 }
 
 a{
@@ -211,7 +213,7 @@ h2{
     /*flex-grow: 250;*/
     width: 80%;
     margin: 0 auto;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, margin-top 0.5s ease-in-out;      /*this makes the animation smoother, including the margin-top change*/
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, margin-top 0.5s ease-in-out;      /*this makes the animation smoother, including the margin-top change could just do all*/
     scrollbar-width: none;      /*this removes scrollbar in firefox*/
 }
 
@@ -1032,7 +1034,171 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     outline: 1px solid #464545;
 
 }
+/*
+.accountSideNavContainer{
+    height: 100%;
+    width: 0px;
+    background-color: #464545;
+    overflow-x: hidden;
+    transition: all 0.5s ease-in-out;
+
+}
+    */
+
+/*container*/
+.accountSideNavContainer{
+    position: fixed; /* added to accomodate for the orderContainer */
+    top: 250px;
+    visibility: hidden;
+    flex-direction: column;
+    height: fit-content;
+    width: 0px;     /*was looking at clamp but isnt what i want.      https://www.w3schools.com/cssref/func_clamp.php*/
+    background-color: rgba(131, 130, 128, 0.5); /*transparent grey background*/
+    overflow-x: hidden; 
+    align-items: center;
+    border-radius: 20px;
+    border: 1px solid #686868;
+    outline: 1px solid #686868;
+    transition: all 0.5s ease-in-out;
+    padding: 5px;
+    z-index: 6;       /*added to try keep ontop above the heading and its working   -- 6 seems to be the highest layer over heading*/
+    /*making it glass -- this is really cool, would have changed my category menu aswell to suit this but i like how that works aswell   https://www.youtube.com/watch?v=PL3Odw-k8W4*/
+    backdrop-filter: blur(10px);
+
+}
+.accountSideNavContainer:hover{
+    transition: all 0.5s ease-in-out;
+    border: 1px solid #464545;
+    outline: 1px solid #464545;
+
+}
+
+
+/*header*/
+
+.accountSideNavHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    border-bottom: #fff solid 1px;
+}
+
+
+/*Heading*/
+
+.accountSideNavHeading{
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff;
+    padding: 5px;
+}
+    
+/*data*/
+
+.accountSideNavData a{
+    padding: 5px;
+    margin-left: 5px;
+    display: block;
+    transition: all 0.5s ease-in-out;
+    color: #fff;
+}
+.accountSideNavData a:hover{
+    transition: all 0.5s ease-in-out;
+    /*background-color: #464545;*/
+    color: #fff;
+    border-radius: 20px;
+}
+/*gonna make this a tab*/
+
+.accountSideNavData a.active{
+    background-color: #464545;
+    border-radius: 20px;
+    transition: all 0.5s ease-in-out;
+}
+/*position and style close btn*/
+
+.btnSideNavClose button{
+    background-color: #838280;
+    border-radius: 20px;
+    transition: all 0.5s ease-in-out;
+}
+.btnSideNavClose button:hover{
+    background-color: #464545;
+    transition: all 0.5s ease-in-out;
+}
+    
+/*open btn styling and positioning*/
+.btnSideNavOpen button{
+    background-color: #838280;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    width: fit-content;
+}
+.btnSideNavOpen button:hover{
+    background-color: #464545;
+    transition: all 0.5s ease-in-out;
+}
+
+.accountSideNavData{
+    transition: all 0.5s ease-in-out;
+
+}
+.accountSideNavData:hover{
+    background-color: #464545;
+    transition: all 0.5s ease-in-out;
+    border-radius: 20px;
+}
+
+
+.tabContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    display: none;
+    
+}
+.tabContent.active{
+    display: flex;
+}
+
+.orderList, .returnList, .reviewList{
+    background-color: #686868;
+    border-radius: 20px;
+    width: 350px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #686868;
+    outline: 1px solid #686868;
+    transition: all 0.5s ease-in-out;
+    
+}
+.orderList:hover, .returnList:hover, .reviewList:hover{
+    border: 1px solid #464545;
+    outline: 1px solid #464545;
+    transition: all 0.5s ease-in-out;
+}
+
+.orderHeader, .returnHeader, .reviewHeader{
+    margin-bottom: 10px;
+    justify-self: center;
+}
 
 
 
 
+
+
+
+
+/*refactor to remove redundancy
+[data-tab-content] {        since im adjusting from a video im not sure if i can adjust my current html struct to suit this better      --updated
+    display: none;
+}
+[data-tab-content].active {
+    display: block;
+}*/

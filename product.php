@@ -76,14 +76,14 @@ $product = mysqli_fetch_assoc($result);
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                 <span>Hi <?php echo $_SESSION["FirstName"]; ?></span>   <!--this will show the user name-->
                 <a href="logout.php" class="btnLogout">Logout</a>       <!--this is the logout button that will log the user out and redirect them to the home page-->
-                <script>
+                <!--<script>
                     document.getElementById("btnShowLogin").style.display = "none";      //this will hide the login button when the user is logged in
-                </script>
+                </script>-->
             <?php else: ?>
                 <span>Hi Guest</span>   <!--guest username when not logged in-->
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
-            <a href="account.php">Account</a>
+            <a href="accountdashboard.php">Account</a>
             <a href="#">Cart</a>
             </div>
         </header>
