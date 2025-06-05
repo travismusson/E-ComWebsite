@@ -16,12 +16,14 @@ This project is being developed as part of my Web Design course at university. T
 - The Server then stores the name of the image in the db of the products table
 - The Server then fetches this image name from the db and looks for it in the images file to display on the product page of the webserver
 - The product is added dynamically to the index.php page to the latest deals
+- Seller Profiles
+- Account Dashboard/Account Editing
 
 *Planned Features*
-- Implement Review System
-- Implement Seller Profiles
+- Implement Review System (Semi-Functional, still in progress)
+- ~~Implement Seller Profiles~~
 - Implement Cart Functionality
-- Implement Account Options Working
+- ~~Implement Account Options Working~~
 - Implement Similair Products Carosel
 - Admin Functionality
 - Password Max Attempts/Lockout
