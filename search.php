@@ -9,7 +9,7 @@ if($category){
     $stmt = mysqli_prepare($db_Conn, $query);
     mysqli_stmt_bind_param($stmt, "s", $category);
     mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+    $categoryResult = mysqli_stmt_get_result($stmt);
 }else{
     echo "Error occured trying to process your request please try again";       //only i would see this error
     header("Location: index.php");      //redirects to homepage
@@ -22,9 +22,9 @@ if(isset($_SESSION['id'])){
     $stmt = mysqli_prepare($db_Conn, $SQL);
     mysqli_stmt_bind_param($stmt, "i", $userID);
     mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    if($row = mysqli_fetch_assoc($result)){
-        if(mysqli_num_rows($result) > 0){
+    $profileResult = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($profileResult)){
+        if(mysqli_num_rows($profileResult) > 0){
             $profileImg = $row['Profile_IMG_DIR'];
         }
     }
@@ -79,8 +79,8 @@ if(isset($_SESSION['id'])){
         </div>
 <!-- need to display search results   Its Working just need some styling-->
         <div class = "searchResults">
-            <?php if(isset($result) && mysqli_num_rows($result) > 0){           //if populated and set
-                while($row = mysqli_fetch_assoc($result)){
+            <?php if(isset($categoryResult) && mysqli_num_rows($categoryResult) > 0){           //if populated and set
+                while($row = mysqli_fetch_assoc($categoryResult)){
                     ?>
                     <div class="productItem">   <!-- same process as used in product.php-->
                         <a href = "product.php?id=<?php echo $row['ProductID']; ?>">
@@ -97,11 +97,6 @@ if(isset($_SESSION['id'])){
             ?>  
         </div>
 </div>
-
-
-
-
-
 
 
 <div class="blurOverlay"></div>

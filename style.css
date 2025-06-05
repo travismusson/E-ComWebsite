@@ -1373,9 +1373,36 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     object-fit: scale-down;
 }
 
+.sellerProfilePhoto{
+    width: 400px;
+    height: auto; 
+    border-radius: 20px;
+    object-fit: scale-down;
+    display: flex;
+    justify-self: center;
+}
 
+.reviewSection{
+    background-color: #838280;
+    border-radius: 20px;
+    padding: 10px;
+    text-align: center;
+    width: clamp(80%, 1500px, 80%);
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    min-width: 250px;
+    transition: all 0.5s ease-in-out;
+    border: 1px solid #838280;
+}
 
-
+.reviewList{
+    padding: 10px;
+}
+.reviewItem{
+    background-color: #686868;
+    border-radius: 20px;
+}
 
 
 

@@ -60,9 +60,74 @@ if(mysqli_num_rows($result) === 0){
     header("Location: index.php");
     exit;
 }
-
 //fetch the product details
 $product = mysqli_fetch_assoc($result);
+$productReviewAverage = '';
+//need to fetch reviews for seller
+//should probs get sellers info also
+$query = "SELECT SUM(Rating) AS SumRating, COUNT(Rating) AS TotalRatings FROM reviews WHERE ProductID = ?";
+$stmt = mysqli_prepare($db_Conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $productID);
+mysqli_stmt_execute($stmt);
+$reviewResult = mysqli_stmt_get_result($stmt);
+$row = mysqli_fetch_assoc($reviewResult);
+$totalReviews = $row['TotalRatings'];
+$sumReviews = $row['SumRating'];
+if($totalReviews > 0){
+    $productReviewAverage =$sumReviews/$totalReviews;
+}
+
+//fetch seller info
+$sellerName = '';
+$sellerID = $product['SellerID'];
+$querySeller = "SELECT * FROM users WHERE id = ?";
+$stmt = mysqli_prepare($db_Conn, $querySeller);
+mysqli_stmt_bind_param($stmt, "i", $sellerID);
+mysqli_stmt_execute($stmt);
+$sellerResult = mysqli_stmt_get_result($stmt);
+if($sellerResult){
+    while($row = mysqli_fetch_assoc($sellerResult)){
+        $sellerName = $row['FirstName']. ' '. $row['LastName'];
+        $sellerProfilePhoto = $row['Profile_IMG_DIR'];
+    }
+}
+//fetching reviews, after some research looks like i need to store into an array and just foreach all reviews out?      --finally working goodness
+$allReviews = [];       //array for reviews
+$query = "SELECT * FROM reviews WHERE ProductID = ?";       //query for review where id matches the product id
+$stmt = mysqli_prepare($db_Conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $productID);
+mysqli_stmt_execute($stmt);
+$reviewsResult = mysqli_stmt_get_result($stmt);
+while($review = mysqli_fetch_assoc($reviewsResult)){    //while loop for going thorugh results
+    $buyerID = $review['BuyerID'];      //assigns the buyer id to the current review in loop
+    $buyerQuery = "SELECT FirstName, LastName FROM users WHERE id = ?";     //another query to lookup the buyers name and last name
+    $buyerStmt = mysqli_prepare($db_Conn, $buyerQuery);
+    mysqli_stmt_bind_param($buyerStmt, "i", $buyerID);
+    mysqli_stmt_execute($buyerStmt);
+    $buyerResult = mysqli_stmt_get_result($buyerStmt);
+    if($buyerResult && $row = mysqli_fetch_assoc($buyerResult)){
+        $buyerName = $row['FirstName']. ' '. $row['LastName'];      //stores buyers name in var
+    }else{
+        $buyerName = "Unknown";
+    }
+    $review['BuyerName'] = $buyerName;      //asigns buyername to the review var
+    $allReviews[] = $review;    //stores review into array
+}
+//need to find a way to also show reviewer maybe just do a sql query in user db where id matches buyer id?
+/* refactor gonna put it in the review section maybe?
+$buyerID = $review['BuyerID'];      //issue only using last review as the reviewer. its late i needa sleep on this
+$buyerQuery ="SELECT FirstName, LastName FROM users WHERE id = ?";
+$stmt = mysqli_prepare($db_Conn, $buyerQuery);
+mysqli_stmt_bind_param($stmt, 'i', $buyerID);
+mysqli_stmt_execute($stmt);
+$buyerResult = mysqli_stmt_get_result($stmt);
+if($buyerResult){
+    while($row = mysqli_fetch_assoc($buyerResult)){
+        $buyerName = $row['FirstName']. ' '. $row['LastName'];
+    }
+}
+*/
+
 //now its html time
 ?>
 <!DOCTYPE html>
@@ -104,6 +169,10 @@ $product = mysqli_fetch_assoc($result);
             <a href="#">Cart</a>
             </div>
         </header>
+    </div>
+    <div class=sellerInfoHeader>
+        <h2><?php echo $sellerName?> Product</h2>
+        <img src="<?php echo "./images/$sellerProfilePhoto";?>" alt="Seller Profile Photo" class="sellerProfilePhoto">
     </div>
     <div class="productDetails">
         <h2>Product Details</h2>
@@ -150,43 +219,25 @@ $product = mysqli_fetch_assoc($result);
     <div class="reviewSection">
         <h2>Reviews</h2>
             <!--need to fetch reviews from db for product-->
-            <?php
-                //instantiate var
-                $totalReviews = 0;
-                $productReviewAverage = 0;
-                $sumReviews = 0;
-                
-                $query = "SELECT SUM(Rating) AS SumRating, COUNT(Rating) AS TotalRatings  FROM reviews WHERE ProductID = ?";     //https://www.w3schools.com/sql/sql_count.asp || https://www.geeksforgeeks.org/count-function-in-mysql/ || https://www.geeksforgeeks.org/php/php-mysql-sum-operation/
-                $stmt = mysqli_prepare($db_Conn, $query);        //using prepare statement
-                if(!$stmt){
-                    $_SESSION['error'] = "Error in SQL Prepare Statement: " . mysqli_error($db_Conn);       //might not be neceassry to include this check
-                    header("Location: index.php");
-                    exit;
-                }
-                mysqli_stmt_bind_param($stmt, "i", $productID);        //int for id
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-                if(!$result){
-                        $_SESSION['error'] = "Error in SQL Result Statement: " . mysqli_error($db_Conn);
-                        header("Location: index.php");
-                        exit;
-                    }else{
-                        while($row = mysqli_fetch_assoc($result)){
-                            $totalReviews += $row['TotalRatings'];
-                            $sumReviews = $row['SumRating'];
-                        }
-                        //getting division by zero error so i need to ensure that total reviews is more than 0
-                        if($totalReviews > 0){
-                            $productReviewAverage = $sumReviews/$totalReviews;
-                        }else{
-                            echo "No Reviews found for this product!<br>Be the first leave a Review!";
-                        }
-                    
-                    }
-            ?>
+           <!--Refactored--> 
+           <?php if($productReviewAverage){
+                echo "A Total of $totalReviews reviews have been made, with an Average of $productReviewAverage";
+           }else{
+                echo "No Reviews have been made for this product.<br>Be the first write a review!";
+           }?> 
         <div class="reviewList">
-
-
+            <?php if(count($allReviews) > 0): ?>
+        <?php foreach($allReviews as $review): ?>
+            <div class="reviewItem">
+                <b>Reviewer:</b> <?php echo $buyerName; ?><br>
+                <b>Rating:</b> <?php echo $review['Rating']; ?>/5<br>
+                <b>Comment:</b> <?php echo $review['Comment']; ?><br>
+                <b>Date:</b> <?php echo $review['ReviewDate']; ?><br>
+            </div>
+        <?php endforeach; ?>
+        <?php else: ?>
+            <p>No reviews yet for this product.</p>
+        <?php endif; ?>
         </div>
         </div>   
     </div>

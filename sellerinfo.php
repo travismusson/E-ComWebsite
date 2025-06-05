@@ -5,6 +5,7 @@ echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!impor
 
 $sellerID = isset($_GET['sellerID']) ? $_GET['sellerID'] : ' ';     //always returning true needa do more research --fixed by adding teneary and actually setting the value
 $sellerName = '';
+$sellerProfilePhoto = '';
 if($sellerID){
     //seller fetch
     $query = "SELECT * FROM users WHERE id = ?";
@@ -15,6 +16,7 @@ if($sellerID){
     if($sellerResult){
         while($row = mysqli_fetch_assoc($sellerResult)){
             $sellerName = $row['FirstName']. ' '. $row['LastName'];
+            $sellerProfilePhoto = $row['Profile_IMG_DIR'];
         }
     }
     //product fetch
@@ -25,7 +27,8 @@ if($sellerID){
     $productResult = mysqli_stmt_get_result($stmt);
     
 }
-//fetching existing profile photo
+
+//fetching existing profile photo for logged in user
 if(isset($_SESSION['id'])){
     $userID = $_SESSION['id'];
     $SQL = "SELECT Profile_IMG_DIR FROM users WHERE id = ?";
@@ -79,7 +82,7 @@ if(isset($_SESSION['id'])){
                 <span>Hi Guest</span>   <!--guest username when not logged in-->
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
-            <a class="active" href="accountdashboard.php">Account</a>
+            <a href="accountdashboard.php">Account</a>
             <a href="#">Cart</a>
             </div>
         </header>
@@ -87,6 +90,7 @@ if(isset($_SESSION['id'])){
     <div class="sellerInfoContainer">
         <div class="sellerInfoHeader">
             <h2>Welcome to <?php echo $sellerName?> Page</h2>
+            <img src="<?php echo "./images/$sellerProfilePhoto";?>" alt="Seller Profile Photo" class="sellerProfilePhoto">
         </div>
         <div class="sellerProducts">
             <?php if($productResult && mysqli_num_rows($productResult) > 0){        //checks to see if seller has products
