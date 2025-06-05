@@ -2,6 +2,21 @@
 include("dbconnection.php");        //included to ensure db connection is valid
 session_start();      //this is needed to start the session
 echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';
+//fetching existing profile photo
+if(isset($_SESSION['id'])){
+    $userID = $_SESSION['id'];
+    $SQL = "SELECT Profile_IMG_DIR FROM users WHERE id = ?";
+    $stmt = mysqli_prepare($db_Conn, $SQL);
+    mysqli_stmt_bind_param($stmt, "i", $userID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($result)){
+        if(mysqli_num_rows($result) > 0){
+            $profileImg = $row['Profile_IMG_DIR'];
+        }
+    }
+
+}
 //get product id from the URL
 $productID = 0;     //initialize to 0
 if(isset($_GET['id'])){
@@ -57,6 +72,7 @@ $product = mysqli_fetch_assoc($result);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['Name']); ?></title>     <!-- allows user to keep track of product name in the title bar, think this is a really neat idea i noticed from takealot, uses control structures in php to echo current viewing product -->
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
 </head>
 <body>
@@ -75,6 +91,7 @@ $product = mysqli_fetch_assoc($result);
 <!--Adding php here for username in the Account list https://www.php.net/manual/en/control-structures.alternative-syntax.php  for control structures within php and html-->
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                 <span>Hi <?php echo $_SESSION["FirstName"]; ?></span>   <!--this will show the user name-->
+                <img src="<?php echo "./images/$profileImg";?>" alt="Profile Photo" class="profilePhoto">
                 <a href="logout.php" class="btnLogout">Logout</a>       <!--this is the logout button that will log the user out and redirect them to the home page-->
                 <!--<script>
                     document.getElementById("btnShowLogin").style.display = "none";      //this will hide the login button when the user is logged in
@@ -111,9 +128,9 @@ $product = mysqli_fetch_assoc($result);
                         header("Location: index.php");
                         exit;
                     }else{
-                        while($data = mysqli_fetch_assoc($result)){
+                        while($row = mysqli_fetch_assoc($result)){
                         ?>
-                            <img src = "./images/<?php echo $data['Product_IMG_DIR']; ?>">
+                            <img src = "./images/<?php echo $row['Product_IMG_DIR']; ?>">
                         <?php
                     }//end while loop
                     }   
@@ -130,6 +147,121 @@ $product = mysqli_fetch_assoc($result);
             </form>
             <a href="index.php">Back to Products</a>
     </div>
+    <div class="reviewSection">
+        <h2>Reviews</h2>
+            <!--need to fetch reviews from db for product-->
+            <?php
+                //instantiate var
+                $totalReviews = 0;
+                $productReviewAverage = 0;
+                $sumReviews = 0;
+                
+                $query = "SELECT SUM(Rating) AS SumRating, COUNT(Rating) AS TotalRatings  FROM reviews WHERE ProductID = ?";     //https://www.w3schools.com/sql/sql_count.asp || https://www.geeksforgeeks.org/count-function-in-mysql/ || https://www.geeksforgeeks.org/php/php-mysql-sum-operation/
+                $stmt = mysqli_prepare($db_Conn, $query);        //using prepare statement
+                if(!$stmt){
+                    $_SESSION['error'] = "Error in SQL Prepare Statement: " . mysqli_error($db_Conn);       //might not be neceassry to include this check
+                    header("Location: index.php");
+                    exit;
+                }
+                mysqli_stmt_bind_param($stmt, "i", $productID);        //int for id
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                if(!$result){
+                        $_SESSION['error'] = "Error in SQL Result Statement: " . mysqli_error($db_Conn);
+                        header("Location: index.php");
+                        exit;
+                    }else{
+                        while($row = mysqli_fetch_assoc($result)){
+                            $totalReviews += $row['TotalRatings'];
+                            $sumReviews = $row['SumRating'];
+                        }
+                        //getting division by zero error so i need to ensure that total reviews is more than 0
+                        if($totalReviews > 0){
+                            $productReviewAverage = $sumReviews/$totalReviews;
+                        }else{
+                            echo "No Reviews found for this product!<br>Be the first leave a Review!";
+                        }
+                    
+                    }
+            ?>
+        <div class="reviewList">
+
+
+        </div>
+        </div>   
+    </div>
+
+
+
+<div class="blurOverlay"></div>
+<div class="loginContainer">
+    <span class="material-symbols-outlined" for="login">close</span>
+    <div class="text">
+        Login Form
+    </div>
+    <form action="login.php" method="post" onsubmit="return ValidateLogin()">
+        <div class="data">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" placeholder="test@email.com" id="loginEmail" name="loginEmail" required>        <!--Regarding the name, im not sure if its better to use standardized just email instead of each email being acquanted to the various forms ie login and register, so im going with this approach for easier debugging-->
+            <span id="emailErrorField" class="error"></span>
+        </div>
+        <div class="data">
+            <label for="loginPassword">Password</label>
+            <input type="password" placeholder="Enter Password Here..." id="loginPassword" name="loginPassword" required>
+            <span id="passwordErrorField" class="error"></span>
+        </div>
+        <div class="forgotPass">
+            <a href="#">Forgot Your Password?</a><br>
+        </div>
+        <div class="registerAccount">
+            <label>Not Registered? <a href="#" class="showRegister">Create an Account</a></label>
+        </div>
+        <div class="btnLogin">
+            <button type="submit" value="login">Login</button>  <!--needs value to parse data, not sure if it is necesarry to have a standardized name (ie "Go") or if this is ok-->
+        </div>
+    </form>
+</div>
+<div class="registerContainer">
+    <span class="material-symbols-outlined" for="register">close</span>
+    <div class="text">Register an Account</div>
+        <form action="register.php" method="post" onsubmit="return ValidateRegister()">
+            <div class="data">
+                <label for="registerFirstName">First Name</label>
+                <input type="text" placeholder="Bob" id="registerFirstName" name="registerFirstName" required>
+                <span id="firstNameError" class="error"></span>
+            </div>
+            <div class="data">
+                <label for="registerLastName">Last Name</label>
+                <input type="text" placeholder="Bobson" id="registerLastName" name="registerLastName" required>
+                <span id="lastNameError" class="error"></span>
+            </div>
+            <div class="data">
+                <label for="registerEmail">Email Address</label>
+                <input type="email" placeholder="test@email.com" id="registerEmail" name="registerEmail" required>
+                <span id="emailError" class="error"></span>
+            </div>
+            <div class="data">
+                <label for="registerPassword">Password</label>
+                <input type="password" placeholder="Enter Password Here..." id="registerPassword" name="registerPassword" required>
+                <span id="passwordError" class="error"></span>
+            </div>
+            <div class="forgotPass">
+                <a href="#">Forgot Your Password?</a><br>
+            </div>
+            <div class="loginAccount">
+                <label>Already Registered? <a href="#" class="showLogin">Login Here</a></label>
+            </div>
+            <div class="btnRegister">
+                <button type="submit" value="register">Register</button>        <!--needs value to parse data-->
+            </div>
+        </form>
+</div>
+
+
+
+
+
+
     <div class="footerContainer">
     <footer>
         <p>2025 Travis Musson. All rights reserved.</p>
@@ -142,5 +274,6 @@ $product = mysqli_fetch_assoc($result);
         </picture>
     </footer>
 </div>
+<script src="scripts.js"></script>     <!--link to the javascript file for the hamburger menu--> 
 </body>
 </html>

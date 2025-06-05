@@ -1,7 +1,19 @@
 <?php
-include("dbconnection.php");
+include ("dbconnection.php");
 session_start();    //enusre user is logged in
 echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';
+//get filtered categories from db
+$category = isset($_GET['category']) ? $_GET['category']:' ';    //always returning true?  --fixed by using a teneray and setting value
+if($category){
+    $query = "SELECT * FROM products WHERE Category = ?";
+    $stmt = mysqli_prepare($db_Conn, $query);
+    mysqli_stmt_bind_param($stmt, "s", $category);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+}else{
+    echo "Error occured trying to process your request please try again";       //only i would see this error
+    header("Location: index.php");      //redirects to homepage
+}
 
 //fetching existing profile photo
 if(isset($_SESSION['id'])){
@@ -18,8 +30,6 @@ if(isset($_SESSION['id'])){
     }
 
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +40,7 @@ if(isset($_SESSION['id'])){
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
-    <title>My Account</title>
+    <title>Search Products</title>
 </head>
 <body>
     <div class="headerStrip">
@@ -57,48 +67,42 @@ if(isset($_SESSION['id'])){
                 <span>Hi Guest</span>   <!--guest username when not logged in-->
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
-            <a class="active" href="accountdashboard.php">Account</a>
+            <a href="accountdashboard.php">Account</a>
             <a href="#">Cart</a>
             </div>
         </header>
     </div>
-    <div class="accountHeader">
-        <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-        <h1>Welcome <?php echo $_SESSION['FirstName']; ?> to Your Account</h1>
-        <p>Manage your orders, account details, and support requests.</p>
-        <?php else: ?>
-            <h1> Welcome Guest </h1>
-            <p>Please login to access account details, orders, and support requests.</p>
-        <?php endif; ?>
-    </div>
-<div class="accountContainer">
-    <div class="accountOrders">
-        <h2>Orders</h2>
-        <ul>
-            <li><a href="accounttabs.php">Orders</a></li>         <!--currently not working -- updated to utilize js func -- not working looking for alternative, think i need to read the url?   --cant find anything ima just set a default for now-->
-            <li><a href="accounttabs.php">Returns</a></li>         <!--in ideal world this would parse through the tab to the next page-->
-            <li><a href="accounttabs.php">Product Reviews</a></li>
-            <li><a href="accounttabs.php">My Listings</a></li>
-        </ul>
-    </div>
-    <div class="accountDetails">
-        <h2>Account Details</h2>
-        <ul>
-            <li><a href="accounttabs.php">Edit Account</a></li>
-            <li><a href="accounttabs.php">Security Settings</a></li>
-            <li><a href="accounttabs.php">Address Book</a></li>
-            <li><a href="accounttabs.php">Newsletter Subscriptions</a></li>
-        </ul>
-    </div>
-    <div class="accountSupport">
-        <h2>Support</h2>
-        <ul>
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="#">FAQs</a></li>
-            <li><a href="#">Help Center</a></li>
-        </ul>
-    </div>
+
+<div class="searchContainer">
+        </div class="searchHeader">
+                <h2><?php echo $category ?></h2>
+        </div>
+<!-- need to display search results   Its Working just need some styling-->
+        <div class = "searchResults">
+            <?php if(isset($result) && mysqli_num_rows($result) > 0){           //if populated and set
+                while($row = mysqli_fetch_assoc($result)){
+                    ?>
+                    <div class="productItem">   <!-- same process as used in product.php-->
+                        <a href = "product.php?id=<?php echo $row['ProductID']; ?>">
+                            <img src="./images/<?php echo $row['Product_IMG_DIR']; ?>" alt="<?php echo $row['Name']?>">     <!-- need to add htmlspecialchars but just testing for now -->
+                            <div><?php echo $row['Name']; ?></div>          <!--temp-->
+                            <div><?php echo $row['Price']; ?></div>
+                        </a>
+                    </div>
+                    <?php
+                }
+            }else{
+                echo "No Products found in this category!";
+            }  
+            ?>  
+        </div>
 </div>
+
+
+
+
+
+
 
 <div class="blurOverlay"></div>
 <div class="loginContainer">
@@ -165,6 +169,7 @@ if(isset($_SESSION['id'])){
 </div>
 
 
+
 <div class="footerContainer">
     <footer>
         <p>2025 Travis Musson. All rights reserved.</p>
@@ -177,7 +182,7 @@ if(isset($_SESSION['id'])){
         </picture>
     </footer>
 </div>
-    <script src="scripts.js"></script>     <!--link to the javascript file for the hamburger menu--> 
-
+    
+<script src="scripts.js"></script>     <!--link to the javascript file for the hamburger menu--> 
 </body>
 </html>

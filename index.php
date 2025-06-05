@@ -22,6 +22,23 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){      //this 
             <button type='submit' class='btnLogout'>Logout</button>
         </form>";
     */
+//fetching profile photo
+//fetching existing profile photo
+if(isset($_SESSION['id'])){
+    $userID = $_SESSION['id'];
+    $SQL = "SELECT Profile_IMG_DIR FROM users WHERE id = ?";
+    $stmt = mysqli_prepare($db_Conn, $SQL);
+    mysqli_stmt_bind_param($stmt, "i", $userID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($result)){
+        if(mysqli_num_rows($result) > 0){
+            $profileImg = $row['Profile_IMG_DIR'];
+        }
+    }
+
+}
+
 
 }
 
@@ -69,7 +86,8 @@ endif; ?>
             </div>
 <!--Adding php here for username in the Account list https://www.php.net/manual/en/control-structures.alternative-syntax.php  for control structures within php and html-->
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
-                <span>Hi <?php echo $_SESSION["FirstName"]; ?></span>   <!--this will show the user name-->
+                <span>Hi <?php echo $_SESSION["FirstName"]; ?></span>
+                <img src="<?php echo "./images/$profileImg";?>" alt="Profile Photo" class="profilePhoto">   <!--this will show the user name-->                 <!--displays profile photo also--> 
                 <a href="logout.php" class="btnLogout">Logout</a>       <!--this is the logout button that will log the user out and redirect them to the home page-->
                 <!-- Refactor for now 
                 <script>
@@ -97,7 +115,7 @@ endif; ?>
                 <li><div class="catItems"><span class="material-symbols-outlined">apparel</span><a href="#">Clothing</a></div></li>
                 <li><div class="catItems"><span class="material-symbols-outlined">computer</span><a href="#">Electronics</a></div></li>    
                 <li><div class="catItems"><span class="material-symbols-outlined">tv_gen</span><a href="#">Entertainment</a></div></li>                 
-                <li><div class="catItems"><span class="material-symbols-outlined">chair</span><a href="#">Furniture & Outdoor</a></div></li>
+                <li><div class="catItems"><span class="material-symbols-outlined">chair</span><a href="#">Home & Outdoor</a></div></li>
                 <li><div class="catItems"><span class="material-symbols-outlined">sports_esports</span><a href="#">Gaming</a></div></li>
                 <li><div class="catItems"><span class="material-symbols-outlined">child_care</span><a href="#">Kiddies</a></div></li>  
                 <li><div class="catItems"><span class="material-symbols-outlined">kettle</span><a href="#">Kitchen</a></div></li> 
@@ -182,13 +200,14 @@ endif; ?>
     <h2>Top Sellers</h2>
     <a href="#">View All</a>
     <button class="topSellersScrollLeft">&lt;</button>
-        <div class="topSellers">            
-            <div class="sellersItem"><img src="images/pexels-karoldach-377711.jpg" alt="HifiHeadphoneStore"><b>From R5000</b><br>HifiHeadphoneStore</div>
-            <div class="sellersItem"><img src="images/pexels-roman-odintsov-12719133.jpg" alt="XboxStore"><b>From R800</b><br>XboxStore</div>
-            <div class="sellersItem"><img src="images/pexels-paggiarofrancesco-704241.jpg" alt="Glasses"><b>From R250</b><br>SunniesStore</div>
-            <div class="sellersItem"><img src="images/pexels-mart-production-7679798.jpg" alt="Jackets"><b>From R400</b><br>Jackets_R_Us</div>
-            <div class="sellersItem"><img src="images/pexels-drew-williams-1285451-3568521.jpg" alt="Gadgets"><b>From R500</b><br>GadgetStore</div>
-            <div class="sellersItem"><img src="images/pexels-pixabay-267320.jpg" alt="Handmade Loafer Store"><b>From R450</b><br>Handmade Loafer Store</div>
+        <div class="topSellers">
+            <!--manually implemented for now        //update gonna add a href now for linking sellers to the seller info page-->            
+            <a href="sellerinfo.php?sellerID=6"><div class="sellersItem"><img src="images/pexels-karoldach-377711.jpg" alt="HifiHeadphoneStore"><b>From R5000</b><br>HifiHeadphoneStore</div></a>
+            <a href="sellerinfo.php?sellerID=7"><div class="sellersItem"><img src="images/pexels-roman-odintsov-12719133.jpg" alt="XboxStore"><b>From R800</b><br>XboxStore</div></a>
+            <a href="sellerinfo.php?sellerID=8"><div class="sellersItem"><img src="images/pexels-paggiarofrancesco-704241.jpg" alt="Glasses"><b>From R250</b><br>SunniesStore</div></a>
+            <a href="sellerinfo.php?sellerID=9"><div class="sellersItem"><img src="images/pexels-mart-production-7679798.jpg" alt="Jackets"><b>From R400</b><br>Jackets_R_Us</div></a>
+            <a href="sellerinfo.php?sellerID=10"><div class="sellersItem"><img src="images/pexels-drew-williams-1285451-3568521.jpg" alt="Gadgets"><b>From R500</b><br>GadgetStore</div></a>
+            <a href="sellerinfo.php?sellerID=11"><div class="sellersItem"><img src="images/pexels-pixabay-267320.jpg" alt="Handmade Loafer Store"><b>From R450</b><br>Handmade Loafer Store</div></a>
         </div>
     <button class="topSellersScrollRight">&gt;</button>
 </div>
@@ -197,12 +216,12 @@ endif; ?>
     <a href="#">View All</a>
     <button class="popularCategoriesScrollLeft">&lt;</button>
         <div class="popularCategories">         
-            <div class="categoryItem"><img src="images/pexels-david-yohanes-97693-1450903.jpg" alt="Appliances">Appliances</div>
-            <div class="categoryItem"><img src="images/pexels-garrettmorrow-682933.jpg" alt="Gaming">Gaming</div>
-            <div class="categoryItem"><img src="images/pexels-jpgata-11118543.jpg" alt="Outdoor Furniture">Furniture & Outdoor</div>
-            <div class="categoryItem"><img src="images/pexels-fecundap6-350417.jpg" alt="Kitchen">Kitchen</div>
-            <div class="categoryItem"><img src="images/pexels-jmark-2726370.jpg" alt="Entertainment">Entertainment</div>
-            <div class="categoryItem"><img src="images/pexels-cottonbro-3661243.jpg" alt="Kids Toys">Kiddies</div>
+            <a href = "search.php?category=Appliances"><div class="categoryItem"><img src="images/pexels-david-yohanes-97693-1450903.jpg" alt="Appliances">Appliances</div></a>      <!--thinking ima pass this to another page using get-->
+            <a href = "search.php?category=Gaming"><div class="categoryItem"> <img src="images/pexels-garrettmorrow-682933.jpg" alt="Gaming">Gaming</div></a>
+            <a href = "search.php?category=Home & Garden"><div class="categoryItem"> <img src="images/pexels-jpgata-11118543.jpg" alt="Outdoor Furniture">Home & Garden</div></a>
+            <a href = "search.php?category=Kitchen"><div class="categoryItem"><img src="images/pexels-fecundap6-350417.jpg" alt="Kitchen">Kitchen</div></a>
+            <a href = "search.php?category=Entertainment"><div class="categoryItem"> <img src="images/pexels-jmark-2726370.jpg" alt="Entertainment">Entertainment</div></a>
+            <a href = "search.php?category=Kiddies"><div class="categoryItem"> <img src="images/pexels-cottonbro-3661243.jpg" alt="Kids Toys">Kiddies</div></a>
         </div>
     <button class="popularCategoriesScrollRight">&gt;</button>
 </div>
@@ -211,6 +230,7 @@ endif; ?>
     <a href="#">View All</a>
     <button class="bestCarDealsScrollLeft">&lt;</button>
         <div class="bestCarDeals">
+            <!--    Refactor
             <div class="carItem"><img src="images/pexels-bradley-de-melo-742237632-19165516.jpg" alt="2008 Volkswagen GTI"><b>R 200 000</b><br>2008 Volkswagen GTI</div>
             <div class="carItem"><img src="images/pexels-framesbyambro-14776719.jpg" alt="2018 BMW 320D MSPORT Auto"><b>R 180 000</b><br>2018 BMW 320D MSPORT Auto</div>
             <div class="carItem"><img src="images/pexels-lenzatic-17157308.jpg" alt="2017 Ford Maverick"><b>R 210 000</b><br>2017 Ford Maverick</div>
@@ -218,6 +238,28 @@ endif; ?>
             <div class="carItem"><img src="images/pexels-iwan-wasyl-3786626-5625482.jpg" alt="2009 Volkswagen TSI"><b>R 120 000</b><br>2009 Volkswagen TSI</div>
             <div class="carItem"><img src="images/pexels-gasparzaldo-8671336.jpg" alt="1999 Toyota Hilux 2.4"><b>R 80 000</b><br>1999 Toyota Hilux 2.4</div>
             <div class="carItem"><img src="" alt=""><b></b><br>Test</div>
+            -->
+            <!--gonna convert to actual items, filter by category for vehicle-->
+            <?php
+            //not gonna use prepare statement here as its an automatic filter
+            $query = "SELECT * FROM products WHERE Category = 'Vehicle' ";
+            $result = mysqli_query($db_Conn,$query);
+            if($result && mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_assoc($result)){
+                    ?>
+                <div class="carItem">
+                    <a href ="product.php?id=<?php echo $row['ProductID']; ?>">
+                        <img src="./images/<?php echo $row['Product_IMG_DIR'];?>" alt = "<?php echo $row['Name']; ?>">
+                        <b>R <?php echo $row['Price']; ?></b><br>
+                        <?php echo $row['Name'];?>
+                    </a>
+                </div>
+                <?php
+                }
+            }else {
+                echo "Currently Empty";     //doesnt seem to be displaying      --fixed by not using ifelse
+            }
+            ?>
         </div>
     <button class="bestCarDealsScrollRight">&gt;</button>
 </div>

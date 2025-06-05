@@ -10,6 +10,22 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     header("Location: login.php");
     exit;
 }
+//fetching existing profile photo
+if(isset($_SESSION['id'])){
+    $userID = $_SESSION['id'];
+    $SQL = "SELECT Profile_IMG_DIR FROM users WHERE id = ?";
+    $stmt = mysqli_prepare($db_Conn, $SQL);
+    mysqli_stmt_bind_param($stmt, "i", $userID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($result)){
+        if(mysqli_num_rows($result) > 0){
+            $profileImg = $row['Profile_IMG_DIR'];
+        }
+    }
+
+}
+
 //https://www.geeksforgeeks.org/how-to-upload-image-into-database-and-display-it-using-php/
 if(isset($_POST['addProduct'])){
     //variables
@@ -85,6 +101,7 @@ if(isset($_POST['addProduct'])){
 <!--Adding php here for username in the Account list https://www.php.net/manual/en/control-structures.alternative-syntax.php  for control structures within php and html-->
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                 <span>Hi <?php echo $_SESSION["FirstName"]; ?></span>   <!--this will show the user name-->
+                <img src="<?php echo "./images/$profileImg";?>" alt="Profile Photo" class="profilePhoto">
                 <a href="logout.php" class="btnLogout">Logout</a>       <!--this is the logout button that will log the user out and redirect them to the home page-->
                 <!--<script>
                     document.getElementById("btnShowLogin").style.display = "none";      //this will hide the login button when the user is logged in
@@ -130,6 +147,7 @@ if(isset($_POST['addProduct'])){
                             <option value="Kitchen">Kitchen</option>
                             <option value="Books">Books</option>
                             <option value="Kiddies">Kiddies</option>
+                            <option value="Vehicle">Vehicle</option>
                         </select>
                     </div>
                     <div class="data">

@@ -2,7 +2,57 @@
 session_start();
 include("dbconnection.php");
 
+//fetching existing profile photo
+if(isset($_SESSION['id'])){
+    $userID = $_SESSION['id'];
+    $SQL = "SELECT Profile_IMG_DIR FROM users WHERE id = ?";
+    $stmt = mysqli_prepare($db_Conn, $SQL);
+    mysqli_stmt_bind_param($stmt, "i", $userID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($result)){
+        if(mysqli_num_rows($result) > 0){
+            $profileImg = $row['Profile_IMG_DIR'];
+        }
+    }
 
+}
+
+
+
+
+
+//profile image handeling
+if(isset($_POST['addImage'])){
+    //var
+    $fileName = $_FILES['profileImage']['name']; //getting file name
+    $fileTmpName = $_FILES['profileImage']['tmp_name'];
+    $folder = "images/".$fileName;
+    $userID = $_SESSION['id'];      //dont think i need this here
+    $sql = "UPDATE users SET Profile_IMG_DIR = ? WHERE id = ?"; 
+    $stmt = mysqli_prepare($db_Conn, $sql);
+    if(!$stmt){
+        $_SESSION['error'] = "Error in SQL Prepare Statement: " . mysqli_error($db_Conn);
+        header("Location: index.php");
+        exit;
+    }
+    mysqli_stmt_bind_param($stmt, "si", $fileName, $userID);
+    if(mysqli_stmt_execute($stmt)){
+        if(move_uploaded_file($fileTmpName, $folder)){
+            echo "Profile Photo added sucessfully";
+            header("Location: accounttabs.php");
+            exit;
+        }else{
+            echo "Error moving uploaded file."; //debug
+            $_SESSION['error'] = "Error moving uploaded file.";
+            header("Location: index.php"); //redirect to index page if file move fails
+            exit;
+        }
+    }
+
+
+}
+    
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +81,7 @@ include("dbconnection.php");
 <!--Adding php here for username in the Account list https://www.php.net/manual/en/control-structures.alternative-syntax.php  for control structures within php and html-->
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                 <span>Hi <?php echo $_SESSION["FirstName"]; ?></span>   <!--this will show the user name-->
+                <img src="<?php echo "./images/$profileImg";?>" alt="Profile Photo" class="profilePhoto">
                 <a href="logout.php" class="btnLogout">Logout</a>       <!--this is the logout button that will log the user out and redirect them to the home page-->
                 <!--<script>
                     document.getElementById("btnShowLogin").style.display = "none";      //this will hide the login button when the user is logged in
@@ -179,13 +230,13 @@ include("dbconnection.php");
             <p>Update your account information.</p>
         </div>
         <div class="accountList">
-        <form action="updateaccount.php" method="POST" id="updateAccountDetails">
+        <form action="updateaccount.php" method="POST" id="updateAccountDetails" enctype="multipart/form-data">
             <div class="nameSection">
                 <h4 for="tempName">Your Name:</h4>
                 <div class="inputRow">
                     <label id="tempName"><?php echo htmlspecialchars($_SESSION['FirstName'] . ' ' . $_SESSION['LastName']); ?></label>
-                    <input type="text" id="inputFirstName" value="<?php echo htmlspecialchars($_SESSION['FirstName']); ?>">
-                    <input type="text" id="inputLastName" value="<?php echo htmlspecialchars($_SESSION['LastName']); ?>">
+                    <input type="text" id="inputFirstName" name="inputFirstName" value="<?php echo htmlspecialchars($_SESSION['FirstName']); ?>">
+                    <input type="text" id="inputLastName" name="inputLastName" value="<?php echo htmlspecialchars($_SESSION['LastName']); ?>">
                 <div class="btnRow">
                     <button type="button" id= "btnEditName" class="btnEditButton" onclick="editName()">Edit</button>
                     <button type="button" id= "btnSaveName" class="btnEditButton" onclick="saveName()">Save</button>
@@ -197,7 +248,7 @@ include("dbconnection.php");
                 <h4 for="tempEmail">Email:</label></h4>
                 <div class="inputRow">
                     <label id="tempEmail"><?php echo htmlspecialchars($_SESSION['Email']); ?></label>
-                    <input type="email" id="inputEmail" value="<?php echo htmlspecialchars($_SESSION['Email']); ?>">
+                    <input type="email" id="inputEmail" name="inputEmail" value="<?php echo htmlspecialchars($_SESSION['Email']); ?>">
                 <div class="btnRow">
                     <button type="button" id= "btnEditEmail" class="btnEditButton" onclick="editEmail()">Edit</button>
                     <button type="button" id= "btnSaveEmail" class="btnEditButton" onclick="saveEmail()">Save</button>
@@ -205,7 +256,14 @@ include("dbconnection.php");
                 </div>
                 </div>
             </div>
-            <button type="submit" class="btnUpdateAccount">Update Account</button>
+            <div class="editProfilePhoto">
+                <h4>Profile Image</h4>
+                <div class="inputRow">
+                    <img src="<?php echo "./images/$profileImg";?>" alt="Profile Photo" class="updateProfilePhoto">        <!--displays profile photo-->           
+                    <input type="file" id="profileImage" name="profileImage" accept="image/*">
+                </div>
+            </div>
+            <button type="submit" name = "addImage" class="btnUpdateAccount">Update Account</button>
         </form>
     </div>
     </div>
