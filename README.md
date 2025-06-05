@@ -21,9 +21,9 @@ This project is being developed as part of my Web Design course at university. T
 
 *Planned Features*
 - Implement Review System (Semi-Functional, still in progress)
-- ~~Implement Seller Profiles~~
+- ~~Implement Seller Profiles~~   *Added*
 - Implement Cart Functionality
-- ~~Implement Account Options Working~~
+- ~~Implement Account Options Working~~    *Added*
 - Implement Similair Products Carosel
 - Admin Functionality
 - Password Max Attempts/Lockout
