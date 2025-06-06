@@ -1462,7 +1462,27 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     background-color: #464545;
 }
 
+.btnDelete{
+    margin-top: 10px;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+.btnDelete:hover{
+    background-color: red;
+    transition: all 0.5s ease-in-out;
+}
 
+.productDetails .btnDelete{
+    margin-top: 10px;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+.productDetails .btnDelete:hover{
+    background-color: red;
+    transition: all 0.5s ease-in-out;
+}
 
 /*refactor to remove redundancy
 [data-tab-content] {        since im adjusting from a video im not sure if i can adjust my current html struct to suit this better      --updated

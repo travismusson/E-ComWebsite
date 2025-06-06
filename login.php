@@ -61,7 +61,7 @@ $db_Conn->close();
 */
 
 //think im going to have to use bind and secure statements here aswell so lets adjust to use that and select where for fetching exact data i need
-$query = "SELECT id, FirstName, LastName, Email, Password FROM users WHERE Email = ?";
+$query = "SELECT id, FirstName, LastName, Email, Password, User_Level FROM users WHERE Email = ?";
 $stmt = mysqli_prepare($db_Conn, $query);       //creates a prepared statement within our db connection and object (my sql query)
 mysqli_stmt_bind_param($stmt, "s", $loginEmail);    //binds the parameter to the statement, s = string
 mysqli_stmt_execute($stmt);     //executes the statement
@@ -70,7 +70,7 @@ if($row = mysqli_fetch_assoc($result)){     //this will return the row if it exi
     //think i need to add a password check here to see if the password matches the one in the db
     //i need to unhash the password to check if it matches
     if(password_verify($loginPassword, $row["Password"])){      //this checks if the password matches the hashed password returns boolean   //https://www.tutorialspoint.com/php/php_function_password_verify.htm
-        echo "User Found: ID: ".$row["id"]." - First Name: ".$row["FirstName"]." - Last Name: ".$row["LastName"]." - Email: ".$row["Email"]." - Password: ".$row["Password"]."<br>";
+        echo "User Found: ID: ".$row["id"]." - First Name: ".$row["FirstName"]." - Last Name: ".$row["LastName"]." - Email: ".$row["Email"]." - Password: ".$row["Password"]."- User Level: ".$row["User_Level"]."<br>";       //added user level to check if admin
         //now im gonna needa figure out how to keep user logged in and redirect them to the home page
         //set session variables (according to lecture held by sir)
         $_SESSION["loggedin"] = true;      //this is a boolean to check if user is logged in
@@ -80,6 +80,7 @@ if($row = mysqli_fetch_assoc($result)){     //this will return the row if it exi
         $_SESSION["LastName"] = $row["LastName"];      //this is the last name of the user
         $_SESSION["Email"] = $row["Email"];      //this is the email of the user
         //$_SESSION["Password"] = $row["Password"];      //this is the password of the user       //might not need this also probs dont want to store this in the session
+        $_SESSION["User_Level"] = $row["User_Level"];
         //redirect to home page
         header("Location: index.php");     //this will redirect the user to the home page
         exit;      

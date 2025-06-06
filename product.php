@@ -150,6 +150,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inputReview'], $_POST
         exit;
     }
 }
+
+//needa do the  deltion of reviews:
+//for debug
+if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //https://www.youtube.com/watch?v=xTHJ4gGycb0 as ref he used more indepth function page and define user level but ima just do this for now.
+    echo "Admin!";       //debug
+} else{
+   // echo "Normal user!";        //debug  !WORKING now i need to add functionality
+};
+
+
+
+
 //now its html time
 ?>
 <!DOCTYPE html>
@@ -237,6 +249,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inputReview'], $_POST
                 <button type="submit" value="cart">Add to Cart</button>
             </form>
             <a href="index.php">Back to Products</a>
+                <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->
+                    <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
+                        <input type="hidden" name="productID" value="<?php echo $product['ProductID']; ?>">
+                            <button type="submit" class="btnDelete">Delete Product</button>
+                    </form>
+                <?php endif; ?>  
     </div>
     <div class="reviewSection">
         <h2>Reviews</h2>
@@ -276,6 +294,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inputReview'], $_POST
                 <b>Comment:</b> <?php echo nl2br(htmlspecialchars($review['Comment'])); ?><br>
                 <b>Date:</b> <?php echo htmlspecialchars($review['ReviewDate']); ?><br>
             </div>
+            <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->
+                <form action="deletereview.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
+                    <input type="hidden" name="reviewID" value="<?php echo $review['ReviewID']; ?>">
+                    <button type="submit" class="btnDelete">Delete Review</button>
+                </form>
+            <?php endif; ?> 
         <?php endforeach; ?>
         <?php else: ?>
             <p>No reviews yet for this product.</p>

@@ -22,6 +22,13 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){      //this 
             <button type='submit' class='btnLogout'>Logout</button>
         </form>";
     */
+//adding admin panel functionality to logged in check
+if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //https://www.youtube.com/watch?v=xTHJ4gGycb0 as ref he used more indepth function page and define user level but ima just do this for now.
+    echo "Admin!";       //debug        keeping to know if user is admin
+} else{
+    //echo "Normal user!";        //debug  !WORKING now i need to add functionality
+}       
+}
 //fetching profile photo
 //fetching existing profile photo
 if(isset($_SESSION['id'])){
@@ -40,7 +47,6 @@ if(isset($_SESSION['id'])){
 }
 
 
-}
 
 ?>
 <!--adding error handleing using session variables and control statements -- not working looking for fix --fixed!! -->
@@ -110,15 +116,15 @@ endif; ?>
         <button class="btn_DropDown">Shop by Category</button>
         <div class = "autoHideCat">
             <ul>
-                <li><div class="catItems"><span class="material-symbols-outlined">iron</span><a href="#">Appliances</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">book_5</span><a href="#">Books</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">apparel</span><a href="#">Clothing</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">computer</span><a href="#">Electronics</a></div></li>    
-                <li><div class="catItems"><span class="material-symbols-outlined">tv_gen</span><a href="#">Entertainment</a></div></li>                 
-                <li><div class="catItems"><span class="material-symbols-outlined">chair</span><a href="#">Home & Outdoor</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">sports_esports</span><a href="#">Gaming</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">child_care</span><a href="#">Kiddies</a></div></li>  
-                <li><div class="catItems"><span class="material-symbols-outlined">kettle</span><a href="#">Kitchen</a></div></li> 
+                <li><div class="catItems"><span class="material-symbols-outlined">iron</span><a href="search.php?category=Appliances">Appliances</a></div></li>
+                <li><div class="catItems"><span class="material-symbols-outlined">book_5</span><a href="search.php?category=Books">Books</a></div></li>
+                <li><div class="catItems"><span class="material-symbols-outlined">apparel</span><a href="search.php?category=Clothing">Clothing</a></div></li>
+                <li><div class="catItems"><span class="material-symbols-outlined">computer</span><a href="search.php?category=Electronics">Electronics</a></div></li>    
+                <li><div class="catItems"><span class="material-symbols-outlined">tv_gen</span><a href="search.php?category=Entertainment">Entertainment</a></div></li>                 
+                <li><div class="catItems"><span class="material-symbols-outlined">chair</span><a href="search.php?category=Home & Garden">Home & Garden</a></div></li>
+                <li><div class="catItems"><span class="material-symbols-outlined">sports_esports</span><a href="search.php?category=Gaming">Gaming</a></div></li>
+                <li><div class="catItems"><span class="material-symbols-outlined">child_care</span><a href="search.php?category=Kiddies">Kiddies</a></div></li>  
+                <li><div class="catItems"><span class="material-symbols-outlined">kettle</span><a href="search.php?category=Kitchen">Kitchen</a></div></li> 
             </ul>
         </div>
     </div>
@@ -186,6 +192,12 @@ endif; ?>
                                 <b>R <?php echo $row['Price'];?></b><br>
                                 <?php echo $row['Name']; ?>
                             </a>
+                            <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->
+                                <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
+                                    <input type="hidden" name="productID" value="<?php echo $row['ProductID']; ?>">
+                                    <button type="submit" class="btnDelete">Delete Product</button>
+                                </form>
+                            <?php endif; ?>             
                         </div>
                         <?php
                     }
@@ -253,6 +265,12 @@ endif; ?>
                         <b>R <?php echo $row['Price']; ?></b><br>
                         <?php echo $row['Name'];?>
                     </a>
+                        <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->
+                            <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
+                                <input type="hidden" name="productID" value="<?php echo $product['ProductID']; ?>">
+                                <button type="submit" class="btnDelete">Delete Product</button>
+                            </form>
+                        <?php endif; ?> 
                 </div>
                 <?php
                 }
