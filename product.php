@@ -127,7 +127,29 @@ if($buyerResult){
     }
 }
 */
+//needa add review submit:
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inputReview'], $_POST['inputRating'], $_POST['productID'])) {        //checks all the necessary info, also checks if its a post request to ensure its comming from our form, also ensures all the relant info is in the post req
+    if (isset($_SESSION['id'])) {       //double checking if user is logged in
+        $buyerID = $_SESSION['id'];     //assigns a new var for the buyerID
+        $productID = $_POST['productID'];      
+        $comment = $_POST['inputReview'];
+        $rating = $_POST['inputRating'];
 
+        if ($productID && $comment && $rating >= 1 && $rating <= 5) {       //checks to see if product id is valid, comment is valid, and rating is between 1 and 5
+            $query = "INSERT INTO reviews (BuyerID, ProductID, Rating, Comment, ReviewDate) VALUES (?, ?, ?, ?, NOW())";        //insert query uses date NOW() function to utilize present time
+            $stmt = mysqli_prepare($db_Conn, $query);
+            mysqli_stmt_bind_param($stmt, "iiis", $buyerID, $productID, $rating, $comment);
+            mysqli_stmt_execute($stmt);
+            header("Location: product.php?id=" . $productID);    //Redirect to avoid form resubmission on refresh
+            exit;
+        }
+    } else {
+        // Not logged in
+        $_SESSION['error'] = "You must be logged in to leave a review.";
+        header("Location: index.php");
+        exit;
+    }
+}
 //now its html time
 ?>
 <!DOCTYPE html>
@@ -224,15 +246,35 @@ if($buyerResult){
                 echo "A Total of $totalReviews reviews have been made, with an Average of $productReviewAverage";
            }else{
                 echo "No Reviews have been made for this product.<br>Be the first write a review!";
-           }?> 
+           }?>
+           <div class="writeReview">
+                <form action="" method="post">
+                    <label for="inputReview">Write A Review:</label><br>
+                    <input name="inputReview" id="inputReview" placeholder="Leave a review..."><br>
+                    <label for="inputRating">Rating:</label><br>
+                    <select name="inputRating" id="selectRating">
+                        <option value ="" disabled="disabled">Select a Rating out of 5</option>
+                        <option value ="1">1</option>
+                        <option value ="2">2</option>
+                        <option value ="3">3</option>
+                        <option value ="4">4</option>
+                        <option value ="5">5</option>
+                    </select>
+                    <div class="btnSubmitReview">
+                        <input type="hidden" name="productID" value="<?php echo $productID; ?>">        <!--not best practice i assume? but was getting an error and managed to find this: https://www.w3schools.com/tags/att_input_type_hidden.asp  which says devs utilize it and allows me to usse it in the post to check for product id  -->
+                        <button type="submit">Submit Review</button>        <!--not submitting-->
+                    </div>
+                </form>
+           </div>
+        
         <div class="reviewList">
             <?php if(count($allReviews) > 0): ?>
         <?php foreach($allReviews as $review): ?>
             <div class="reviewItem">
-                <b>Reviewer:</b> <?php echo $buyerName; ?><br>
-                <b>Rating:</b> <?php echo $review['Rating']; ?>/5<br>
-                <b>Comment:</b> <?php echo $review['Comment']; ?><br>
-                <b>Date:</b> <?php echo $review['ReviewDate']; ?><br>
+                <b>Reviewer:</b> <?php echo htmlspecialchars($buyerName); ?><br>
+                <b>Rating:</b> <?php echo htmlspecialchars($review['Rating']); ?>/5<br>
+                <b>Comment:</b> <?php echo nl2br(htmlspecialchars($review['Comment'])); ?><br>
+                <b>Date:</b> <?php echo htmlspecialchars($review['ReviewDate']); ?><br>
             </div>
         <?php endforeach; ?>
         <?php else: ?>

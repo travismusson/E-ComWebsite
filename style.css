@@ -926,6 +926,7 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     outline-color: #686868;
     transition: 1s ease-in-out;
     background-color: #464545;      /*makes it more visible might remove tho*/
+    cursor: pointer;
 }
 
 /*add product btn styling*/
@@ -1383,7 +1384,7 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 }
 
 .reviewSection{
-    background-color: #838280;
+    background-color: #686868;
     border-radius: 20px;
     padding: 10px;
     text-align: center;
@@ -1400,8 +1401,65 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     padding: 10px;
 }
 .reviewItem{
-    background-color: #686868;
+    background-color: #838280;
     border-radius: 20px;
+}
+
+.writeReview{
+    padding: 10px;
+}
+
+.writeReview input{
+    height: 30px;
+    width: 80%;
+    padding-left: 10px;
+    font-size: 15px;
+    outline: 1px solid #838383;
+    border: 1px solid #838280;
+    border-radius: 10px;
+    background-color: #686868;
+    color: #ffffff;
+    transition: 1s ease-in-out;
+}
+
+.writeReview input:focus{
+    transition: 1s ease-in-out;
+    outline: 1px solid #464545;
+    border: 1px solid #464545;
+}
+
+.writeReview select{
+    width: 40px;
+    outline: 1px solid #838383;
+    border: 1px solid #838280;
+    border-radius: 10px;
+    background-color: #686868;
+    color: #ffffff;
+    transition: 1s ease-in-out;
+}
+.writeReview select:focus, .writeReview select:hover{
+    transition: 1s ease-in-out;
+    outline: 1px solid #464545;
+    border: 1px solid #464545;
+    background-color: #464545;
+    cursor: pointer;
+}
+
+.btnSubmitReview button{
+    cursor: pointer;
+    outline: 1px solid #838383;
+    border: 1px solid #838280;
+    border-radius: 10px;
+    background-color: #838383;
+    color: #ffffff;
+    transition: 1s ease-in-out;
+}
+
+.btnSubmitReview button:hover{
+    transition: 1s ease-in-out;
+    outline: 1px solid #464545;
+    border: 1px solid #464545;
+    background-color: #464545;
 }
 
 
