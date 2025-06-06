@@ -91,7 +91,7 @@ if(isset($_POST['addImage'])){
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
             <a class="active" href="accountdashboard.php">Account</a>
-            <a href="#">Cart</a>
+            <a href="usercart.php">Cart</a>
             </div>
         </header>
 </div>

@@ -1,20 +1,9 @@
 <?php
-include ("dbconnection.php");
-session_start();    //enusre user is logged in
+session_start();        //session start for session handling
+include("dbconnection.php");    //added in to allow for dynamic product loading and db connection       
+//check if user is logged in
+// Set background color early to prevent white flashes
 echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';
-//get filtered categories from db
-$category = isset($_GET['category']) ? $_GET['category']:' ';    //always returning true?  --fixed by using a teneray and setting value
-if($category){
-    $query = "SELECT * FROM products WHERE Category = ?";
-    $stmt = mysqli_prepare($db_Conn, $query);
-    mysqli_stmt_bind_param($stmt, "s", $category);
-    mysqli_stmt_execute($stmt);
-    $categoryResult = mysqli_stmt_get_result($stmt);
-}else{
-    echo "Error occured trying to process your request please try again";       //only i would see this error
-    header("Location: index.php");      //redirects to homepage
-}
-
 //fetching existing profile photo
 if(isset($_SESSION['id'])){
     $userID = $_SESSION['id'];
@@ -22,16 +11,15 @@ if(isset($_SESSION['id'])){
     $stmt = mysqli_prepare($db_Conn, $SQL);
     mysqli_stmt_bind_param($stmt, "i", $userID);
     mysqli_stmt_execute($stmt);
-    $profileResult = mysqli_stmt_get_result($stmt);
-    if($row = mysqli_fetch_assoc($profileResult)){
-        if(mysqli_num_rows($profileResult) > 0){
+    $result = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($result)){
+        if(mysqli_num_rows($result) > 0){
             $profileImg = $row['Profile_IMG_DIR'];
         }
     }
 
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,35 +56,16 @@ if(isset($_SESSION['id'])){
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
             <a href="accountdashboard.php">Account</a>
-            <a href="usercart.php">Cart</a>
+            <a href="usercart.php" class="active">Cart</a>
             </div>
         </header>
     </div>
 
-<div class="searchContainer">
-        </div class="searchHeader">
-                <h2><?php echo $category ?></h2>
-        </div>
-<!-- need to display search results   Its Working just need some styling-->
-        <div class = "searchResults">
-            <?php if(isset($categoryResult) && mysqli_num_rows($categoryResult) > 0){           //if populated and set
-                while($row = mysqli_fetch_assoc($categoryResult)){
-                    ?>
-                    <div class="productItem">   <!-- same process as used in product.php-->
-                        <a href = "product.php?id=<?php echo $row['ProductID']; ?>">
-                            <img src="./images/<?php echo $row['Product_IMG_DIR']; ?>" alt="<?php echo $row['Name']?>">     <!-- need to add htmlspecialchars but just testing for now -->
-                            <div><?php echo $row['Name']; ?></div>          <!--temp-->
-                            <div><?php echo $row['Price']; ?></div>
-                        </a>
-                    </div>
-                    <?php
-                }
-            }else{
-                echo "No Products found in this category!";
-            }  
-            ?>  
-        </div>
+<div class="cartContainer">
+    
 </div>
+
+
 
 
 <div class="blurOverlay"></div>
@@ -177,7 +146,7 @@ if(isset($_SESSION['id'])){
         </picture>
     </footer>
 </div>
-    
 <script src="scripts.js"></script>     <!--link to the javascript file for the hamburger menu--> 
 </body>
 </html>
+

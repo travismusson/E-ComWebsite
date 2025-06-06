@@ -144,7 +144,7 @@ button{
     top: 210px;
     left: 0;
     background-color: #838280;
-    width: 250px;
+    width: 200px;
     box-sizing: border-box;
     border-radius: 20px;
     overflow: hidden;
@@ -159,13 +159,19 @@ button{
     align-items: stretch;
     padding: 5px;
     margin: 0;
+    width: 100%;
   
 }
 .autoHideCat ul li{
     display: flex;
     align-items: center;
     gap: 5px;
+    width: 90%;
 
+}
+
+.autoHideCat ul li a{
+    width: 100%;
 }
 /*  redundant so refactored
 .autoHideCat ul li a:hover{
@@ -179,6 +185,7 @@ button{
     display: inline-block;
     font-size: 24px;
     padding-right: 10px;
+    
 }
 .catItems{
     width: 100%;

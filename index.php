@@ -105,7 +105,7 @@ endif; ?>
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
             <a href="accountdashboard.php">Account</a>
-            <a href="#">Cart</a>
+            <a href="usercart.php">Cart</a>
         </div>
     </header>
     <div class= "headerBtnContainer">
@@ -116,15 +116,15 @@ endif; ?>
         <button class="btn_DropDown">Shop by Category</button>
         <div class = "autoHideCat">
             <ul>
-                <li><div class="catItems"><span class="material-symbols-outlined">iron</span><a href="search.php?category=Appliances">Appliances</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">book_5</span><a href="search.php?category=Books">Books</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">apparel</span><a href="search.php?category=Clothing">Clothing</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">computer</span><a href="search.php?category=Electronics">Electronics</a></div></li>    
-                <li><div class="catItems"><span class="material-symbols-outlined">tv_gen</span><a href="search.php?category=Entertainment">Entertainment</a></div></li>                 
-                <li><div class="catItems"><span class="material-symbols-outlined">chair</span><a href="search.php?category=Home & Garden">Home & Garden</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">sports_esports</span><a href="search.php?category=Gaming">Gaming</a></div></li>
-                <li><div class="catItems"><span class="material-symbols-outlined">child_care</span><a href="search.php?category=Kiddies">Kiddies</a></div></li>  
-                <li><div class="catItems"><span class="material-symbols-outlined">kettle</span><a href="search.php?category=Kitchen">Kitchen</a></div></li> 
+                <li><a href="search.php?category=Appliances"><div class="catItems"><span class="material-symbols-outlined">iron</span>Appliances</div></a></li>
+                <li><a href="search.php?category=Books"><div class="catItems"><span class="material-symbols-outlined">book_5</span>Books</div></a></li>
+                <li><a href="search.php?category=Clothing"><div class="catItems"><span class="material-symbols-outlined">apparel</span>Clothing</div></a></li>
+                <li><a href="search.php?category=Electronics"><div class="catItems"><span class="material-symbols-outlined">computer</span>Electronics</div></a></li>    
+                <li><a href="search.php?category=Entertainment"><div class="catItems"><span class="material-symbols-outlined">tv_gen</span>Entertainment</div></a></li>                 
+                <li><a href="search.php?category=Home & Garden"><div class="catItems"><span class="material-symbols-outlined">chair</span>Home & Garden</div></a></li>
+                <li><a href="search.php?category=Gaming"><div class="catItems"><span class="material-symbols-outlined">sports_esports</span>Gaming</div></a></li>
+                <li><a href="search.php?category=Kiddies"><div class="catItems"><span class="material-symbols-outlined">child_care</span>Kiddies</div></a></li>  
+                <li><a href="search.php?category=Kitchen"><div class="catItems"><span class="material-symbols-outlined">kettle</span>Kitchen</div></a></li> 
             </ul>
         </div>
     </div>
