@@ -62,7 +62,13 @@ if(isset($_SESSION['id'])){
     </div>
 
 <div class="cartContainer">
-    
+    <div class="cartHeader">
+        <h2>Account Cart</h2>
+        <p>Add Orders to your account to checkout and proceed with Payment!</p>
+    </div>
+    <div class="cartList">
+        <p>Comming soon!</p>
+    </div>
 </div>
 
 

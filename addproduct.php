@@ -82,6 +82,7 @@ if(isset($_POST['addProduct'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
     <title>Add Product</title>
 </head>
@@ -182,6 +183,6 @@ if(isset($_POST['addProduct'])){
         </picture>
     </footer>
 </div>
-<script src="script.js"></script> <!--linking to the script.js file for the hamburger menu-->
+<script src="scripts.js"></script> <!--linking to the script.js file for the hamburger menu-->
 </body>
 </html>
