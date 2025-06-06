@@ -18,14 +18,16 @@ This project is being developed as part of my Web Design course at university. T
 - The product is added dynamically to the index.php page to the latest deals
 - Seller Profiles
 - Account Dashboard/Account Editing
+- Review System
+- Admin Functionality (Delete Products, Reviews, Need to implement a view for users perhaps)
 
 *Planned Features*
-- Implement Review System (Semi-Functional, still in progress)
+- ~~Implement Review System (Semi-Functional, still in progress)~~  *added*
 - ~~Implement Seller Profiles~~   *Added*
 - Implement Cart Functionality
 - ~~Implement Account Options Working~~    *Added*
 - Implement Similair Products Carosel
-- Admin Functionality
+- ~~Admin Functionality~~
 - Password Max Attempts/Lockout
 - Polish
 
