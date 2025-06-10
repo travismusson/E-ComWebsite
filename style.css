@@ -1383,7 +1383,7 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 }
 
 .sellerProfilePhoto{
-    width: 400px;
+    width: 300px;
     height: auto; 
     border-radius: 20px;
     object-fit: scale-down;

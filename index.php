@@ -24,7 +24,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){      //this 
     */
 //adding admin panel functionality to logged in check
 if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //https://www.youtube.com/watch?v=xTHJ4gGycb0 as ref he used more indepth function page and define user level but ima just do this for now.
-    echo "Admin!";       //debug        keeping to know if user is admin
+    echo "You are a Admin!";       //debug        keeping to know if user is admin
 } else{
     //echo "Normal user!";        //debug  !WORKING now i need to add functionality
 }       
@@ -174,23 +174,28 @@ endif; ?>
                 <div class="dealsItem">Test</div>
             -->
                 <?php //dynamically adds products to the dealsItem divs
+                
                 $query = "SELECT ProductID, Name, Price, Description, Product_IMG_DIR FROM products ORDER BY ProductID DESC";    //selecting the product from the products table    --need to update to reverse this to show the latest product added first
                 $result = mysqli_query($db_Conn, $query);
                 //if(!$result){
                 //    $_SESSION['error'] = "Error in SQL Result Statement: " . mysqli_error($db_Conn);
                 //    header("Location: index.php");
                 //    exit;
-                
-
+                //needa add count to ensure we keep track of orders
+                $count = 0;
+                $productlimit = 30;     //change this to increase displayed products
                 if($result){
                     while($row = mysqli_fetch_assoc($result)){
                         //now we need to display the products in the dealsItem divs
+                        $count += 1;
+                        if($count < $productlimit){
                         ?>
-                        <div class="dealsItem">
+                        <div class="dealsItem">     <!-- needa add a limit here, thinking i use a count to count numb of items added within the fetch -->
                             <a href="product.php?id=<?php echo $row['ProductID']; ?>">
                                 <img src="./images/<?php echo $row['Product_IMG_DIR']; ?>" alt = "<?php echo $row['Name']; ?>">
                                 <b>R <?php echo $row['Price'];?></b><br>
                                 <?php echo $row['Name']; ?>
+                                <?php //echo $count ?>      <!-- testing -->
                             </a>
                             <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->
                                 <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
@@ -199,8 +204,9 @@ endif; ?>
                                 </form>
                             <?php endif; ?>             
                         </div>
-                        <?php
-                    }
+                        <?php 
+                        } // end if for productlimit
+                    } // end while result
                 }       //getting an error here the and i think its coz i didnt add db connection?      --fixed
                 ?>
 
@@ -213,7 +219,7 @@ endif; ?>
     <a href="#">View All</a>
     <button class="topSellersScrollLeft">&lt;</button>
         <div class="topSellers">
-            <!--manually implemented for now        //update gonna add a href now for linking sellers to the seller info page-->            
+            <!--manually implemented for now        //update gonna add a href now for linking sellers to the seller info page to dynamically add, we would look for sellers who have more than 1 posting and having more than 1 review perhaps?-->            
             <a href="sellerinfo.php?sellerID=6"><div class="sellersItem"><img src="images/pexels-karoldach-377711.jpg" alt="HifiHeadphoneStore"><b>From R5000</b><br>HifiHeadphoneStore</div></a>
             <a href="sellerinfo.php?sellerID=7"><div class="sellersItem"><img src="images/pexels-roman-odintsov-12719133.jpg" alt="XboxStore"><b>From R800</b><br>XboxStore</div></a>
             <a href="sellerinfo.php?sellerID=8"><div class="sellersItem"><img src="images/pexels-paggiarofrancesco-704241.jpg" alt="Glasses"><b>From R250</b><br>SunniesStore</div></a>

@@ -178,6 +178,7 @@ if(isset($_SESSION['id'])){
     </footer>
 </div>
     <script src="scripts.js"></script>     <!--link to the javascript file for the hamburger menu--> 
+    <script src="validate.js"></script>
 
 </body>
 </html>

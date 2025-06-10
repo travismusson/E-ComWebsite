@@ -184,5 +184,6 @@ if(isset($_POST['addProduct'])){
     </footer>
 </div>
 <script src="scripts.js"></script> <!--linking to the script.js file for the hamburger menu-->
+<script src="validate.js"></script>
 </body>
 </html>

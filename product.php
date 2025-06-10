@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inputReview'], $_POST
 //needa do the  deltion of reviews:
 //for debug
 if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //https://www.youtube.com/watch?v=xTHJ4gGycb0 as ref he used more indepth function page and define user level but ima just do this for now.
-    echo "Admin!";       //debug
+    echo "You Are a Admin!";       //debug
 } else{
    // echo "Normal user!";        //debug  !WORKING now i need to add functionality
 };
@@ -173,6 +173,8 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">      -->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">-->
 </head>
 <body>
     <div class="headerStrip">       <!-- standardized header strip for all pages -->
@@ -391,6 +393,7 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
         </picture>
     </footer>
 </div>
-<script src="scripts.js"></script>     <!--link to the javascript file for the hamburger menu--> 
+<script src="scripts.js"></script>     <!--link to the javascript file for the hamburger menu-->
+<script src="validate.js"></script> 
 </body>
 </html>

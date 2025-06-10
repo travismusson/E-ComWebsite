@@ -448,5 +448,6 @@ if(isset($_POST['addImage'])){
 </div>
 <!--https://github.com/travismusson-->
 <script src="scripts.js"></script>
+<script src="validate.js"></script>
 </body>
 </html>
