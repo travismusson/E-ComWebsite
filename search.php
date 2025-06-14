@@ -40,13 +40,13 @@ if(isset($_SESSION['id'])){
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
-    <title>Search Products</title>
+    <title>TravsList | Search Products</title>
 </head>
 <body>
     <div class="headerStrip">
         <header>
             <div class="headerTop">
-                <h1>Travis Musson's C2C E-Commerce Website!</h1>
+                <h1>TravsList a C2C E-Commerce Website!</h1>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">

@@ -1524,6 +1524,27 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     text-align: center;       
     width: 100%;  
 }
+
+.adminUserList{
+    background-color: #686868;
+    border-radius: 20px;
+}
+
+.adminUserlist table{
+    width:100%;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+.adminUserList th, .adminUserList td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+.adminUserList img {
+    border-radius: 50%;
+}
 /*refactor to remove redundancy
 [data-tab-content] {        since im adjusting from a video im not sure if i can adjust my current html struct to suit this better      --updated
     display: none;

@@ -1,34 +1,10 @@
 <?php
-include("dbconnection.php");
-session_start();    //enusre user is logged in
+session_start();        //session start for session handling
+include("dbconnection.php");    //added in to allow for dynamic product loading and db connection       
+//check if user is logged in
+// Set background color early to prevent white flashes
 echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';
-
-$sellerID = isset($_GET['sellerID']) ? $_GET['sellerID'] : ' ';     //always returning true needa do more research --fixed by adding teneary and actually setting the value
-$sellerName = '';
-$sellerProfilePhoto = '';
-if($sellerID){
-    //seller fetch
-    $query = "SELECT * FROM users WHERE id = ?";
-    $stmt = mysqli_prepare($db_Conn, $query);
-    mysqli_stmt_bind_param($stmt, "i", $sellerID);
-    mysqli_stmt_execute($stmt);
-    $sellerResult = mysqli_stmt_get_result($stmt);
-    if($sellerResult){
-        while($row = mysqli_fetch_assoc($sellerResult)){
-            $sellerName = $row['FirstName']. ' '. $row['LastName'];
-            $sellerProfilePhoto = $row['Profile_IMG_DIR'];
-        }
-    }
-    //product fetch
-    $query = "SELECT * FROM products WHERE SellerID = ?";
-    $stmt = mysqli_prepare($db_Conn, $query);
-    mysqli_stmt_bind_param($stmt, "i", $sellerID);
-    mysqli_stmt_execute($stmt);
-    $productResult = mysqli_stmt_get_result($stmt);
-    
-}
-
-//fetching existing profile photo for logged in user
+//fetching existing profile photo
 if(isset($_SESSION['id'])){
     $userID = $_SESSION['id'];
     $SQL = "SELECT Profile_IMG_DIR FROM users WHERE id = ?";
@@ -43,8 +19,11 @@ if(isset($_SESSION['id'])){
     }
 
 }
-
-
+if (!isset($_SESSION["User_Level"]) || $_SESSION["User_Level"] !== 1) {     //checks to see if user is admin
+    $_SESSION["error"] = "Unauthorized access.";
+    header("Location: index.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +34,8 @@ if(isset($_SESSION['id'])){
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
-    <title>TravsList | Seller Info</title>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="9415a47e-d40f-4dd5-a813-f4c68ef3d995"></script>       <!-- for website tracking info -->
+    <title>TravsList | Admin Panel</title>
 </head>
 <body>
     <div class="headerStrip">
@@ -82,42 +62,54 @@ if(isset($_SESSION['id'])){
                 <span>Hi Guest</span>   <!--guest username when not logged in-->
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
-            <a href="accountdashboard.php">Account</a>
+            <a class="active" href="accountdashboard.php">Account</a>
             <a href="usercart.php">Cart</a>
             </div>
         </header>
     </div>
-    <div class="sellerInfoContainer">
-        <div class="sellerInfoHeader">
-            <h2>Welcome to <?php echo $sellerName?> Page</h2>
-            <img src="<?php echo "./images/$sellerProfilePhoto";?>" alt="Seller Profile Photo" class="sellerProfilePhoto">
-        </div>
-        <div class="sellerProducts">
-            <?php if($productResult && mysqli_num_rows($productResult) > 0){        //checks to see if seller has products
-                while($row = mysqli_fetch_assoc($productResult)){
-                    ?>
-                    <div class="productItem">
-                        <a href="product.php?id=<?php echo $row['ProductID']; ?>">
-                            <img src="./images/<?php echo $row['Product_IMG_DIR']; ?>" alt="<?php echo $row['Name']?>">
-                            <div><?php echo $row['Name']; ?></div>
-                            <div><?php echo $row['Price']; ?></div>
-                        </a>
-                    </div>
-                    <?php
-                }
-            }else{
-                echo "Seller Does not have any other products";
-            }
-            ?>
-        </div>
+    <div class="accountHeader">
+        <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+        <h1>Welcome <?php echo $_SESSION['FirstName']; ?> to The Admin Panel</h1>
+        <p>View User Information and Delete Users from this page</p>
+        <?php else: ?>
+            <h1> Welcome Guest </h1>
+            <p>Please login to access account details, orders, and support requests.</p>
+        <?php endif; ?>
     </div>
 
-
-
-
-
-
-
+<?php   //to delete user
+$query = "SELECT id, FirstName, LastName, Email, Profile_IMG_DIR FROM users";
+$result = mysqli_query($db_Conn, $query);
+?>
+<div class="adminUserList">
+    <h2>All Users</h2>
+    <table>
+        <tr>
+            <th>Profile</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        <?php while($user = mysqli_fetch_assoc($result)): ?>
+        <tr>
+            <td><img src="images/<?php echo htmlspecialchars($user['Profile_IMG_DIR']); ?>" alt="Profile" width="40"></td>
+            <td><?php echo $user['FirstName'] . ' ' . $user['LastName']; ?></td>
+            <td><?php echo $user['Email']; ?></td>
+            <td>
+                <?php if($user['id'] != $_SESSION['id']): // Prevent self-delete ?>
+                <form action="deleteuser.php" method="post" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                    <input type="hidden" name="userID" value="<?php echo $user['id']; ?>">
+                    <button type="submit" class="btnDelete">Delete</button>
+                </form>
+                <?php else: ?>
+                    (You)       <!-- showcases to admin this is them -->
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php endwhile; ?>
+    </table>
+</div>
+    
 <div class="blurOverlay"></div>
 <div class="loginContainer">
     <span class="material-symbols-outlined" for="login">close</span>
@@ -200,3 +192,4 @@ if(isset($_SESSION['id'])){
 <script src="validate.js"></script>
 </body>
 </html>
+

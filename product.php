@@ -169,7 +169,7 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($product['Name']); ?></title>     <!-- allows user to keep track of product name in the title bar, think this is a really neat idea i noticed from takealot, uses control structures in php to echo current viewing product -->
+    <title>TravsList | <?php echo htmlspecialchars($product['Name']); ?></title>     <!-- allows user to keep track of product name in the title bar, think this is a really neat idea i noticed from takealot, uses control structures in php to echo current viewing product -->
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
@@ -180,7 +180,7 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
     <div class="headerStrip">       <!-- standardized header strip for all pages -->
         <header>
             <div class="headerTop">
-                <h1>Travis Musson's C2C E-Commerce Website!</h1>
+                <h1>TravsList a C2C E-Commerce Website!</h1>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">
@@ -252,6 +252,10 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
             </form>
             <a href="index.php">Back to Products</a>
                 <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->
+                    <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
+                        <input type="hidden" name="productID" value="<?php echo $product['ProductID']; ?>">
+                            <button type="submit" class="btnDelete">Edit Product</button>
+                    </form>
                     <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
                         <input type="hidden" name="productID" value="<?php echo $product['ProductID']; ?>">
                             <button type="submit" class="btnDelete">Delete Product</button>
