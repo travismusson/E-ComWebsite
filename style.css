@@ -1201,7 +1201,7 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     display: flex;
     background-color: #686868;
     border-radius: 20px;
-    width: 90%;          
+    width: 100%;          
     padding: 10px;
     align-items: center;
     justify-content: center;
@@ -1406,7 +1406,10 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 }
 
 .reviewList{
+    display: flex;
+    flex-direction: column;
     padding: 10px;
+    gap: 10px;
 }
 .reviewItem{
     background-color: #838280;

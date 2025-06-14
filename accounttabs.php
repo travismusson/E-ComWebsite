@@ -145,13 +145,14 @@ if(isset($_POST['addImage'])){
         $result = mysqli_stmt_get_result($stmt);
 
         if(mysqli_num_rows($result) > 0) {
-            while($order = mysqli_fetch_assoc($result)) {
-                echo "<div class='orderItem'>";
-                echo "<h3>Order ID: " . htmlspecialchars($order['OrderID']) . "</h3>";
-                echo "<p>Date: " . htmlspecialchars($order['OrderDate']) . "</p>";
-                echo "<p>Total: $" . htmlspecialchars($order['TotalPrice']) . "</p>";
-                echo "<a href='orderdetails.php?orderid=" . htmlspecialchars($order['OrderID']) . "'>View Details</a>";
-                echo "</div>";
+            while($order = mysqli_fetch_assoc($result)) { ?>
+                <div class='orderItem'>";
+                <h3>Order ID: <?php echo htmlspecialchars($order['OrderID']) ?></h3>
+                <p>Date: <?php echo htmlspecialchars($order['OrderDate']) ?></p>
+                <p>Total: R<?php echo htmlspecialchars($order['TotalPrice']) ?></p>
+                <a href='orderdetails.php?orderid="<?php echo htmlspecialchars($order['OrderID']) ?>"'>View Details</a>
+            </div>
+            <?php
             }
         } else {
             echo "<p>No orders found.</p>";
@@ -176,13 +177,14 @@ if(isset($_POST['addImage'])){
         $result = mysqli_stmt_get_result($stmt);
 
         if(mysqli_num_rows($result) > 0) {
-            while($return = mysqli_fetch_assoc($result)) {
-                echo "<div class='returnItem'>";
-                echo "<h3>Return ID: " . htmlspecialchars($return['ReturnID']) . "</h3>";
-                echo "<p>Date: " . htmlspecialchars($return['ReturnDate']) . "</p>";
-                echo "<p>Status: " . htmlspecialchars($return['ReturnStatus']) . "</p>";
-                echo "<a href='returndetails.php?returnid=" . htmlspecialchars($return['ReturnID']) . "'>View Details</a>";
-                echo "</div>";
+            while($return = mysqli_fetch_assoc($result)) { ?>
+                <div class='returnItem'>
+                <h3>Return ID: <?php echo htmlspecialchars($return['ReturnID']) ?></h3>
+                <p>Date: <?php echo htmlspecialchars($return['ReturnDate']) ?></p>
+                <p>Status:<?php echo htmlspecialchars($return['ReturnStatus']) ?></p>
+                <a href='returndetails.php?returnid=" <?php echo htmlspecialchars($return['ReturnID']) ?>"'>View Details</a>
+                </div>
+            <?php
             }
         } else {
             echo "<p>No returns found.</p>";
@@ -207,14 +209,15 @@ if(isset($_POST['addImage'])){
         $result = mysqli_stmt_get_result($stmt);
 
         if(mysqli_num_rows($result) > 0) {
-            while($review = mysqli_fetch_assoc($result)) {
-                echo "<div class='reviewItem'>";
-                echo "<h3>Review ID: " . htmlspecialchars($review['ReviewID']) . "</h3>";
-                echo "<p>Product ID: " . htmlspecialchars($review['ProductID']) . "</p>";
-                echo "<p>Rating: " . htmlspecialchars($review['Rating']) . "</p>";
-                echo "<p>Comment: " . htmlspecialchars($review['Comment']) . "</p>";
-                echo "<a href='editreview.php?reviewid=" . htmlspecialchars($review['ReviewID']) . "'>Edit Review</a>";
-                echo "</div>";
+            while($review = mysqli_fetch_assoc($result)) { ?>
+                <div class='reviewTabItem'>
+                    <h3>Review ID: <?php echo htmlspecialchars($review['ReviewID']); ?></h3>
+                    <p>Product ID: <?php echo htmlspecialchars($review['ProductID']); ?></p>
+                    <p>Rating: <?php echo htmlspecialchars($review['Rating']); ?></p>
+                    <p>Comment: <?php echo htmlspecialchars($review['Comment']); ?></p>
+                    <a href='editreview.php?reviewid=<?php echo htmlspecialchars($review['ReviewID']); ?>'>Edit Review</a>
+                </div>
+            <?php
             }
         } else {
             echo "<p>No reviews found.</p>";
