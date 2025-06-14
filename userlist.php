@@ -34,7 +34,7 @@ if (!isset($_SESSION["User_Level"]) || $_SESSION["User_Level"] !== 1) {     //ch
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="9415a47e-d40f-4dd5-a813-f4c68ef3d995"></script>       <!-- for website tracking info -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="9415a47e-d40f-4dd5-a813-f4c68ef3d995"></script>     <!-- for website tracking info -->
     <title>TravsList | Admin Panel</title>
 </head>
 <body>
@@ -109,7 +109,10 @@ $result = mysqli_query($db_Conn, $query);
         <?php endwhile; ?>
     </table>
 </div>
-    
+    <div class="trackingInfoContainer">
+        <h2>Tracking Info</h2>
+        
+    </div>
 <div class="blurOverlay"></div>
 <div class="loginContainer">
     <span class="material-symbols-outlined" for="login">close</span>
