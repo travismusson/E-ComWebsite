@@ -31,3 +31,24 @@ This project is being developed as part of my Web Design course at university. T
 - Password Max Attempts/Lockout
 - Polish
 
+Current Wireframe:
+
+*Landing Page*
+![image](https://github.com/user-attachments/assets/c46dd3b6-d59c-4c90-a8f1-3c552636dfb6)
+
+*Login Screen*
+![image](https://github.com/user-attachments/assets/24a79d27-4d07-4695-9af8-0e38a712a3c9)
+
+*Register Screen*
+![image](https://github.com/user-attachments/assets/cd3d004d-106f-4559-8e6d-562f1a3c016a)
+
+*Product Page*
+![image](https://github.com/user-attachments/assets/ebc650f8-3504-46dd-aa75-e24d168d0566)
+
+*Account Dashboard*
+![image](https://github.com/user-attachments/assets/ed04cb3a-3138-4ceb-aa48-0f9bf3735e24)
+
+*Review System*
+![image](https://github.com/user-attachments/assets/565be38d-6102-43e8-8204-b577200525bf)
+
+
