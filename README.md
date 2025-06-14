@@ -32,8 +32,9 @@ This project is being developed as part of my Web Design course at university. T
 - Polish
 
 Current Wireframe:
+
 *Landing Page*
-![image](https://github.com/user-attachments/assets/c46dd3b6-d59c-4c90-a8f1-3c552636dfb6)\
+![image](https://github.com/user-attachments/assets/c46dd3b6-d59c-4c90-a8f1-3c552636dfb6)
 
 *Login Screen*
 ![image](https://github.com/user-attachments/assets/24a79d27-4d07-4695-9af8-0e38a712a3c9)
