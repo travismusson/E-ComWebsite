@@ -19,12 +19,13 @@ This project is being developed as part of my Web Design course at university. T
 - Seller Profiles
 - Account Dashboard/Account Editing
 - Review System
-- Admin Functionality (Delete Products, Reviews, Need to implement a view for users perhaps)
+- Admin Functionality (Edit Functionality in some things still needs to be implemented)
+- Temp Version of Cart System
 
 *Planned Features*
 - ~~Implement Review System (Semi-Functional, still in progress)~~  *added*
 - ~~Implement Seller Profiles~~   *Added*
-- Implement Cart Functionality
+- ~~Implement Cart Functionality~~ *Added Temp Version for now*
 - ~~Implement Account Options Working~~    *Added*
 - Implement Similair Products Carosel
 - ~~Admin Functionality~~
