@@ -98,9 +98,13 @@ if(isset($_SESSION['id'])){
             ?>
             <div class="cartTotal">
                 <b>Total: R <?php echo $total ?></b>
+                <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <form action="checkout.php" method="POST">
                     <button type="submit" value="checkout">Checkout</button>
                 </form>
+                <?php else: ?>
+                    <br><a href="#" class="btnShowLogin">Please Login to Checkout</a>
+                <?php endif ?>
             </div>
             <?php
         } else {

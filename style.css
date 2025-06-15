@@ -1578,6 +1578,16 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     transition: all 0.5s ease-in-out;
 }
 
+.cartItem {
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 20px; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;  
+}
 .cartItem img {
     display: flex;
     flex-direction: column;
@@ -1593,6 +1603,14 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 .cartItem img:hover{
     border: 1px solid #838280;
     transition: all 0.5s ease-in-out;
+}
+
+.cartTotal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .cartTotal button{
@@ -1657,6 +1675,27 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     text-decoration: underline;
 }
 
+.cartList h2{
+    text-align: center;
+    align-self: center;
+}
+
+.cartList a {
+    display: flex;
+    background: #838280;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    border-radius: 20px;
+    padding: 10px;
+    
+}
+
+.cartList a:hover {
+    background-color: #464545;
+    text-decoration: underline;
+    transition: all 0.5s ease-in-out;
+}
 
 /*refactor to remove redundancy
 [data-tab-content] {        since im adjusting from a video im not sure if i can adjust my current html struct to suit this better      --updated
