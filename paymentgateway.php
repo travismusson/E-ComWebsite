@@ -81,7 +81,8 @@ if(isset($_SESSION['id'])){
                 }
                 ?>
                 <h2> Test Payment Gateway </h2>
-                <p> Your order #<?php echo $orderID?> has been placed!</p>
+                <p>Your order number is #<?php echo $orderID?>.</p>
+                <p>Payment has been recieved and is being processed</p><br>
                 <a href="index.php">Return to Home</a>
         </div>
     </div>

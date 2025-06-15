@@ -1647,6 +1647,15 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     transition: all 0.5s ease-in-out;
 }
 
+.paymentList a{
+    transition:all 0.5s ease-in-out;
+    
+}
+.paymentList a:hover{
+    transition:all 0.5s ease-in-out;
+    color: #464545;
+    text-decoration: underline;
+}
 
 
 /*refactor to remove redundancy
