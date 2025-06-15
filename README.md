@@ -23,12 +23,12 @@ This project is being developed as part of my Web Design course at university. T
 - Temp Version of Cart System
 
 *Planned Features*
-- ~~Implement Review System (Semi-Functional, still in progress)~~  *added*
+- ~~Implement Review System (Semi-Functional, still in progress)~~  *Added*
 - ~~Implement Seller Profiles~~   *Added*
 - ~~Implement Cart Functionality~~ *Added Temp Version for now*
 - ~~Implement Account Options Working~~    *Added*
 - Implement Similair Products Carosel
-- ~~Admin Functionality~~
+- ~~Admin Functionality~~  *Added*
 - Password Max Attempts/Lockout
 - Polish
 
