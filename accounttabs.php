@@ -70,7 +70,12 @@ if(isset($_POST['addImage'])){
 <div class="headerStrip">
         <header>
             <div class="headerTop">
-                <h1>TravsList a C2C E-Commerce Website!</h1>
+                <a href="index.php">
+                    <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">
+                </a>
+                <a href="index.php">
+                    <h1>TravsList a C2C E-Commerce Website!</h1>
+                </a>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">
@@ -203,7 +208,7 @@ if(isset($_POST['addImage'])){
     <div class="orderList">
         <?php
         // Fetch product reviews from the database
-        $query = "SELECT * FROM Reviews WHERE BuyerID = ?";
+        $query = "SELECT * FROM reviews WHERE BuyerID = ?";     //was causing issue in prod
         $stmt = mysqli_prepare($db_Conn, $query);
         mysqli_stmt_bind_param($stmt, "i", $userId);
         mysqli_stmt_execute($stmt);

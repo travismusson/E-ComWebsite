@@ -489,9 +489,20 @@ h2{
 
 .headerTop{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
+}
+
+.headerTop .siteLogo{
+    height: clamp(20px, 100px, 100px);      /*this wasnt working for mobile device for some reason, seems its not reading my css properly?   --fixed was a cache issue*/
+    width: clamp(20px, 100px, 100px);
+    display: flex;    
+    
+}
+.headerTop a h1{
+    display: flex;
+    padding-left: 15px; 
 }
 
 .hamburgerBtn{
@@ -1548,6 +1559,96 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 .adminUserList img {
     border-radius: 50%;
 }
+
+.cartList {
+    width: clamp(80%, 1500px, 80%); 
+    margin: 40px auto;
+    background: #686868;
+    border-radius: 15px;
+    border: 2px solid #838280;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+}
+
+.cartList:hover{
+    border: 2px solid #464545;
+    transition: all 0.5s ease-in-out;
+}
+
+.cartItem img {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    background: #838280;
+    border: 1px solid #464545;
+    transition: all 0.5s ease-in-out;
+}
+.cartItem img:hover{
+    border: 1px solid #838280;
+    transition: all 0.5s ease-in-out;
+}
+
+.cartTotal button{
+    transition:all 0.5s ease-in-out;
+    padding: 15px;
+    cursor: pointer;
+    
+}
+
+.cartTotal button:hover{
+    transition:all 0.5s ease-in-out;
+    background-color: #464545;
+}
+
+.testPaymentContainer {
+    background-color: #838280;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    width: clamp(80%, 1500px, 80%);
+    border: 1px solid #686868;
+    outline: 1px solid #686868;
+    transition: all 0.5s ease-in-out;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px;
+}
+
+.testPaymentContainer:hover{
+    border: 1px solid #464545;
+    outline: 1px solid #464545;
+    transition: all 0.5s ease-in-out;
+}
+
+.paymentList{
+    width: clamp(80%, 1500px, 80%); 
+    margin: 40px auto;
+    background: #686868;
+    border-radius: 15px;
+    border: 2px solid #838280;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+}
+.paymentList:hover{
+    border: 2px solid #464545;
+    transition: all 0.5s ease-in-out;
+}
+
+
+
 /*refactor to remove redundancy
 [data-tab-content] {        since im adjusting from a video im not sure if i can adjust my current html struct to suit this better      --updated
     display: none;

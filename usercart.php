@@ -35,7 +35,12 @@ if(isset($_SESSION['id'])){
     <div class="headerStrip">
         <header>
             <div class="headerTop">
-                <h1>TravsList a C2C E-Commerce Website!</h1>
+                <a href="index.php">
+                    <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">     <!-- having an issue on my phone on prod   fixed was a cache issue-->
+                </a>
+                <a href="index.php">
+                    <h1>TravsList a C2C E-Commerce Website!</h1>
+                </a>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">
@@ -68,7 +73,41 @@ if(isset($_SESSION['id'])){
         <p>Add Orders to your account to checkout and proceed with Payment!</p>
     </div>
     <div class="cartList">
-        <p>Comming soon!</p>
+        <?php
+        if(isset($_SESSION["cart"]) && !empty($_SESSION["cart"])){       //checks to see if cart isset
+            $cart = $_SESSION["cart"];
+            $total = 0;
+            foreach($cart as $productID => $qty){        //foreach item in the cart session array productID will take key using lamda and Qty will take value
+                $stmt = mysqli_prepare($db_Conn, "SELECT * FROM products WHERE ProductID = ?");
+                mysqli_stmt_bind_param($stmt, "i", $productID);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                if($row = mysqli_fetch_assoc($result)){
+                    $subtotal = $row["Price"] * $qty;       //math to x the qty by the price to get a subtotal
+                    $total += $subtotal;        //increment the total for each item
+                    ?>
+                    <div class="cartItem"> 
+                        <img src="./images/<?php echo $row["Product_IMG_DIR"];?>"></img>
+                        <?php
+                        echo $row["Name"]. " x $qty - R". $subtotal; 
+                        ?>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+            <div class="cartTotal">
+                <b>Total: R <?php echo $total ?></b>
+                <form action="checkout.php" method="POST">
+                    <button type="submit" value="checkout">Checkout</button>
+                </form>
+            </div>
+            <?php
+        } else {
+            echo "Your Cart is Empty!";
+        }
+?>
+</div>
     </div>
 </div>
 

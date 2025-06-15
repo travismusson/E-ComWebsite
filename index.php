@@ -75,13 +75,20 @@ endif; ?>
     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">     was testing bootstrap but its too late to incorperate it but for future projects i might look to use it and not suffer through all the styling ive been doing haha-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script defer src="https://cloud.umami.is/script.js" data-website-id="9415a47e-d40f-4dd5-a813-f4c68ef3d995"></script>     <!-- for website tracking info -->
+    <link rel="icon" type="image" href="images/favicon.png">    <!--added for prod it is very small atm -->
     <title>TravsList | E-commerce Platform</title> 
 </head>
 <body>
 <div class="headerStrip">
     <header>
         <div class="headerTop">
-        <h1>TravsList a C2C E-Commerce Website!</h1>
+        <!--gonna add logo here also wanna add animations-->
+        <a href="index.php">
+            <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">
+        </a>
+        <a href="index.php">
+            <h1>TravsList a C2C E-Commerce Website!</h1>
+        </a>
         <!--Hidden Hamburger for mobile view-->
         <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
         </div>

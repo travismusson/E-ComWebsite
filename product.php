@@ -181,7 +181,12 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
     <div class="headerStrip">       <!-- standardized header strip for all pages -->
         <header>
             <div class="headerTop">
-                <h1>TravsList a C2C E-Commerce Website!</h1>
+                <a href="index.php">
+                    <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">
+                </a>
+                <a href="index.php">
+                    <h1>TravsList a C2C E-Commerce Website!</h1>
+                </a>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">
@@ -247,14 +252,14 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
             <div class="productItem"><h4>Price:</h4> R <?php echo htmlspecialchars($product['Price']); ?></div>
             <div class="productItem"><h4>Category:</h4> <?php echo htmlspecialchars($product['Category']); ?></div>
             <div class="productItem"><h4>Stock:</h4> <?php echo htmlspecialchars($product['StockQuantity']); ?></div>
-            <form action="add_to_cart.php" method="post">
+            <form action="addtocart.php" method="post">
                 <input type="hidden" name="product_id" value="<?php echo $productID; ?>">
                 <button type="submit" value="cart">Add to Cart</button>
             </form>
             <a href="index.php">Back to Products</a>
-                <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->
+                <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->      <!--needa adjust to see if sellerid matches current id -->
                     <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
-                        <input type="hidden" name="productID" value="<?php echo $product['ProductID']; ?>">
+                        <input type="hidden" name="productID" value="<?php echo $product['ProductID']; ?>">     <!--needa adjust for edit -->
                             <button type="submit" class="btnDelete">Edit Product</button>
                     </form>
                     <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->

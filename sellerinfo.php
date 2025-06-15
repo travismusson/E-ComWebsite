@@ -62,7 +62,12 @@ if(isset($_SESSION['id'])){
     <div class="headerStrip">
         <header>
             <div class="headerTop">
+            <a href="index.php">
+                <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">
+            </a>
+            <a href="index.php">
                 <h1>TravsList a C2C E-Commerce Website!</h1>
+            </a>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">

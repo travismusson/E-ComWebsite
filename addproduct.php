@@ -91,7 +91,12 @@ if(isset($_POST['addProduct'])){
     <div class="headerStrip">       <!-- standardized header strip for all pages -->
         <header>
             <div class="headerTop">
-                <h1>TravsList a C2C E-Commerce Website!</h1>
+                <a href="index.php">
+                    <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">
+                </a>
+                <a href="index.php">
+                    <h1>TravsList a C2C E-Commerce Website!</h1>
+                </a>
                 <button class="hamburgerBtn"><span class="material-symbols-outlined">Menu</span></button>
             </div>
             <div class="homeStrip">

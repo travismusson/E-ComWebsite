@@ -19,13 +19,7 @@ if(isset($_SESSION['id'])){
     }
 
 }
-if (!isset($_SESSION["User_Level"]) || $_SESSION["User_Level"] !== 1) {     //checks to see if user is admin
-    $_SESSION["error"] = "Unauthorized access.";
-    header("Location: index.php");
-    exit;
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,14 +29,14 @@ if (!isset($_SESSION["User_Level"]) || $_SESSION["User_Level"] !== 1) {     //ch
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="9415a47e-d40f-4dd5-a813-f4c68ef3d995"></script>     <!-- for website tracking info -->
-    <title>TravsList | Admin Panel</title>
+    <title>TravsList | Search Products</title>
 </head>
 <body>
     <div class="headerStrip">
         <header>
             <div class="headerTop">
                 <a href="index.php">
-                    <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">
+                    <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">     <!-- having an issue on my phone on prod   fixed was a cache issue-->
                 </a>
                 <a href="index.php">
                     <h1>TravsList a C2C E-Commerce Website!</h1>
@@ -67,57 +61,32 @@ if (!isset($_SESSION["User_Level"]) || $_SESSION["User_Level"] !== 1) {     //ch
                 <span>Hi Guest</span>   <!--guest username when not logged in-->
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
-            <a class="active" href="accountdashboard.php">Account</a>
-            <a href="usercart.php">Cart</a>
+            <a href="accountdashboard.php">Account</a>
+            <a href="usercart.php" class="active">Cart</a>
             </div>
         </header>
     </div>
-    <div class="accountHeader">
-        <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-        <h1>Welcome <?php echo $_SESSION['FirstName']; ?> to The Admin Panel</h1>
-        <p>View User Information and Delete Users from this page</p>
-        <?php else: ?>
-            <h1> Welcome Guest </h1>
-            <p>Please login to access account details, orders, and support requests.</p>
-        <?php endif; ?>
+    <div class="testPaymentContainer">
+        <div class="testPaymentHeader">
+            <h2>Payment Gateway</h2>
+            <p>View Order Details and confirm payment</p>
+        </div>
+        <div class="paymentList">
+            <?php 
+                //if(isset($_GET["orderID"]) && !empty($_SESSION["orderID"])){     //issue here refactoring
+                if(isset($_GET["orderID"])){
+                    $orderID = $_GET["orderID"];        //had to simplify this for my brain couldnt figure out issue 
+                }else{
+                    $orderID = 0;
+                }
+                ?>
+                <h2> Test Payment Gateway </h2>
+                <p> Your order #<?php echo $orderID?> has been placed!</p>
+                <a href="index.php">Return to Home</a>
+        </div>
     </div>
 
-<?php   //to delete user
-$query = "SELECT id, FirstName, LastName, Email, Profile_IMG_DIR FROM users";
-$result = mysqli_query($db_Conn, $query);
-?>
-<div class="adminUserList">
-    <h2>All Users</h2>
-    <table>
-        <tr>
-            <th>Profile</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Action</th>
-        </tr>
-        <?php while($user = mysqli_fetch_assoc($result)): ?>
-        <tr>
-            <td><img src="images/<?php echo htmlspecialchars($user['Profile_IMG_DIR']); ?>" alt="Profile" width="40"></td>
-            <td><?php echo $user['FirstName'] . ' ' . $user['LastName']; ?></td>
-            <td><?php echo $user['Email']; ?></td>
-            <td>
-                <?php if($user['id'] != $_SESSION['id']): // Prevent self-delete ?>
-                <form action="deleteuser.php" method="post" onsubmit="return confirm('Are you sure you want to delete this user?');">
-                    <input type="hidden" name="userID" value="<?php echo $user['id']; ?>">
-                    <button type="submit" class="btnDelete">Delete</button>
-                </form>
-                <?php else: ?>
-                    (You)       <!-- showcases to admin this is them -->
-                <?php endif; ?>
-            </td>
-        </tr>
-        <?php endwhile; ?>
-    </table>
-</div>
-    <div class="trackingInfoContainer">
-        <h2>Tracking Info</h2>
-        
-    </div>
+
 <div class="blurOverlay"></div>
 <div class="loginContainer">
     <span class="material-symbols-outlined" for="login">close</span>
