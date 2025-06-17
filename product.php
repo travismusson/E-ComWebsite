@@ -258,9 +258,9 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
             </form>
             <a href="index.php">Back to Products</a>
                 <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->      <!--needa adjust to see if sellerid matches current id -->
-                    <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
+                    <form action="editproduct.php" method ="POST">
                         <input type="hidden" name="productID" value="<?php echo $product['ProductID']; ?>">     <!--needa adjust for edit -->
-                            <button type="submit" class="btnDelete">Edit Product</button>
+                            <button type="submit" class="btnEditProduct">Edit Product</button>
                     </form>
                     <form action="deleteproduct.php" method ="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">        <!-- cool prebuilt alert functionality https://www.w3schools.com/jsref/met_win_confirm.asp-->
                         <input type="hidden" name="productID" value="<?php echo $product['ProductID']; ?>">

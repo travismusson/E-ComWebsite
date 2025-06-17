@@ -833,7 +833,7 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 }
 
 /*add product php styling*/
-.addProductContainer {
+.addProductContainer, .editProductContainer {
     /*min-width: 500px;*/
     width: clamp(80%, 1500px, 80%);
     margin: 40px auto;
@@ -846,21 +846,21 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     align-items: center;
     transition: all 0.5s ease-in-out;
 }
-.addProductContainer:hover{
+.addProductContainer:hover, .editProductContainer:hover{
     border: 2px solid #464545;
     transition: all 0.5s ease-in-out;
 }
-.addProductContainer .text {
+.addProductContainer .text , .editProductContainer .text{
     font-size: 25px;
     font-weight: 500;
     text-align: center;
 }
-.addProductContainer form {
+.addProductContainer form , .editProductContainer form{
     display: flex;
     flex-direction: column;
     width: 100%;
 }
-.addProductContainer form .data {
+.addProductContainer form .data , .editProductContainer form .data{
     height: auto;
     min-height: 20px;   
     width: 90%;     
@@ -868,11 +868,11 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     display: flex;  
     flex-direction: column;
 }
-.addProductContainer form .data label {
+.addProductContainer form .data label , .editProductContainer form .data label{
     font-size: 20px;
 }
 
-.addProductContainer form .data input {
+.addProductContainer form .data input , .editProductContainer form .data input{
     height: 35px;
     width: 100%;
     padding-left: 10px;
@@ -881,13 +881,13 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     border-radius: 10px;
     background-color: #686868;
 }
-.addProductContainer form .data input:focus, .addProductContainer form .data input:hover{
+.addProductContainer form .data input:focus, .addProductContainer form .data input:hover, .editProductContainer form .data input:hover, .editProductContainer form .data input:focus{
     border-color: #464545;
     outline: 1px solid #686868;
     outline-color: #686868;
     transition: 1s ease-in-out;
 }
-.addProductContainer form .data textarea {
+.addProductContainer form .data textarea , .editProductContainer form .data textarea{
     height: auto;
     width: 100%;
     padding-left: 10px;
@@ -898,7 +898,7 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     background-color: #686868;
     color: #fff;
 }
-.addProductContainer form .data textarea:focus, .addProductContainer form .data textarea:hover {
+.addProductContainer form .data textarea:focus, .addProductContainer form .data textarea:hover, .editProductContainer form .data textarea:hover , .editProductContainer form .data textarea:focus {
     border-color: #464545;
     outline: 1px solid #686868;
     outline-color: #686868;
@@ -906,12 +906,12 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 }
 
 
-.addProductContainer form .btnAddProduct {
+.addProductContainer form .btnAddProduct , .editProductContainer form .btnEditProduct{
     display: flex;
     justify-content: center;
     width: 100%;
 }
-.addProductContainer form .btnAddProduct button {
+.addProductContainer form .btnAddProduct button , .editProductContainer form .btnEditProduct button {
     background: #838280;
     color: #fff;
     border: none;
@@ -921,12 +921,12 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
-.addProductContainer form .btnAddProduct button:hover {
+.addProductContainer form .btnAddProduct button:hover , .editProductContainer form .btnEditProduct button:hover{
     background: #464545;
     transition: all 0.5s ease-in-out;
 }
 
-.addProductContainer form .data select {
+.addProductContainer form .data select , .editProductContainer form .data select{
     height: 40px;
     width: 100%;
     padding-left: 10px;
@@ -939,13 +939,26 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     transition: all 0.5s ease-in-out;
 }
 
-.addProductContainer form .data select:focus, .addProductContainer form .data select:hover {
+.addProductContainer form .data select:focus, .addProductContainer form .data select:hover , .editProductContainer form .data select:hover , .editProductContainer form .data select:focus{
     border-color: #464545;
     outline: 1px solid #686868;
     outline-color: #686868;
     transition: 1s ease-in-out;
     background-color: #464545;      /*makes it more visible might remove tho*/
     cursor: pointer;
+}
+
+.editProductContainer .editProduct a{
+    color: #fff;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    transition:all 0.5s ease-in-out;
+}
+
+.editProductContainer .editProduct a:hover{
+    transition:all 0.5s ease-in-out;
+    color: #464545;
 }
 
 /*add product btn styling*/
