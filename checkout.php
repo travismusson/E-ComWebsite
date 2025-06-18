@@ -17,6 +17,11 @@ if ($cart) {
         $stmt = mysqli_prepare($db_Conn, "INSERT INTO orderdetails (OrderID, ProductID, Quantity) VALUES (?, ?, ?)");
         mysqli_stmt_bind_param($stmt, "iii", $orderID, $productID, $qty);
         mysqli_stmt_execute($stmt);
+        $updateSql = "UPDATE products SET StockQuantity = StockQuantity - ? WHERE ProductID = ?";        //update the stock - the binded qty amount on the order to reduce the stock of the product
+        $updateStmt = mysqli_prepare($db_Conn, $updateSql);
+        mysqli_stmt_bind_param($updateStmt, "ii", $qty, $productID);
+        mysqli_stmt_execute($updateStmt);
+        //this works but my checks to adding to cart arnt working
     }
     unset($_SESSION['cart']);
     header("Location: paymentgateway.php?orderID=$orderID");

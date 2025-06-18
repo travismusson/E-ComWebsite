@@ -166,9 +166,14 @@ var_dump($_SESSION);
 var_dump($product);
 echo "</pre>";
 */
-
 //now its html time
 ?>
+<?php if(isset($_SESSION["error"])):  ?>      <!--this checks if there is an error message set in the session -->
+    <script>
+    alert('<?php echo $_SESSION["error"]; ?>');
+    </script>
+    <?php unset($_SESSION["error"]);      //this will unset the error message so it does not show again
+endif; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -256,7 +261,7 @@ echo "</pre>";
             <div class="productItem"><h4>Description:</h4> <?php echo nl2br(htmlspecialchars($product['Description'])); ?></div>     <!--using nl2br to convert new lines to <br> tags https://www.php.net/manual/en/function.nl2br.php-->
             <div class="productItem"><h4>Price:</h4> R <?php echo htmlspecialchars($product['Price']); ?></div>
             <div class="productItem"><h4>Category:</h4> <?php echo htmlspecialchars($product['Category']); ?></div>
-            <div class="productItem"><h4>Stock:</h4> <?php echo htmlspecialchars($product['StockQuantity']); ?></div>
+            <div class="productItem"><h4>Stock:</h4> <?php if($product['StockQuantity'] === 0){echo "Out of Stock!";}else{echo $product['StockQuantity'];} ?></div><!-- prints out of stock if zero for customer ux
             <form action="addtocart.php" method="post">
                 <input type="hidden" name="product_id" value="<?php echo $productID; ?>">
                 <button type="submit" value="cart">Add to Cart</button>

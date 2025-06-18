@@ -1710,6 +1710,65 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     transition: all 0.5s ease-in-out;
 }
 
+.updateCartForm input{
+    height: 30px;
+    width: 60px;
+    padding: 10px;
+    font-size: 15px;
+    outline: 1px solid #838383;
+    border: 1px solid #838280;
+    border-radius: 10px;
+    background-color: #686868;
+    color: #ffffff;
+    transition: 0.5s ease-in-out;
+}
+
+.updateCartForm input:hover, .updateCartForm input:focus{
+    transition: 0.5s ease-in-out;
+    outline: 1px solid #464545;
+    border: 1px solid #464545;
+}
+
+.updateCartForm button{
+    width: fit-content;
+    transition: 0.5s ease-in-out;
+    outline: 1px solid #838383;
+    border: 1px solid #838280;
+}
+.updateCartForm button:hover{
+    transition: 0.5s ease-in-out;
+    background-color: #464545;
+    outline: 1px solid #464545;
+    border: 1px solid #464545;
+}
+
+.updateCartForm .removeBtnCart:hover{
+    transition: 0.5s ease-in-out;
+    background-color: red;
+    outline: 1px solid red;
+    border: 1px solid red;
+}
+
+.updateCartForm .cartInput{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    padding: 5px;
+}
+.updateCartForm .cartInput p{
+    padding: 10px;
+}
+
+.updateCartForm .cartBtn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    
+}
+
+
 /*refactor to remove redundancy
 [data-tab-content] {        since im adjusting from a video im not sure if i can adjust my current html struct to suit this better      --updated
     display: none;

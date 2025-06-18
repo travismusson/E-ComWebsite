@@ -19,6 +19,48 @@ if(isset($_SESSION['id'])){
     }
 
 }
+
+//first wanna see what prints to post
+/*
+echo "<pre>";
+var_dump($_SESSION);
+var_dump($_POST);
+echo "</pre>";
+*/
+
+//needa add handling for the post of the product update and deletion from cart
+if(isset($_POST['updateItem']) && isset($_POST['productQty'])){
+    //var
+    $productID = $_POST['productID'];
+    $productQty = $_POST['productQty'];
+    //maybe needa check to see if there is enough stock of the product.
+    //fetching current stock
+    $sql = "SELECT StockQuantity FROM products WHERE ProductID = ?";
+    $stmt = mysqli_prepare($db_Conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $productID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+
+    if($productQty > 0){    //just incase
+        if($row && $productQty <= $row['StockQuantity']){   //if row is populated and the productqty user inputs is equalt to or less than the stock quantity
+             $_SESSION['cart'][$productID] = $productQty;     //set the new quantity
+        }else{
+            $_SESSION['error'] = "Seller does not have the request quantity of stock available";
+            header("Location: index.php");
+            exit;
+        }
+       
+    }
+}
+if(isset($_POST['removeItem'])){
+    //var
+    $productID = $_POST['productID'];
+    unset($_SESSION['cart'][$productID]);   //unsets the cart at the product id -- basically removes from cart
+
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,10 +129,22 @@ if(isset($_SESSION['id'])){
                     $total += $subtotal;        //increment the total for each item
                     ?>
                     <div class="cartItem"> 
+                        <h2><?php echo $row["Name"];?></h2>
                         <img src="./images/<?php echo $row["Product_IMG_DIR"];?>"></img>
-                        <?php
-                        echo $row["Name"]. " x $qty - R". $subtotal; 
-                        ?>
+                        <p> <?php echo $row["Name"]. " x $qty - R". $subtotal;?></p>
+                        <div class="updateCartItem">
+                            <form action="usercart.php" method="POST" class="updateCartForm">
+                                <div class="cartInput">
+                                    <input type="hidden" name="productID" value="<?php echo $productID;?>">
+                                    <p>Qty:</p>
+                                    <input type="number" name="productQty" value="<?php echo $qty;?>" step="1" min="1" max = "<?php echo $row['StockQuantity'];?>">     <!--ensures it steps by 1 and min value is 1 unless they wanna remove it, testing max with stock quant-->
+                                </div>
+                                <div class="cartBtn">
+                                    <button type="submit" name="updateItem" value="update">Update</button>
+                                    <button type="submit" name="removeItem" value="remove" class="removeBtnCart">Remove</button>        <!--removed this coz im adding update also //onsubmit="return confirm('Are you sure you want to remove this product from your cart?')"-->
+                                </div> 
+                            </form>
+                        </div>
                     </div>
                     <?php
                 }
