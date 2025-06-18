@@ -1,7 +1,7 @@
 <?php
 session_start();
 $productID = $_POST['product_id'];
-$quantity = 1; // You can extend this to allow custom quantities
+$quantity = 1; // hardcoded for now but will implement a button to change
 
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];     //empties the cart

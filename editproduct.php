@@ -18,11 +18,6 @@ if(isset($_SESSION['id'])){
 
 }
 
-if (!isset($_SESSION["User_Level"]) || $_SESSION["User_Level"] !== 1) {     //double checking if not admin
-    header("Location: index.php");
-    exit;
-}
-
 //needa get product id and fetch details for current product
 if(isset($_POST['productID'])){     //check to see if set
     $productID = $_POST['productID'];
@@ -42,6 +37,24 @@ if(isset($_POST['productID'])){     //check to see if set
     echo "Not a valid product!";     //temp for debug
 }
 
+//debug     https://stackoverflow.com/questions/3331613/how-to-print-all-session-variables-currently-set
+/*
+echo "<pre>";
+var_dump($_SESSION);
+var_dump($currentProductData);
+echo "</pre>";
+*/
+/*if (!isset($_SESSION["User_Level"]) || $_SESSION["User_Level"] !== 1 || !isset($_SESSION['id']) || $_SESSION['id'] !== $currentProductData['SellerID']){     //double checking if not admin and if id is set and equal to seller id of product nah not getting in with this code --fixed potentially
+    //header("Location: index.php");        //temp removed for debug
+    //exit;
+}*/
+
+//refactored above logic
+if(!isset($_SESSION['User_Level']) || !$currentProductData || ($_SESSION['User_Level'] !== 1 && $_SESSION['id'] !== $currentProductData['SellerID'])){
+    header("Location: index.php");
+    $_SESSION['error'] = "Invalid Access";
+    exit;
+}
 
 //handling post for edit
 if(isset($_POST['editProduct'])){

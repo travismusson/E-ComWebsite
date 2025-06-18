@@ -159,8 +159,13 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
    // echo "Normal user!";        //debug  !WORKING now i need to add functionality
 };
 
-
-
+//debug var
+/*
+echo "<pre>";
+var_dump($_SESSION);
+var_dump($product);
+echo "</pre>";
+*/
 
 //now its html time
 ?>
@@ -257,7 +262,7 @@ if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1){        //ht
                 <button type="submit" value="cart">Add to Cart</button>
             </form>
             <a href="index.php">Back to Products</a>
-                <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1): ?>       <!--WORKING-->      <!--needa adjust to see if sellerid matches current id -->
+                <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1 || isset($_SESSION['id']) && $_SESSION['id'] === $product['SellerID']): ?>       <!--WORKING     //needa adjust to see if sellerid matches current id  //checking to see if seller matches with this now  //working :D -->        
                     <form action="editproduct.php" method ="POST">
                         <input type="hidden" name="productID" value="<?php echo $product['ProductID']; ?>">     <!--needa adjust for edit -->
                             <button type="submit" class="btnEditProduct">Edit Product</button>

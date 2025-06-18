@@ -71,10 +71,13 @@ if(mysqli_num_rows($check) > 0){
     mysqli_stmt_execute($stmt);
     echo "Record has been saved";       //WORKING YAY!!!!!
     header("Location: index.php");     //move to home page this will bypass all the error checking so will comment out for testing -- renabled
+    $_SESSION['error'] = "Please login to confirm account creation";        //added this to curve the issue i was having before
     //thinking as ive added session i should log user in automatically after registration
+    /*  gonna refactor this as im getting a bug with loggin user in like this
     $_SESSION["loggedin"] = true;      //set session variable to true
     $_SESSION["FirstName"] = $registerFirstName;      //set session variable for first name
     $_SESSION["LastName"] = $registerLastName;        //set session variable for last name
+    */
     exit;
 }
 

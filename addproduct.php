@@ -7,7 +7,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 } else {
     // User is not logged in, redirect to login page or show an error
     $_SESSION["addProductError"] = "You must be logged in to add a product.";     //this is being overwritten if i try to access this page without being logged in by the error message in the login.php file so i might need to utilize unique error messages in session variable
-    header("Location: login.php");
+    header("Location: index.php");
     exit;
 }
 //fetching existing profile photo
@@ -39,8 +39,10 @@ if(isset($_POST['addProduct'])){
     //not sure if this is correct
     $fileName = $_FILES['productImage']['name'];       //getting the file name from the form
     $fileTmpName = $_FILES['productImage']['tmp_name']; //getting the temporary file name
+    $defaultImage = "default_product.jpg";      //default product name incase no file is uploaded
     $folder = "images/".$fileName; 
     $sellerID = $_SESSION["id"];    //assigns current logged in user id to the sellerID variable
+
     $sql = "INSERT INTO products (Name, Description, Price, Category, StockQuantity, DateAdded, Product_IMG_DIR, SellerID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($db_Conn, $sql);
     if(!$stmt){
@@ -48,6 +50,10 @@ if(isset($_POST['addProduct'])){
         $_SESSION['error'] = "Error in SQL Prepare Statement: " . mysqli_error($db_Conn);
         header("Location: index.php");
         exit;
+    }
+
+    if(empty($fileName)){
+        $fileName = $defaultImage;
     }
 
     //bind the parameters to the SQL statement
@@ -59,12 +65,12 @@ if(isset($_POST['addProduct'])){
         $productID = mysqli_insert_id($db_Conn); //get the last inserted ID
         //move the uploaded file to the designated folder
         if(move_uploaded_file($fileTmpName, $folder)){      //this isnt working at the moment. okay it now is working
-            echo "Product added successfully."; //debug
+            //echo "File added successfully."; //debug
             header("Location: product.php?id=" . $productID); //redirect to the product page after successful addition
             exit; 
         } else {
-            echo "Error moving uploaded file."; //debug
-            $_SESSION['error'] = "Error moving uploaded file.";
+            //echo "Error moving uploaded file."; //debug 
+            $_SESSION['error'] = "No File Uploaded, a default image was appointed";     //so ima refactor this to add a default image
             header("Location: index.php"); //redirect to index page if file move fails
             exit;
         }
