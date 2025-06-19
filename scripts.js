@@ -1,4 +1,5 @@
 //assign variables using query selector
+
 let homeStrip = document.querySelector(".homeStrip")
 let categoryMenu = document.querySelector(".autoHideCat");
 let dropdownButton = document.querySelector(".btn_DropDown");
@@ -38,6 +39,7 @@ let blurOverlay = document.querySelector(".blurOverlay");
 //hamburger for mobile view and header strip for resizing
 let mobileMenu = document.querySelector(".hamburgerBtn");
 let headerStrip = document.querySelector(".headerStrip");
+let lastScrollY = window.scrollY;       //https://www.youtube.com/watch?v=Q_XZk5Vnujw for the ref
 // Track whether the menu was toggled by a click
 let menuIsToggled = false;
 let mobileMenuIsToggled = false;
@@ -415,12 +417,12 @@ mobileMenu.addEventListener("click", function(){
         homeStrip.style.opacity = "1";
         homeStrip.style.visibility = "visible";
         homeStrip.style.height = "auto"
-        categoryMenu.style.top = "480px"        //works to an extent
+        categoryMenu.style.top = "530px"        //works to an extent
     }else{
         homeStrip.style.opacity = "0";
         homeStrip.style.visibility = "hidden";
         homeStrip.style.height = "0"
-        categoryMenu.style.top = "250px"        //this works but still icant check for if the user resizes the windows      
+        categoryMenu.style.top = "270px"        //this works but still icant check for if the user resizes the windows      
     }   
 });
 
@@ -437,17 +439,32 @@ window.addEventListener("resize", function(){
         homeStrip.style.opacity = "1";
         homeStrip.style.visibility = "visible";
         homeStrip.style.height = "auto"
-        categoryMenu.style.top = "250px"        //works to an extent        had to manually align this and went through a various amount of values
+        categoryMenu.style.top = "270px"        //works to an extent        had to manually align this and went through a various amount of values
     }else{
         if (!mobileMenuIsToggled) {
             homeStrip.style.opacity = "0";
             homeStrip.style.visibility = "hidden";
             homeStrip.style.height = "0";
-            categoryMenu.style.top = "250px"           //arrived at this value
+            categoryMenu.style.top = "270px"           //arrived at this value
         }
     }
 });
-}
+};
+
+//gonna enable hidden nav bar for scroll behaviour      //https://www.youtube.com/watch?v=Q_XZk5Vnujw for ref
+window.addEventListener("scroll", () => {       
+    if(lastScrollY < window.scrollY){
+        console.log("Scrolling Down");      //for debug
+        headerStrip.classList.add("nav--hidden");
+    }else{
+        console.log("Scrolling Up");
+        headerStrip.classList.remove("nav--hidden");
+    }
+
+    lastScrollY = window.scrollY;
+});
+
+
 
 function editPassword(){
     inputPassword.style.display = "block";
@@ -624,6 +641,8 @@ function cancelEmail(){
     tempEmail.style.display = "block";
     btnEditEmail.style.display = "block";
 }
+
+
 
 /*
 btn_NavOpen.addEventListener("click", function(){

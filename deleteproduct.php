@@ -33,6 +33,8 @@ if (isset($_POST['productID'])) {
     $stmt = mysqli_prepare($db_Conn, "DELETE FROM reviews WHERE ProductID = ?");
     mysqli_stmt_bind_param($stmt, "i", $productID);
     mysqli_stmt_execute($stmt);
+    //needa delete orders with product?
+    
     //delete product from product table
     $stmt = mysqli_prepare($db_Conn, "DELETE FROM products WHERE ProductID = ?");
     mysqli_stmt_bind_param($stmt, "i", $productID);

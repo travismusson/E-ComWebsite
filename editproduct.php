@@ -105,7 +105,7 @@ if(isset($_POST['editProduct'])){
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="9415a47e-d40f-4dd5-a813-f4c68ef3d995"></script>     <!-- for website tracking info -->
-    <title>TravsList | Add Product</title>
+    <title>TravsList | Edit Product</title>
 </head>
 <body>
     <div class="headerStrip">       <!-- standardized header strip for all pages -->

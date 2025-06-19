@@ -36,7 +36,11 @@ a{
     border-radius: 20px;
     padding: 20px;
     
+    transition: all 0.5s ease-in-out;
 }
+
+
+
 /*
 .headerBtnContainer{
     position: relative;
@@ -503,6 +507,7 @@ h2{
 .headerTop a h1{
     display: flex;
     padding-left: 15px; 
+    
 }
 
 .hamburgerBtn{
@@ -512,6 +517,12 @@ h2{
 }
 /*small screen styling*/
 @media screen and (max-width: 624px){
+
+    .nav--hidden{
+    transform: translateY(-500px);
+    transition: all 0.5s ease-in-out;
+    }
+
     .homeStrip{
         /*refactor*/
         /*
@@ -555,20 +566,23 @@ h2{
         width: 90%;
     }
     
+    .headerTop a h1{
+        display: none;
+    }
     .autoHideCat{
-        top: 250px;
+        top: 270px;
     }  
     
     .hamburgerBtn{
         display: inline-block;
         width: 50px;
+        margin-left: 150px;
     }
 
     .hamburgerBtn:hover{
         color: #838280;
         transition: all 0.5s ease-in-out;
     }
-
 }
 
 
@@ -1220,7 +1234,13 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 .tabContent.active{
     display: flex;
 }
-
+.ordersContainer{
+    width:fit-content;
+    display: flex;
+    flex-direction: column;
+    padding:10px;
+    margin:0 auto;
+}
 .orderList, .accountList{
     display: flex;
     background-color: #686868;
@@ -1239,6 +1259,25 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     border: 1px solid #464545;
     outline: 1px solid #464545;
     transition: all 0.5s ease-in-out;
+}
+
+.orderList a{
+    background-color: #838383;
+    border-radius: 20px;
+    padding: 10px;
+    height: fit-content;
+    transition: all 0.5s ease-in-out;
+}
+.orderList a:hover{
+    background-color: #464545;
+    transition: all 0.5s ease-in-out;
+}
+
+.orderItem {
+    display: flex;
+    width:100%;
+    align-self: center;
+    gap:20px;
 }
 
 .orderHeader, .accountHeader, .addressHeader, .newsletterHeader, .supportHeader, .FAQHeader, .helpCenterHeader{
@@ -1442,6 +1481,31 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 
 .writeReview{
     padding: 10px;
+    background-color: #838383;
+    display: flex;
+    gap: 10px;
+    
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+    border-radius: 20px;
+}
+
+.reviewRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    gap: 10px;
+    justify-content: center;
+}
+
+.writeReview form{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: clamp(400px, 1500px, fit-content);
 }
 
 .writeReview input{
@@ -1464,13 +1528,15 @@ form .btnLogin button:hover, form .btnRegister button:hover{
 }
 
 .writeReview select{
-    width: 40px;
+    width: 60px;
     outline: 1px solid #838383;
     border: 1px solid #838280;
     border-radius: 10px;
     background-color: #686868;
     color: #ffffff;
     transition: 1s ease-in-out;
+    font-size: 15px;
+    padding: 10px;
 }
 .writeReview select:focus, .writeReview select:hover{
     transition: 1s ease-in-out;
@@ -1485,9 +1551,11 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     outline: 1px solid #838383;
     border: 1px solid #838280;
     border-radius: 10px;
-    background-color: #838383;
+    background-color: #686868;
     color: #ffffff;
     transition: 1s ease-in-out;
+    font-size: 15px;
+    
 }
 
 .btnSubmitReview button:hover{

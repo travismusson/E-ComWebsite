@@ -152,11 +152,11 @@ if(isset($_POST['addImage'])){
 
         if(mysqli_num_rows($result) > 0) {
             while($order = mysqli_fetch_assoc($result)) { ?>
-                <div class='orderItem'>";
+                <div class='orderItem'>
                 <h3>Order ID: <?php echo htmlspecialchars($order['OrderID']) ?></h3>
                 <p>Date: <?php echo htmlspecialchars($order['OrderDate']) ?></p>
                 <p>Total: R<?php echo htmlspecialchars($order['TotalPrice']) ?></p>
-                <a href='orderdetails.php?orderid="<?php echo htmlspecialchars($order['OrderID']) ?>"'>View Details</a>
+                <a href="orderdetails.php?orderid=<?php echo $order['OrderID'] ?>">View Details</a>
             </div>
             <?php
             }
@@ -188,7 +188,7 @@ if(isset($_POST['addImage'])){
                 <h3>Return ID: <?php echo htmlspecialchars($return['ReturnID']) ?></h3>
                 <p>Date: <?php echo htmlspecialchars($return['ReturnDate']) ?></p>
                 <p>Status:<?php echo htmlspecialchars($return['ReturnStatus']) ?></p>
-                <a href='returndetails.php?returnid=" <?php echo htmlspecialchars($return['ReturnID']) ?>"'>View Details</a>
+                <a href="returndetails.php?returnid=<?php echo htmlspecialchars($return['ReturnID']) ?>">View Details</a>
                 </div>
             <?php
             }
@@ -221,7 +221,7 @@ if(isset($_POST['addImage'])){
                     <p>Product ID: <?php echo htmlspecialchars($review['ProductID']); ?></p>
                     <p>Rating: <?php echo htmlspecialchars($review['Rating']); ?></p>
                     <p>Comment: <?php echo htmlspecialchars($review['Comment']); ?></p>
-                    <a href='editreview.php?reviewid=<?php echo htmlspecialchars($review['ReviewID']); ?>'>Edit Review</a>
+                    <a href="editreview.php?reviewid=<?php echo htmlspecialchars($review['ReviewID']); ?>">Edit Review</a>
                 </div>
             <?php
             }

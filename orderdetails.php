@@ -1,9 +1,7 @@
 <?php
-session_start();        //session start for session handling
-include("dbconnection.php");    //added in to allow for dynamic product loading and db connection       
-//check if user is logged in
-// Set background color early to prevent white flashes
-echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';
+session_start();
+include("dbconnection.php");
+
 //fetching existing profile photo
 if(isset($_SESSION['id'])){
     $userID = $_SESSION['id'];
@@ -20,48 +18,26 @@ if(isset($_SESSION['id'])){
 
 }
 
-//first wanna see what prints to post
-/*
-echo "<pre>";
-var_dump($_SESSION);
-var_dump($_POST);
-echo "</pre>";
-*/
+//fetch order details
+$orderID = $_GET['orderid'];
+$sql= "SELECT * FROM orderdetails WHERE OrderID = ?";
+$stmt = mysqli_prepare($db_Conn, $sql);
+mysqli_stmt_bind_param($stmt, "i", $orderID);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$orderDetails = mysqli_fetch_assoc($result);
 
-//needa add handling for the post of the product update and deletion from cart
-if(isset($_POST['updateItem']) && isset($_POST['productQty'])){
-    //var
-    $productID = $_POST['productID'];
-    $productQty = $_POST['productQty'];
-    //maybe needa check to see if there is enough stock of the product.
-    //fetching current stock
-    $sql = "SELECT StockQuantity FROM products WHERE ProductID = ?";
-    $stmt = mysqli_prepare($db_Conn, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $productID);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $row = mysqli_fetch_assoc($result);
-
-    if($productQty > 0){    //just incase
-        if($row && $productQty <= $row['StockQuantity']){   //if row is populated and the productqty user inputs is equalt to or less than the stock quantity
-             $_SESSION['cart'][$productID] = $productQty;     //set the new quantity
-        }else{
-            $_SESSION['error'] = "Seller does not have the request quantity of stock available";
-            header("Location: index.php");
-            exit;
-        }
-       
-    }
-}
-if(isset($_POST['removeItem'])){
-    //var
-    $productID = $_POST['productID'];
-    unset($_SESSION['cart'][$productID]);   //unsets the cart at the product id -- basically removes from cart
-
-}
-
-
+//fetch product details for ux
+$productID = $orderDetails['ProductID'];
+$sqlProduct = "SELECT Name, Description, Price FROM products WHERE ProductID = ?";
+$productStmt = mysqli_prepare($db_Conn, $sqlProduct);
+mysqli_stmt_bind_param($productStmt, "i", $productID);
+mysqli_stmt_execute($productStmt);
+$result = mysqli_stmt_get_result($productStmt);
+$productDetails = mysqli_fetch_assoc($result);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,14 +47,14 @@ if(isset($_POST['removeItem'])){
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       <!-- for social media icons -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="9415a47e-d40f-4dd5-a813-f4c68ef3d995"></script>     <!-- for website tracking info -->
-    <title>TravsList | User Cart</title>
+    <title>TravsList | Order Details</title>
 </head>
 <body>
-    <div class="headerStrip">
+<div class="headerStrip">
         <header>
             <div class="headerTop">
                 <a href="index.php">
-                    <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">     <!-- having an issue on my phone on prod   fixed was a cache issue-->
+                    <img src="images/logo.png" alt="TravsList Logo" class="siteLogo">
                 </a>
                 <a href="index.php">
                     <h1>TravsList a C2C E-Commerce Website!</h1>
@@ -103,71 +79,24 @@ if(isset($_POST['removeItem'])){
                 <span>Hi Guest</span>   <!--guest username when not logged in-->
                 <a href="#" class="btnShowLogin">Login</a>       <!--only shown when user is not logged in-->
             <?php endif; ?>      <!--ends the if statement for php-->
-            <a href="accountdashboard.php">Account</a>
-            <a href="usercart.php" class="active">Cart</a>
+            <a class="active" href="accountdashboard.php">Account</a>
+            <a href="usercart.php">Cart</a>
             </div>
         </header>
+</div>
+<div class="orderDetailsContainer">
+    <div class="orderDetailsHeader">
+        <h2>Order Details for order #<?php echo $orderID;?></h2>
     </div>
+    <div class="orderDetailsList">
+            <p>Name: <?php echo $productDetails['Name']?></p>
+            <p>Description: <?php echo $productDetails['Description']?></p>
+            <p>Price: <?php echo $productDetails['Price']?></p>
+    </div>
+    <a href="accounttabs.php">Back</a>
+</div>
 
-<div class="cartContainer">
-    <div class="cartHeader">
-        <h2>Account Cart</h2>
-        <p>Add Orders to your account to checkout and proceed with Payment!</p>
-    </div>
-    <div class="cartList">
-        <?php
-        if(isset($_SESSION["cart"]) && !empty($_SESSION["cart"])){       //checks to see if cart isset
-            $cart = $_SESSION["cart"];
-            $total = 0;
-            foreach($cart as $productID => $qty){        //foreach item in the cart session array productID will take key using lamda and Qty will take value
-                $stmt = mysqli_prepare($db_Conn, "SELECT * FROM products WHERE ProductID = ?");
-                mysqli_stmt_bind_param($stmt, "i", $productID);
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-                if($row = mysqli_fetch_assoc($result)){
-                    $subtotal = $row["Price"] * $qty;       //math to x the qty by the price to get a subtotal
-                    $total += $subtotal;        //increment the total for each item
-                    ?>
-                    <div class="cartItem"> 
-                        <h2><?php echo $row["Name"];?></h2>
-                        <img src="./images/<?php echo $row["Product_IMG_DIR"];?>"></img>
-                        <p> <?php echo $row["Name"]. " x $qty - R". $subtotal;?></p>
-                        <div class="updateCartItem">
-                            <form action="usercart.php" method="POST" class="updateCartForm">
-                                <div class="cartInput">
-                                    <input type="hidden" name="productID" value="<?php echo $productID;?>">
-                                    <p>Qty:</p>
-                                    <input type="number" name="productQty" value="<?php echo $qty;?>" step="1" min="1" max = "<?php echo $row['StockQuantity'];?>">     <!--ensures it steps by 1 and min value is 1 unless they wanna remove it, testing max with stock quant-->
-                                </div>
-                                <div class="cartBtn">
-                                    <button type="submit" name="updateItem" value="update">Update</button>
-                                    <button type="submit" name="removeItem" value="remove" class="removeBtnCart">Remove</button>        <!--removed this coz im adding update also //onsubmit="return confirm('Are you sure you want to remove this product from your cart?')"-->
-                                </div> 
-                            </form>
-                        </div>
-                    </div>
-                    <?php
-                }
-            }
-            ?>
-            <div class="cartTotal">
-                <b>Total: R <?php echo $total ?></b>
-                <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                <form action="checkout.php" method="POST">
-                    <button type="submit" value="checkout">Checkout</button>
-                </form>
-                <?php else: ?>
-                    <br><a href="#" class="btnShowLogin">Please Login to Checkout</a>
-                <?php endif ?>
-            </div>
-            <?php
-        } else {
-            echo "Your Cart is Empty!";
-        }
-?>
-</div>
-    </div>
-</div>
+
 
 
 
@@ -236,8 +165,6 @@ if(isset($_POST['removeItem'])){
         </form>
 </div>
 
-
-
 <div class="footerContainer">
     <footer>
         <p>2025 Travis Musson. All rights reserved.</p>
@@ -250,8 +177,8 @@ if(isset($_POST['removeItem'])){
         </picture>
     </footer>
 </div>
-<script src="scripts.js"></script>     <!--link to the javascript file for the hamburger menu--> 
+<!--https://github.com/travismusson-->
+<script src="scripts.js"></script>
 <script src="validate.js"></script>
 </body>
 </html>
-

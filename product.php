@@ -289,6 +289,7 @@ endif; ?>
            }?>
            <div class="writeReview">
                 <form action="" method="post">
+                <div class="reviewRow">
                     <label for="inputReview">Write A Review:</label><br>
                     <input name="inputReview" id="inputReview" placeholder="Leave a review..."><br>
                     <label for="inputRating">Rating:</label><br>
@@ -300,6 +301,7 @@ endif; ?>
                         <option value ="4">4</option>
                         <option value ="5">5</option>
                     </select>
+                </div>
                     <div class="btnSubmitReview">
                         <input type="hidden" name="productID" value="<?php echo $productID; ?>">        <!--not best practice i assume? but was getting an error and managed to find this: https://www.w3schools.com/tags/att_input_type_hidden.asp  which says devs utilize it and allows me to usse it in the post to check for product id  -->
                         <button type="submit">Submit Review</button>        <!--not submitting-->
