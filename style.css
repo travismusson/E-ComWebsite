@@ -1840,6 +1840,15 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     cursor: pointer;
 }
 
+.trackingInfoContainer a{
+    transition: all 0.5s ease-in-out;
+}
+
+.trackingInfoContainer a:hover{
+    transition: all 0.5s ease-in-out;
+    color: #464545;
+}
+
 /*refactor to remove redundancy
 [data-tab-content] {        since im adjusting from a video im not sure if i can adjust my current html struct to suit this better      --updated
     display: none;

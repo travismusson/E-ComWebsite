@@ -115,7 +115,7 @@ $result = mysqli_query($db_Conn, $query);
     </table>
 </div>
     <div class="trackingInfoContainer">
-        <h2>Tracking Info</h2>
+        <h2><a href="https://eu.umami.is/websites/9415a47e-d40f-4dd5-a813-f4c68ef3d995">Tracking Info</a></h2>
         
     </div>
 <div class="blurOverlay"></div>
