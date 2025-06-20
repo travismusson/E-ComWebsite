@@ -45,7 +45,7 @@ if ($cart) {
     foreach ($cart as $productID => $qty) {
         $price = $productPrices[$productID];
         $subtotal = $price * $qty;
-        $insertDetailSql ="INSERT INTO orderdetails (OrderID, ProductID, Quantity, Price) VALUES (?, ?, ?)";
+        $insertDetailSql ="INSERT INTO orderdetails (OrderID, ProductID, Quantity, Price) VALUES (?, ?, ?, ?)";
         $detailStmt = mysqli_prepare($db_Conn, $insertDetailSql);
         mysqli_stmt_bind_param($detailStmt, "iiid", $orderID, $productID, $qty, $subtotal);
         mysqli_stmt_execute($detailStmt);
