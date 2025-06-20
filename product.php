@@ -261,10 +261,14 @@ endif; ?>
             <div class="productItem"><h4>Description:</h4> <?php echo nl2br(htmlspecialchars($product['Description'])); ?></div>     <!--using nl2br to convert new lines to <br> tags https://www.php.net/manual/en/function.nl2br.php-->
             <div class="productItem"><h4>Price:</h4> R <?php echo htmlspecialchars($product['Price']); ?></div>
             <div class="productItem"><h4>Category:</h4> <?php echo htmlspecialchars($product['Category']); ?></div>
-            <div class="productItem"><h4>Stock:</h4> <?php if($product['StockQuantity'] === 0){echo "Out of Stock!";}else{echo $product['StockQuantity'];} ?></div><!-- prints out of stock if zero for customer ux
-            <form action="addtocart.php" method="post">
-                <input type="hidden" name="product_id" value="<?php echo $productID; ?>">
-                <button type="submit" value="cart">Add to Cart</button>
+            <div class="productItem"><h4>Stock:</h4> <?php if($product['StockQuantity'] === 0){echo "Out of Stock!";}else{echo $product['StockQuantity'];} ?></div><!-- prints out of stock if zero for customer ux-->
+            <form action="addtocart.php" method="post">              
+                <?php if($product['StockQuantity'] === 0): ?>
+                    <button type="button" disabled title="Product out of Stock!">Add to Cart</button> <!--yeh i think this is good, allows for better ux-->
+                <?php else: ?>
+                    <input type="hidden" name="product_id" value="<?php echo $productID; ?>">
+                    <button type="submit" value="cart">Add to Cart</button>     <!-- thinking of disabling this if out of stock, and hovering a prompt to indicate to user out of stock  testing solution now-->
+                <?php endif; ?>     
             </form>
             <a href="index.php">Back to Products</a>
                 <?php if(isset($_SESSION["User_Level"]) && $_SESSION["User_Level"] === 1 || isset($_SESSION['id']) && $_SESSION['id'] === $product['SellerID']): ?>       <!--WORKING     //needa adjust to see if sellerid matches current id  //checking to see if seller matches with this now  //working :D -->        
@@ -278,6 +282,7 @@ endif; ?>
                     </form>
                 <?php endif; ?>  
     </div>
+    
     <div class="reviewSection">
         <h2>Reviews</h2>
             <!--need to fetch reviews from db for product-->

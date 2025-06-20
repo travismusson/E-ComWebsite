@@ -27,18 +27,23 @@ if (!isset($_SESSION['User_Level']) || ($_SESSION['User_Level'] !== 1 && $_SESSI
     header("Location: index.php");
     exit;
 }
-if (isset($_POST['productID'])) {
+if (isset($_POST['productID'])) {       //needa refactor for consistency across website instead of this quick way       --done
     $productID = $_POST['productID'];
     //delete reviews for this product first
-    $stmt = mysqli_prepare($db_Conn, "DELETE FROM reviews WHERE ProductID = ?");
-    mysqli_stmt_bind_param($stmt, "i", $productID);
-    mysqli_stmt_execute($stmt);
-    //needa delete orders with product?
-    
+    $sqlReviewDelete = "DELETE FROM reviews WHERE ProductID = ?";
+    $reviewStmt = mysqli_prepare($db_Conn, $sqlReviewDelete);
+    mysqli_stmt_bind_param($reviewStmt, "i", $productID);
+    mysqli_stmt_execute($reviewStmt);
+    //needa delete orders with product?     //not sure if this is best practice
+    $sqlOrderDelete = "DELETE FROM orderdetails WHERE ProductID = ?";
+    $orderStmt = mysqli_prepare($db_Conn, $sqlOrderDelete);
+    mysqli_stmt_bind_param($orderStmt, "i", $productID);
+    mysqli_stmt_execute($orderStmt);
     //delete product from product table
-    $stmt = mysqli_prepare($db_Conn, "DELETE FROM products WHERE ProductID = ?");
-    mysqli_stmt_bind_param($stmt, "i", $productID);
-    mysqli_stmt_execute($stmt);
+    $sqlProductDelete = "DELETE FROM products WHERE ProductID = ?";
+    $productStmt = mysqli_prepare($db_Conn, $sqlProductDelete);
+    mysqli_stmt_bind_param($productStmt, "i", $productID);
+    mysqli_stmt_execute($productStmt);
 
     $_SESSION['error'] = "Product deleted.";        //temp debug
 }

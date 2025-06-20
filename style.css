@@ -570,7 +570,7 @@ h2{
         display: none;
     }
     .autoHideCat{
-        top: 270px;
+        top: 200px;
     }  
     
     .hamburgerBtn{
@@ -844,6 +844,7 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+    
 }
 
 /*add product php styling*/
@@ -1832,10 +1833,12 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     display: flex;
     flex-direction: row;
     align-items: center;
-    align-self: center;
-    
+    align-self: center; 
 }
 
+.updateCartForm .cartBtn button{
+    cursor: pointer;
+}
 
 /*refactor to remove redundancy
 [data-tab-content] {        since im adjusting from a video im not sure if i can adjust my current html struct to suit this better      --updated
