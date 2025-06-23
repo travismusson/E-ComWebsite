@@ -108,8 +108,11 @@ if(isset($_POST['addProduct'])){
             <div class="homeStrip">
                 <a href="index.php">Home</a>
             <div class="searchWrapper">
-                <input class="searchBar" type="text" placeholder="Search...">
-                <button type="submit"><img src="images/icons8-search-16.png"></button>
+                <!--this is the search bar that will allow users to search for products-->
+                <form action="search.php" method="get">     <!--this will allow the user to search for products by category or name-->
+                    <input class="searchBar" type="text" name="searchBar" placeholder="Search...">
+                    <button type="submit" value="search"><img src="images/icons8-search-16.png"></button>
+                </form>
             </div>
 <!--Adding php here for username in the Account list https://www.php.net/manual/en/control-structures.alternative-syntax.php  for control structures within php and html-->
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>

@@ -14,7 +14,18 @@ if($category){
     echo "Error occured trying to process your request please try again";       //only i would see this error
     header("Location: index.php");      //redirects to homepage
 }
-
+//needa add for search bar to search by name as well
+$search = isset($_GET['searchBar']) ? $_GET['searchBar'] : '';
+if($search){
+    $query = "SELECT * FROM products WHERE Name LIKE ?";        //sql search query we are looking for names in this case
+    $search = "%$search%";  //adding wildcards for search   https://www.w3schools.com/sql/sql_wildcards.asp
+    $stmt = mysqli_prepare($db_Conn, $query);
+    mysqli_stmt_bind_param($stmt, "s", $search);
+    mysqli_stmt_execute($stmt);
+    $categoryResult = mysqli_stmt_get_result($stmt);        //reusing the same variable to hold the results
+} else {
+    echo "No search term provided.";
+}
 //fetching existing profile photo
 if(isset($_SESSION['id'])){
     $userID = $_SESSION['id'];
@@ -58,8 +69,11 @@ if(isset($_SESSION['id'])){
             <div class="homeStrip">
                 <a href="index.php">Home</a>
             <div class="searchWrapper">
-                <input class="searchBar" type="text" placeholder="Search...">
-                <button type="submit"><img src="images/icons8-search-16.png"></button>
+                <!--this is the search bar that will allow users to search for products-->
+                <form action="search.php" method="get">     <!--this will allow the user to search for products by category or name-->
+                    <input class="searchBar" type="text" name="searchBar" placeholder="Search...">
+                    <button type="submit" value="search"><img src="images/icons8-search-16.png"></button>
+                </form>
             </div>
 <!--Adding php here for username in the Account list https://www.php.net/manual/en/control-structures.alternative-syntax.php  for control structures within php and html-->
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
