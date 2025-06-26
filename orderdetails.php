@@ -29,7 +29,7 @@ $orderDetails = mysqli_fetch_assoc($result);
 
 //fetch product details for ux
 $productID = $orderDetails['ProductID'];
-$sqlProduct = "SELECT Name, Description, Price FROM products WHERE ProductID = ?";
+$sqlProduct = "SELECT Name, Description, Price, Product_IMG_DIR FROM products WHERE ProductID = ?";
 $productStmt = mysqli_prepare($db_Conn, $sqlProduct);
 mysqli_stmt_bind_param($productStmt, "i", $productID);
 mysqli_stmt_execute($productStmt);
@@ -92,8 +92,10 @@ $productDetails = mysqli_fetch_assoc($result);
         <h2>Order Details for order #<?php echo $orderID;?></h2>
     </div>
     <div class="orderDetailsList">
+            <img src="<?php echo "./images/{$productDetails['Product_IMG_DIR']}"; ?>" alt="<?php echo $productDetails['Name']; ?>">
             <p>Name: <?php echo $productDetails['Name']?></p>
             <p>Description: <?php echo $productDetails['Description']?></p>
+            <p>Quantity: <?php echo $orderDetails['Quantity']?></p>
             <p>Price: <?php echo $productDetails['Price']?></p>
     </div>
     <a href="accounttabs.php">Back</a>
