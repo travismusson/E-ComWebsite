@@ -25,6 +25,12 @@ if (!isset($_SESSION["User_Level"]) || $_SESSION["User_Level"] !== 1) {     //ch
     exit;
 }
 ?>
+<?php if(isset($_SESSION["error"])):  ?>      <!--this checks if there is an error message set in the session -->
+    <script>
+    alert('<?php echo $_SESSION["error"]; ?>');
+    </script>
+    <?php unset($_SESSION["error"]);      //this will unset the error message so it does not show again
+endif; ?>
 
 <!DOCTYPE html>
 <html lang="en">
