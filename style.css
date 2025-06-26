@@ -1653,6 +1653,11 @@ form .btnLogin button:hover, form .btnRegister button:hover{
     border-radius: 50%;
 }
 
+.adminUserList td a:hover{
+    color: #464545;
+    transition: all 0.5s ease-in-out;
+}
+
 .cartList {
     width: clamp(80%, 1500px, 80%); 
     margin: 40px auto;

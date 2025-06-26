@@ -101,7 +101,7 @@ $result = mysqli_query($db_Conn, $query);
         <?php while($user = mysqli_fetch_assoc($result)): ?>
         <tr>
             <td><img src="images/<?php echo htmlspecialchars($user['Profile_IMG_DIR']); ?>" alt="Profile" width="40"></td>
-            <td><?php echo $user['FirstName'] . ' ' . $user['LastName']; ?></td>
+            <td><a href="sellerinfo.php?sellerID=<?php echo $user['id']; ?>"><?php echo $user['FirstName'] . ' ' . $user['LastName']; ?></a></td>
             <td><?php echo $user['Email']; ?></td>
             <td>
                 <?php if($user['id'] != $_SESSION['id']): // Prevent self-delete ?>
