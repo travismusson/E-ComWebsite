@@ -39,6 +39,11 @@ if (isset($_POST['productID'])) {       //needa refactor for consistency across 
     $orderStmt = mysqli_prepare($db_Conn, $sqlOrderDelete);
     mysqli_stmt_bind_param($orderStmt, "i", $productID);
     mysqli_stmt_execute($orderStmt);
+    //delete orders from orders table
+    $sqlOrderDelete = "DELETE FROM orders WHERE ProductID = ?";
+    $orderStmt = mysqli_prepare($db_Conn, $sqlOrderDelete);
+    mysqli_stmt_bind_param($orderStmt, "i", $productID);
+    mysqli_stmt_execute($orderStmt);
     //delete product from product table
     $sqlProductDelete = "DELETE FROM products WHERE ProductID = ?";
     $productStmt = mysqli_prepare($db_Conn, $sqlProductDelete);
