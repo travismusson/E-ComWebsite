@@ -168,7 +168,7 @@ endif; ?>
 <!-- needa implement a means of linking items to a product page-->
 <div class="latestDealsContainer">
         <h2>Latest Deals</h2>
-        <a href="#">View All</a>
+        <a href="search.php?view=latest">View All</a>
         <button class="latestDealsScrollLeft">&lt;</button>
             <div class="latestDeals">
                 <!--refactored span encapsulating every div item-->

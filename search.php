@@ -3,28 +3,42 @@ include ("dbconnection.php");
 session_start();    //enusre user is logged in
 echo '<style>body{background:linear-gradient(to top,#686868,rgb(54,54,54))!important;}</style>';
 //get filtered categories from db
-$category = isset($_GET['category']) ? $_GET['category']:' ';    //always returning true?  --fixed by using a teneray and setting value
-if($category){
-    $query = "SELECT * FROM products WHERE Category = ?";
-    $stmt = mysqli_prepare($db_Conn, $query);
-    mysqli_stmt_bind_param($stmt, "s", $category);
-    mysqli_stmt_execute($stmt);
-    $categoryResult = mysqli_stmt_get_result($stmt);
-}else{
-    echo "Error occured trying to process your request please try again";       //only i would see this error
-    header("Location: index.php");      //redirects to homepage
-}
-//needa add for search bar to search by name as well
-$search = isset($_GET['searchBar']) ? $_GET['searchBar'] : '';
-if($search){
+
+//refactoring this
+//set default value
+$categoryResult = null;      //initialize variable to hold results
+$headerTitle = "Search Results";     //default header title
+//searchbar functionality
+if(isset($_GET['searchBar']) && !empty($_GET['searchBar'])){     //checking if search bar is set and not empty
+    $search = $_GET['searchBar'];     //getting the search term from the search bar
     $query = "SELECT * FROM products WHERE Name LIKE ?";        //sql search query we are looking for names in this case
     $search = "%$search%";  //adding wildcards for search   https://www.w3schools.com/sql/sql_wildcards.asp
     $stmt = mysqli_prepare($db_Conn, $query);
     mysqli_stmt_bind_param($stmt, "s", $search);
     mysqli_stmt_execute($stmt);
-    $categoryResult = mysqli_stmt_get_result($stmt);        //reusing the same variable to hold the results
+    $categoryResult = mysqli_stmt_get_result($stmt);        //reusing the same variable to hold the results)
+}
+//check if category is set in the url
+elseif(isset($_GET['category']) && !empty($_GET['category'])){
+    $category = $_GET['category'];     //getting the category from the url
+    $query = "SELECT * FROM products WHERE Category = ?";
+    $stmt = mysqli_prepare($db_Conn, $query);
+    mysqli_stmt_bind_param($stmt, "s", $category);
+    mysqli_stmt_execute($stmt);
+    $categoryResult = mysqli_stmt_get_result($stmt);
+    $headerTitle = "Products in $category";     //set header title for category
+}
+//check if view is set in the url
+elseif(isset($_GET['view']) && $_GET['view'] === 'latest'){
+    $query = "SELECT * FROM products ORDER BY ProductID DESC";
+    $stmt = mysqli_prepare($db_Conn, $query);
+    mysqli_stmt_execute($stmt);
+    $categoryResult = mysqli_stmt_get_result($stmt);        //get results from prepared statement
+    $headerTitle = "Latest Deals";     //set header title for latest deals
 } else {
-    echo "No search term provided.";
+    echo "No search term provided.";    //unseen just for logs
+    header("Location: index.php");     //if no search term is provided, redirect to home page
+    exit;
 }
 //fetching existing profile photo
 if(isset($_SESSION['id'])){
@@ -95,7 +109,7 @@ if(isset($_SESSION['id'])){
 
 <div class="searchContainer">
         </div class="searchHeader">
-                <h2><?php echo $category ?></h2>
+                <h2><?php echo $headerTitle ?></h2>
         </div>
 <!-- need to display search results   Its Working just need some styling-->
         <div class = "searchResults">
@@ -112,7 +126,7 @@ if(isset($_SESSION['id'])){
                     <?php
                 }
             }else{
-                echo "No Products found in this category!";
+                echo "No Products found in this search category!";
             }  
             ?>  
         </div>
