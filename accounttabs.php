@@ -400,7 +400,7 @@ if(isset($_POST['addImage'])){
             <span id="passwordErrorField" class="error"></span>
         </div>
         <div class="forgotPass">
-            <a href="#">Forgot Your Password?</a><br>
+            <a href="#" onclick="alert('An Email will be Sent to you for Password Reset')">Forgot Your Password?</a><br>
         </div>
         <div class="registerAccount">
             <label>Not Registered? <a href="#" class="showRegister">Create an Account</a></label>
@@ -435,7 +435,7 @@ if(isset($_POST['addImage'])){
                 <span id="passwordError" class="error"></span>
             </div>
             <div class="forgotPass">
-                <a href="#">Forgot Your Password?</a><br>
+                <a href="#" onclick="alert('An Email will be Sent to you for Password Reset')">Forgot Your Password?</a><br>
             </div>
             <div class="loginAccount">
                 <label>Already Registered? <a href="#" class="showLogin">Login Here</a></label>
